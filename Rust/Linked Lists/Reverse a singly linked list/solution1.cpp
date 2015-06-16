@@ -9,9 +9,11 @@ LinkedListNode<T>* reverse_iterative (LinkedListNode<T>* head) {
   // Check size:
   if (head == nullptr || head->next == nullptr) return head;
 
+  // Initialize the stuff still to do, and set head to be the last
   LinkedListNode<T>* still_to_do = head->next;
   head->next = nullptr;
 
+  // While there is still stuff to do - move from one pile to other
   while (still_to_do != nullptr) {
 	LinkedListNode<T>* temp = still_to_do;
 	still_to_do = still_to_do->next;
@@ -33,7 +35,7 @@ int main() {
   temp = temp->next;
   temp->next = new LinkedListNode<int>(28);
 
-  
+  // 
   cout << "HEAD->";
   head->printChain();
 

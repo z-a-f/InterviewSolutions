@@ -18,7 +18,7 @@ Return the pointer to a reversed SLL as shown below:
 ## Solution 1 explanation
 * Time: _O(n)_
 * Memory: _O(1)_
-* File: solution1.(cpp|java|py)
+* File: solution.(cpp|java|py)
 
 Given the SLL `(head)->[7]->[14]->[21]->[28]->[NULL]`, if it only contains 0 or 1 nodes, then the current list is the same when reversed, and can be returned as it is. If there are two or more nodes, then iterative solution starts with 2 pointers:
 1. A pointer to already reversed SLL (head)
@@ -44,3 +44,11 @@ Here how the pointers will look like after each iteration:
 (still_to_do)->[NULL]
 ```
 
+## Solution 2 explanation
+* Time: _O(n)_
+* Memory: _O(n)_
+* File: solution.(cpp|java|py)
+
+_Note_: Recursive method uses __stack__, meaning the the OS might run out of memory if a huge SLL is given.
+
+In order to reverse the SLL, we call the method (recursively), up until there is only a single element in the SLL. Once reached we return 
