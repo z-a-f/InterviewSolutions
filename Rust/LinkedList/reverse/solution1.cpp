@@ -1,6 +1,7 @@
 # include <iostream>
 
-#include "../../support/support.hpp" // This has useful stuff
+// #include "../../support/support.hpp" // This has useful stuff
+#include "../LinkedList.hpp"
 
 using namespace std;
 
