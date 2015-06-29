@@ -1,26 +1,23 @@
 #include <iostream>
 
-#include "LinkedList.hpp"
+#include "LinkedListS.hpp"
 
 using namespace std;
 
-template <typename T>
-void printLinkedList(LinkedList<T> ll) {
-  cout << "HEAD->";
-  LinkedListNode<T> *ptr = ll.head->next;
-  while (ptr != nullptr) {
-	cout << ptr->data << "->";
-  }
-  cout << "NULL\n";
-}
 
 int main() {
-  LinkedListNode<int> *node1 = new LinkedListNode<int>();
-  node1->data = 1;
-  cout << "Node value: " << node1->data << endl;
-  
-  LinkedList<int> ll;
-  //printLinkedList(ll);
+  // Test Constructors/Destructors
+  ListNodeS<int> *h1 = new ListNodeS<int>();
+  LinkedListS<int> ll1(h1);
+  LinkedListS<int> ll2;
 
-  delete node1;
+  ListNodeS<int> *h2 = ll1.head();
+  
+  cout << h2 << endl;
+
+  // Friend classes:
+  cout << ll1 << endl;
+  
+  // delete h1;
+  // delete h2;
 }

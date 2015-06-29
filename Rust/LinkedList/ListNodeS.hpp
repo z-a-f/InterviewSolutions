@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 /*********************************************************************/
 /* Singly Node class */
 template <typename T>
@@ -16,6 +18,13 @@ public:
   void set(T, ListNodeS<T>*);
   void setNext(ListNodeS<T>*);
   void setValue(T);
+public:
+  // Friends:
+  friend inline std::ostream& operator<<(std::ostream& os,
+										 ListNodeS<T> const& node){
+	os << node._value;
+	return os;
+  }
 private:
   T _value;
   ListNodeS<T> *_next;
@@ -28,7 +37,7 @@ ListNodeS<T>::ListNodeS(const T &_value, ListNodeS<T> *_next) {
   this->_value = _value;
   this->_next = _next;
 }
-template <typename T> ListNodeS<T>::~ListNodeS() {}
+template <typename T> ListNodeS<T>::~ListNodeS() { /*delete this->_next;*/ }
 
 // Getters:
 template <typename T>
