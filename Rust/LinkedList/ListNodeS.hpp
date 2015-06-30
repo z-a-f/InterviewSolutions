@@ -8,7 +8,7 @@ template <typename T>
 class ListNodeS {
 public:
   ListNodeS();
-  ListNodeS(const T&, ListNodeS<T>*);
+  ListNodeS(const T &value, ListNodeS<T> *next = nullptr);
   ~ListNodeS();
 public:
   // Getters:
@@ -22,7 +22,7 @@ public:
   // Friends:
   friend inline std::ostream& operator<<(std::ostream& os,
 										 ListNodeS<T> const& node){
-	os << node._value;
+	os << node.value();
 	return os;
   }
 private:
@@ -31,11 +31,14 @@ private:
 };
 
 // Constructors/Destructors
-template <typename T> ListNodeS<T>::ListNodeS() {}
+template <typename T> ListNodeS<T>::ListNodeS() {
+  this->_next = nullptr;
+  this->_value = 0;
+}
 template <typename T>
-ListNodeS<T>::ListNodeS(const T &_value, ListNodeS<T> *_next) {
-  this->_value = _value;
-  this->_next = _next;
+ListNodeS<T>::ListNodeS(const T &value, ListNodeS<T> *next) {
+  this->_value = value;
+  this->_next = next;
 }
 template <typename T> ListNodeS<T>::~ListNodeS() { /*delete this->_next;*/ }
 
