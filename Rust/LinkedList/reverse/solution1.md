@@ -13,23 +13,23 @@ Here how the pointers will look like after each iteration:
 
 1.
 
-    (head)->[7]->[NULL]
-    (still_to_do)->[14]->[21]->[28]->[NULL]
+	(head)->[7]->[NULL]
+	(still_to_do)->[14]->[21]->[28]->[NULL]
 
 
 2.
 
-    (head)->[14]->[7]->[NULL]
-    (still_to_do)->[21]->[28]->[NULL]
+	(head)->[14]->[7]->[NULL]
+	(still_to_do)->[21]->[28]->[NULL]
 
 
 3.
 
-    (head)->[21]->[14]->[7]->[NULL]
-    (still_to_do)->[28]->[NULL]
+	(head)->[21]->[14]->[7]->[NULL]
+	(still_to_do)->[28]->[NULL]
 
 
 4.
 
-    (head)->[28]->[21]->[14]->[7]->[NULL]
-    (still_to_do)->[NULL]
+	(head)->[28]->[21]->[14]->[7]->[NULL]
+	(still_to_do)->[NULL]
