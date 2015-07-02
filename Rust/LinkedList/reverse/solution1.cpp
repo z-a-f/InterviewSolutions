@@ -1,48 +1,47 @@
 # include <iostream>
 
-// #include "../../support/support.hpp" // This has useful stuff
 #include "../LinkedList.hpp"
 
 using namespace std;
 
+/** Reverse a singly linked list
+ *
+ * @returns Node<T>* The head of the reversed linked list
+ * @param Node<T>* The head of the linked list to be reversed
+ */
 template <typename T>
-LinkedListNode<T>* reverse_iterative (LinkedListNode<T>* head) {
-  // Check size:
-  if (head == nullptr || head->next == nullptr) return head;
+Node<T>* reverse_iterative (Node<T>* head) {
+  // If the size of the linked list = 0 or 1, nothing to do :)
+  if (head == nullptr || head->next() == nullptr)
+	return head;
 
-  // Initialize the stuff still to do, and set head to be the last
-  LinkedListNode<T>* still_to_do = head->next;
-  head->next = nullptr;
+  Node<T>* list_to_do = head->next();
+  Node<T>* reversed_list = head;
+  reversed_list->setNext(nullptr);
 
-  // While there is still stuff to do - move from one pile to other
-  while (still_to_do != nullptr) {
-	LinkedListNode<T>* temp = still_to_do;
-	still_to_do = still_to_do->next;
+  while (list_to_do != nullptr) {
+	Node<T>* temp = list_to_do;
+	list_to_do = list_to_do->next();
 
-	temp->next = head;
-	head = temp;
-
+	temp->setNext(reversed_list);
+	reversed_list = temp;
   }
-  return head;
+  delete list_to_do;
+  return reversed_list;
 }
 
 int main() {
-  // Example case:
-  LinkedListNode<int>* head = new LinkedListNode<int>(7);
-  LinkedListNode<int>* temp = head;
-  temp->next = new LinkedListNode<int>(14);
-  temp = temp->next;
-  temp->next = new LinkedListNode<int>(21);
-  temp = temp->next;
-  temp->next = new LinkedListNode<int>(28);
+  LinkedList<int> list;
+  cout << list << endl;
 
-  // 
-  cout << "HEAD->";
-  head->printChain();
+  list.addFront(28);
+  list.addFront(21);
+  list.addFront(14);
+  list.addFront(7);
+  cout << list << endl;
 
-  head = reverse_iterative(head);
-  cout << "HEAD->";
-  head->printChain();
-
+  list.setHead(reverse_iterative(list.head()));
+  cout << list << endl;
+  
   return 0;
 }
