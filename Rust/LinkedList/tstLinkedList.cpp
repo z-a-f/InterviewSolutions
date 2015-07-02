@@ -12,9 +12,19 @@ int main() {
   list.addFront(21);
   list.addFront(14);
   list.addFront(7);
+
+  cout << "Initial list:\n";
   cout << list << endl;
 
+
+  // Check iterative reversing:
+  cout << "\nAfter iterative reverse:\n";
   list.reverse();
+  cout << list << endl;
+
+  // Check recursive reversing:
+  cout << "\nAfter recursive reverse:\n";
+  list.reverseRecursive();
   cout << list << endl;
   
   return 0;

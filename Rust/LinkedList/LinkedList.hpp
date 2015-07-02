@@ -74,6 +74,9 @@ private:
   // Rust solutions after this point
 public:
   void reverse();
+  void reverseRecursive();
+private:
+  Node<T>* _reverse_recursive(Node<T>* node);
 };
 
 /** Constructor */
@@ -201,4 +204,31 @@ void LinkedList<T>::reverse() {
 	_head = temp;
   }
   delete list_to_do;
+}
+
+/** Reverse the linked list using solution 2 (recursive)
+ */
+template <typename T>
+void LinkedList<T>::reverseRecursive() {
+  this->_head = this->_reverse_recursive(this->_head);
+}
+
+// Helpers:
+
+/** Reverse a singly linked list (Recursive)
+ *
+ * @returns Node<T>* The head of the reversed linked list
+ * @param Node<T>* The head of the linked list to be reversed
+ */
+template <typename T>
+Node<T>* LinkedList<T>::_reverse_recursive (Node<T>* node) {
+  // If the size of the linked list = 0 or 1, nothing to do :)
+  if (node == nullptr || node->next() == nullptr)
+	return node;
+
+  Node<T>* reversed_list = this->_reverse_recursive(node->next());
+
+  node->next()->setNext(node);
+  node->setNext(nullptr);
+  return reversed_list;
 }

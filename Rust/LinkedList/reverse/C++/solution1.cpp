@@ -1,6 +1,6 @@
 # include <iostream>
 
-#include "../LinkedList.hpp"
+#include "../../LinkedList.hpp"
 
 using namespace std;
 
