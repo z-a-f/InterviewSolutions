@@ -1,5 +1,7 @@
 #pragma once
 
+#include <exception>
+
 template <typename T> class LinkedList;
 template <typename T>
 std::ostream& operator<<(std::ostream& os, const LinkedList<T>& list);
@@ -56,7 +58,7 @@ public:
   ~LinkedList();
 public:
   bool empty() const;
-  const T& front() const;
+  const T& front() const throw(std::range_error);
   void addFront(const T& e);
   void removeFront();
 public:
@@ -104,7 +106,12 @@ bool LinkedList<T>::empty() const {
  * @returns T
  */
 template <typename T>
-const T& LinkedList<T>::front() const {
+const T& LinkedList<T>::front() const
+  throw (std::range_error) {
+  if (empty()) {
+	throw std::range_error("Linked List empty! Cannot get front()");
+	// return 0;
+  }
   return _head->_elem;
 }
 

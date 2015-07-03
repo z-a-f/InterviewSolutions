@@ -1,4 +1,5 @@
 #include <iostream>
+#include <exception>
 
 #include "LinkedList.hpp"
 
@@ -7,6 +8,11 @@ using namespace std;
 int main() {
   LinkedList<int> list;
   cout << list << endl;
+  try {
+	cout << list.front() << endl;
+  } catch (std::exception& e) {
+	cout << "Exception caught: " << e.what() << endl;
+  }
 
   list.addFront(28);
   list.addFront(21);
