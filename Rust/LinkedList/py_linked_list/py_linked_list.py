@@ -1,5 +1,32 @@
-from node import *
+"""
+Node class
+"""
+class Node(object):
+    def __init__(self, _elem=None, _next=None):
+        self._elem = _elem
+        self._next = _next
 
+    def __str__(self):
+        return str(self._elem)
+
+    # __repr__ = __str__
+    
+    def value(self):
+        return self._elem
+
+    def next(self):
+        return self._next
+
+    def setValue(self, e):
+        self._elem = e
+
+    def setNext(self, n):
+        self._next = n
+
+
+"""
+LinkedList class
+"""
 class LinkedList(object):
     # Public:
     def __init__(self):
@@ -48,8 +75,18 @@ class LinkedList(object):
 
     # Rust solutions after this point
 
-        
+
+
+if __name__ == '__main__':
+    print "\nTesting Node..."
+    n = Node('abc', None)
+    n.setNext(Node(3, None))
+    print "New node n:", n
+    print "Next of the n:", n.next()
+
+    
 if __name__ == "__main__":
+    print "\nTesting LinkedList..."
     list = LinkedList()
     print "Initial list is:", list
     print "Front of empty list:", list.front()
@@ -59,5 +96,4 @@ if __name__ == "__main__":
     list.addFront(14)
     list.addFront(7)
     print "After populating the list:", list
-
     
