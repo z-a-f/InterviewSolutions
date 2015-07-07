@@ -74,19 +74,48 @@ class LinkedList(object):
         return os
 
     # Rust solutions after this point
+    def reverse(self):
+        # return if the size == 0 or 1
+        if (self._head == None or self._head._next == None):
+            return
 
+        list_to_do = self._head._next
 
+        reversed_list = self._head
+        reversed_list._next = None
+
+        while (list_to_do != None):
+            temp = list_to_do
+            list_to_do = list_to_do._next
+
+            temp._next = reversed_list
+            reversed_list = temp
+
+        self._head = reversed_list
+
+    def reverseRecursive(self):
+        self._head = self._reverse_recursive(self._head)
+
+    def _reverse_recursive(self, node):
+        # Do not check the size = 0 or 1
+        if (node == None or node._next == None):
+            return node
+
+        reversed_list = self._reverse_recursive(node._next)
+
+        node._next.setNext(node)
+        node.setNext(None)
+
+        return reversed_list
 
 if __name__ == '__main__':
-    print "\nTesting Node..."
+    print "\n1) Testing Node..."
     n = Node('abc', None)
     n.setNext(Node(3, None))
     print "New node n:", n
     print "Next of the n:", n.next()
-
     
-if __name__ == "__main__":
-    print "\nTesting LinkedList..."
+    print "\n2)Testing LinkedList..."
     list = LinkedList()
     print "Initial list is:", list
     print "Front of empty list:", list.front()
@@ -96,4 +125,13 @@ if __name__ == "__main__":
     list.addFront(14)
     list.addFront(7)
     print "After populating the list:", list
+    
+    print "\n3) Testing iterative reverse..."
+    list.reverse()
+    print "After reverse:", list
+
+    print "\n4) Testing recursive reverse..."
+    list.reverseRecursive()
+    print "After reverse:", list
+
     
