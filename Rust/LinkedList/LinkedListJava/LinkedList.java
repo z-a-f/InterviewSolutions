@@ -50,5 +50,45 @@ public class LinkedList<T> {
 		os += "NULL";
 		return os;
 	}
+
+	/* Rust solutions here */
+
+	// Iterative reverse:
+	public void reverse() {
+		// Do nothing if the size = 0 or 1
+		if (this._head == null || this._head._next == null)
+			return;
+
+		Node<T> list_to_do = this._head._next;
+		// Node<T> reversed_list = head;
+
+		this._head._next = null;
+
+		while (list_to_do != null) {
+			Node<T> temp = list_to_do;
+			list_to_do = list_to_do.next();
+
+			temp._next = this._head;
+			this._head = temp;
+		}
+	}
+
+	// Recursive reverse:
+	public void reverseRecursive() {
+		this._head = _reverse_recursive(this._head);
+	}
+
+	// Recursive helper:
+	private Node<T> _reverse_recursive(Node<T> node) {
+		if (node == null || node._next == null)
+			return node;
+
+		Node<T> reversed_list = _reverse_recursive(node._next);
+
+		node._next._next = node;
+		node._next = null;
+
+		return reversed_list;
+	}
 }
 
