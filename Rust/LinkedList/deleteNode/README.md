@@ -1,4 +1,4 @@
-# Delete node with a give key
+# Delete node with a given key
 Given head of a linked list and a key, delete node with this given key from the list
 
 ## Example
