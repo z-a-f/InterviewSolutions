@@ -1,4 +1,3 @@
-
 import sys                      # Need that to set path
 sys.path.insert(0, '../..') # Need that to import LL
 
