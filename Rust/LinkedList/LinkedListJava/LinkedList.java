@@ -2,25 +2,6 @@ package LinkedListJava;
 
 import java.lang.RuntimeException;
 
-class Node<T> {
-	
-	public Node() {
-		this._next = null;
-		// this._elem = 0;			
-	}
-
-	public T value() { return this._elem; }
-	public Node<T> next() { return this._next; }
-	public void setValue(T e) { this._elem = e; }
-	public void setNext(Node<T> n) { this._next = n; }
-
-	protected T _elem;
-	protected Node<T> _next;
-
-	// Linked List is friend as long as it is in the same package
-}
-
-
 public class LinkedList<T> {
 	private Node<T> _head;
 	private Integer _size;
@@ -31,21 +12,43 @@ public class LinkedList<T> {
 		this._size = 0;
 	}
 
+	public Node<T> head() { return this._head; }
+	public void setHead(Node<T> h) { this._head = h; }
 	public Boolean empty() { return this.size() == 0; }
 	public Integer size() { return this._size; }
 
 	public T front() {
-		if (this.empty()) throw new RuntimeException("Cannot get front() of an empty list...");
+		if (this.empty())
+			throw new RuntimeException("Cannot get front() of an empty list...");
 		return this._head._elem;
 	}
 
-	public static void main(String[] args) {
-		LinkedList<Integer> list = new LinkedList<>();
-		try {
-			list.front();
-		} catch (Exception e) {
-			System.out.println ("Exception: " + e);
+	public void addFront(T e) {
+		Node<T> v = new Node<T>();
+		v._elem = e;
+		v._next = this._head;
+		this._head = v;
+		this._size++;
+	}
+
+	public void removeFront() {
+		if(this.empty()) return;
+		Node<T> old = this._head;
+		this._head = old._next;
+		this._size--;
+	}
+
+	// This is the printing routine:
+	@Override
+	public String toString() {
+		String os = "HEAD->";
+		Node<T> ptr = this._head;
+		while (ptr != null) {
+			os += ptr._elem+"->";
+			ptr = ptr._next;
 		}
+		os += "NULL";
+		return os;
 	}
 }
 
