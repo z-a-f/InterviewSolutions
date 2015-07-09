@@ -6,6 +6,8 @@ If node with the key to be deleted is in the middle of the SLL, then next pointe
 ```
 (head)->[70]->[10]->[55]->[22]->[NULL]
 (key)->[55]
+
+(head)->[70]->[10]->[22]->[NULL]
 ```
 
 1. Keep track of previous pointer
