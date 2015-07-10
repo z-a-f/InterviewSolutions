@@ -10,9 +10,8 @@ __NOTE__ that in C-like languages the memory of the node to be deleted has to be
 __NOTE__ that if the current node is the `head`, the previous should be pointing at the `NULL`. In this case we just move the `head` node to its `.next` node.
 
 ```
-              prev  curr
-(head)->[70]->[10]->[55]->[22]->[NULL]
 key = 55
-
-
+(head)->[70]->[10]->[55]->[22]->[NULL]
+               ^     ^
+              prev  curr
 ```
