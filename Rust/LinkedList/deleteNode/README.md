@@ -13,7 +13,7 @@ If node with the key to be deleted is in the middle of the SLL, then next pointe
 If node with the key to be deleted is the head node, then head should start pointing to the 2nd node
 ```
 (head)->[70]->[10]->[55]->[22]->[NULL]
-(key)->[70]
+key = [70]
 
 (head)->->[10]->[55]->[22]->[NULL]
 ```
