@@ -77,6 +77,7 @@ private:
 public:
   void reverse();
   void reverseRecursive();
+  void deleteKey (T key);
 private:
   Node<T>* _reverse_recursive(Node<T>* node);
 };
@@ -217,9 +218,43 @@ void LinkedList<T>::reverse() {
  */
 template <typename T>
 void LinkedList<T>::reverseRecursive() {
-  this->_head = this->_reverse_recursive(this->_head);
+  this->_head = this->_reverse_recursive(this->_head); // This method is declared later in the "Helpers" section
 }
 
+/** Delete a node with key `key` from the linked list
+ *
+ * @params T Key value
+ */
+template <typename T>
+void LinkedList<T>::deleteKey (T key) {
+  Node<T>* prev = nullptr;
+  Node<T>* current = this->head();
+
+  while (current != nullptr) {
+	if (current->value() == key) {
+	  this->_size--;
+	  break;					// Found it! :)
+	}
+
+	prev = current;
+	current = current->next();
+  }
+  
+  if (current == nullptr) {
+	return;				// Didn't find it :(
+  }
+
+  if (current == this->head()) {
+	this->setHead(this->head()->next());
+  } else {
+	prev->setNext(current->next());
+  }
+
+  delete current;
+}
+
+
+//////////////////////////////////////
 // Helpers:
 
 /** Reverse a singly linked list (Recursive)
@@ -239,3 +274,4 @@ Node<T>* LinkedList<T>::_reverse_recursive (Node<T>* node) {
   node->setNext(nullptr);
   return reversed_list;
 }
+

@@ -15,21 +15,48 @@ Node<T>* delete_key (Node<T>* head, T key) {
   Node<T>* current = head;
 
   while (current != nullptr) {
-	if (current->value()
+	if (current->value() == key) {
+	  break;					// Found it! :)
+	}
+
+	prev = current;
+	current = current->next();
   }
+  
+  if (current == nullptr) {
+	return head;				// Didn't find it :(
+  }
+
+  if (current == head) {
+	head = head->next();
+  } else {
+	prev->setNext(current->next());
+  }
+
+  delete current;
+  return head;
 }
 
 int main() {
   LinkedList<int> list;
   cout << list << endl;
 
-  list.addFront(28);
-  list.addFront(21);
-  list.addFront(14);
-  list.addFront(7);
+  list.addFront(22);
+  list.addFront(55);
+  list.addFront(10);
+  list.addFront(70);
   cout << list << endl;
 
-  list.setHead(reverse_iterative(list.head()));
+  list.setHead(delete_key(list.head(), 55));
+  cout << list << endl;
+
+  list.setHead(delete_key(list.head(), 70));
+  cout << list << endl;
+
+  list.setHead(delete_key(list.head(), 0));
+  cout << list << endl;
+
+  list.setHead(delete_key(list.head(), 22));
   cout << list << endl;
   
   return 0;

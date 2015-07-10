@@ -32,6 +32,24 @@ int main() {
   cout << "\nAfter recursive reverse:\n";
   list.reverseRecursive();
   cout << list << endl;
+
+  // Check deleting nodes:
+  cout << "\nAfter deleting non-existing key:\n";
+  list.deleteKey(0);
+  cout << list << endl;
+
+  cout << "\nAfter deleting head key:\n";
+  list.deleteKey(list.head()->value());
+  cout << list << endl;
+
+  cout << "\nAfter deleting middle key:\n";
+  list.deleteKey(list.head()->next()->value());
+  cout << list << endl;
+
+  cout << "\nAfter deleting key:\n";
+  list.deleteKey(list.head()->next()->value());
+  cout << list << endl;
+
   
   return 0;
 }
