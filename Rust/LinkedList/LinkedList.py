@@ -96,6 +96,32 @@ class LinkedList(object):
     def reverseRecursive(self):
         self._head = self._reverse_recursive(self._head)
 
+    def deleteKey(self, key):
+        prev = None
+        current = self.head()
+
+        while (current != None):
+            if (current.value() == key):
+                self._size -= 1
+                break
+            prev = current
+            current = current.next()
+
+        # Key not found:
+        if current == None:
+            return
+        
+        # If node is found:
+        if current == self.head():
+            self.setHead(self.head().next())
+            return
+
+        prev._next = current.next()
+
+        
+    ######################################
+    # Internal utilities:
+    
     def _reverse_recursive(self, node):
         # Do not check the size = 0 or 1
         if (node == None or node._next == None):
@@ -135,3 +161,11 @@ if __name__ == '__main__':
     print "After reverse:", list
 
     
+    list.deleteKey(0)
+    print "\n5)After removing non-existent element:", list
+
+    list.deleteKey(list.head().next().value())
+    print "6)After removing existent element:", list
+
+    list.deleteKey(list.head().value())
+    print "7)After removing headelement:", list
