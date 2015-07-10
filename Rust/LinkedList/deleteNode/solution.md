@@ -12,6 +12,6 @@ __NOTE__ that if the current node is the `head`, the previous should be pointing
 ```
 key = 55
 (head)->[70]->[10]->[55]->[22]->[NULL]
-               ^     ^
+               ↑     ↑
               prev  curr
 ```
