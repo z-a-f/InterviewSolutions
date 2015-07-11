@@ -78,7 +78,34 @@ public class LinkedList<T> {
 		this._head = _reverse_recursive(this._head);
 	}
 
-	// Recursive helper:
+	// delete by key:
+	public void deleteKey(T key) {
+		Node<T> prev = null;
+		Node<T> current = this._head;
+
+		while (current != null) {
+			if (current.value() == key) {
+				this._size--;
+				break;
+			}
+			prev = current;
+			current = current.next();
+		}
+
+		if (current == null) {
+			return;
+		}
+
+		if (current == this._head) {
+			this._head = current.next();
+			return;
+		}
+
+		prev.setNext(current.next());
+	}
+
+	//////////////////////////////////////
+	// Helper utilities
 	private Node<T> _reverse_recursive(Node<T> node) {
 		if (node == null || node._next == null)
 			return node;

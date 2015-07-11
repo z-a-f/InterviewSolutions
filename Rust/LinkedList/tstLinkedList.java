@@ -26,5 +26,17 @@ public class tstLinkedList{
 		
 		list.reverseRecursive();
 		System.out.println("After recursive reverse: " + list);
+
+		list.deleteKey(0);
+		System.out.println("After trying to remove non-existent element: " + list);
+
+		list.deleteKey(14);
+		System.out.println("After removing mid-element: " + list);
+
+		list.deleteKey(7);
+		System.out.println("After removing head element: " + list);
+
+		list.deleteKey(28);
+		System.out.println("After removing the last element: " + list);
 	}
 }
