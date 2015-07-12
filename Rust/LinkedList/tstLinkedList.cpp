@@ -50,6 +50,10 @@ int main() {
   list.deleteKey(list.head()->next()->value());
   cout << list << endl;
 
-  
+  cout << "\nCreate an Linked List Integer:\n";
+  Integer num(100);
+  cout << num << endl;
+  num = Integer(200);
+  cout << num << endl;
   return 0;
 }

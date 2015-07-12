@@ -3,8 +3,10 @@
 #include <exception>
 
 template <typename T> class LinkedList;
+class Integer;
 template <typename T>
 std::ostream& operator<<(std::ostream& os, const LinkedList<T>& list);
+std::ostream& operator<<(std::ostream& os, const Integer& num);
 
 
 /** Node class
@@ -141,8 +143,6 @@ void LinkedList<T>::removeFront() {
   delete old;
 }
 
-// Housekeeping functions
-
 /** Number of elements in the list
  * 
  * @returns std::size_t Number of elements in the list
@@ -275,3 +275,91 @@ Node<T>* LinkedList<T>::_reverse_recursive (Node<T>* node) {
   return reversed_list;
 }
 
+
+//////////////////////////////////////
+// This is a specialized Linked List
+// used for integer representation
+
+/** Integer class
+ *
+ * Every digit in the integer is represented as a node in
+ * a singly linked list starting from ones
+ */
+class Integer {
+public:
+  Integer(int n);
+  ~Integer();
+public:
+  Node<std::size_t>* getHead() const {
+	return const_cast<Integer*>(this)->num.head(); }
+  Integer& operator=(const Integer& rhs);
+  int value() const;
+public:
+  friend std::ostream& operator<<(std::ostream& os, const Integer& num);
+private:
+  LinkedList<std::size_t> num;
+  // bool negative;
+};
+
+/** Signed constructor
+ */
+Integer::Integer(int n) {
+  // delete &num;
+  this->num = LinkedList<std::size_t>();
+  if (n < 0)
+	throw (std::range_error("No support for negative numbers...!"));
+  do {
+	num.addFront(n % 10);
+	n = n / 10;
+  } while (n > 0);
+  num.reverse();
+}
+
+Integer::~Integer() {
+  while (!this->num.empty()) this->num.removeFront();
+}
+
+/** Copy assignment !!!
+ */
+Integer& Integer::operator=(const Integer& rhs) {
+  while (!this->num.empty()) this->num.removeFront();
+  int n = rhs.value();
+  if (n < 0)
+	throw (std::range_error("No support for negative numbers...!"));
+  do {
+	this->num.addFront(n % 10);
+	n = n / 10;
+  } while (n > 0);
+  this->num.reverse();
+  return *this;
+}
+
+/** Return the value
+ */
+int Integer::value() const {
+  long exp = 1;
+  int n = 0;
+  Node<std::size_t>* ptr = this->getHead();
+  while (ptr != nullptr) {
+	n += exp * ptr->value();
+	exp *= 10;
+	ptr = ptr->next();
+  }
+  delete ptr;
+  return n;
+}
+
+/** Ostream method
+ */
+std::ostream& operator<<(std::ostream& os, const Integer& num) {
+  Node<std::size_t> *ptr = num.getHead();
+  int counter = 1;
+  int number = 0;
+  while (ptr != nullptr) {
+	number = counter * ptr->value();
+	ptr = ptr->next();
+	counter *= 10;
+  }
+  os << number;
+  return os;
+}
