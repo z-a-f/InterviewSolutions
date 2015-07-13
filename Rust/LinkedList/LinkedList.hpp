@@ -291,46 +291,46 @@ public:
   ~Integer();
 public:
   Node<std::size_t>* getHead() const {
-	return const_cast<Integer*>(this)->num.head(); }
+	return const_cast<Integer*>(this)->_num.head(); }
   Integer& operator=(const Integer& rhs);
   int value() const;
 public:
   friend std::ostream& operator<<(std::ostream& os, const Integer& num);
 private:
-  LinkedList<std::size_t> num;
+  LinkedList<std::size_t> _num;
   // bool negative;
 };
 
 /** Signed constructor
  */
 Integer::Integer(int n) {
-  // delete &num;
-  this->num = LinkedList<std::size_t>();
+  // delete &_num;
+  this->_num = LinkedList<std::size_t>();
   if (n < 0)
 	throw (std::range_error("No support for negative numbers...!"));
   do {
-	num.addFront(n % 10);
+	_num.addFront(n % 10);
 	n = n / 10;
   } while (n > 0);
-  num.reverse();
+  _num.reverse();
 }
 
 Integer::~Integer() {
-  while (!this->num.empty()) this->num.removeFront();
+  while (!this->_num.empty()) this->_num.removeFront();
 }
 
 /** Copy assignment !!!
  */
 Integer& Integer::operator=(const Integer& rhs) {
-  while (!this->num.empty()) this->num.removeFront();
+  while (!this->_num.empty()) this->_num.removeFront();
   int n = rhs.value();
   if (n < 0)
 	throw (std::range_error("No support for negative numbers...!"));
   do {
-	this->num.addFront(n % 10);
+	this->_num.addFront(n % 10);
 	n = n / 10;
   } while (n > 0);
-  this->num.reverse();
+  this->_num.reverse();
   return *this;
 }
 

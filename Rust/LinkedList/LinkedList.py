@@ -134,6 +134,39 @@ class LinkedList(object):
 
         return reversed_list
 
+"""
+Integer class
+"""
+class Integer:
+    def __init__(self, n):
+        try:
+            n = int(n)
+        except ValueError:
+            print ("Integer has to be numeric...!")
+        else:
+            self._num = LinkedList()
+            if (n < 0):
+                raise ValueError("No support for negative numbers...!")
+            while True:
+                self._num.addFront(n % 10)
+                n = n / 10
+                if (n <= 0):
+                    break
+            self._num.reverse()
+
+    def getHead(self):
+        return self._num.head()
+        
+    def value(self):
+        exp = 1
+        n = 0
+        Node ptr = self.getHead()
+        while (ptr != None):
+            n += exp * ptr.value()
+            exp *= 10
+            ptr = ptr.next()
+        return n
+    
 if __name__ == '__main__':
     print "\n1) Testing Node..."
     n = Node('abc', None)
@@ -169,3 +202,6 @@ if __name__ == '__main__':
 
     list.deleteKey(list.head().value())
     print "7)After removing headelement:", list
+
+    num = Integer(100)
+    print num._num
