@@ -160,7 +160,7 @@ class Integer:
     def value(self):
         exp = 1
         n = 0
-        Node ptr = self.getHead()
+        ptr = self.getHead()
         while (ptr != None):
             n += exp * ptr.value()
             exp *= 10
@@ -205,3 +205,4 @@ if __name__ == '__main__':
 
     num = Integer(100)
     print num._num
+    print num.value()
