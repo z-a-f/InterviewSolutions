@@ -135,14 +135,14 @@ class LinkedList(object):
         return reversed_list
 
 """
-Integer class
+Int class
 """
-class Integer:
+class Int:
     def __init__(self, n):
         try:
             n = int(n)
         except ValueError:
-            print ("Integer has to be numeric...!")
+            print ("Int has to be numeric...!")
         else:
             self._num = LinkedList()
             if (n < 0):
@@ -203,6 +203,6 @@ if __name__ == '__main__':
     list.deleteKey(list.head().value())
     print "7)After removing headelement:", list
 
-    num = Integer(100)
+    num = Int(100)
     print num._num
     print num.value()

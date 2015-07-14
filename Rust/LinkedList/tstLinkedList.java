@@ -38,5 +38,9 @@ public class tstLinkedList{
 
 		list.deleteKey(28);
 		System.out.println("After removing the last element: " + list);
+
+		Int num = new Int(100);
+		System.out.println("After creating new Int: " + (num + 1));
+		
 	}
 }

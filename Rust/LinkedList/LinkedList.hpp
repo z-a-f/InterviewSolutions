@@ -3,10 +3,10 @@
 #include <exception>
 
 template <typename T> class LinkedList;
-class Integer;
+class Int;
 template <typename T>
 std::ostream& operator<<(std::ostream& os, const LinkedList<T>& list);
-std::ostream& operator<<(std::ostream& os, const Integer& num);
+std::ostream& operator<<(std::ostream& os, const Int& num);
 
 
 /** Node class
@@ -280,22 +280,22 @@ Node<T>* LinkedList<T>::_reverse_recursive (Node<T>* node) {
 // This is a specialized Linked List
 // used for integer representation
 
-/** Integer class
+/** Int class
  *
  * Every digit in the integer is represented as a node in
  * a singly linked list starting from ones
  */
-class Integer {
+class Int {
 public:
-  Integer(int n);
-  ~Integer();
+  Int(int n);
+  ~Int();
 public:
   Node<std::size_t>* getHead() const {
-	return const_cast<Integer*>(this)->_num.head(); }
-  Integer& operator=(const Integer& rhs);
+	return const_cast<Int*>(this)->_num.head(); }
+  Int& operator=(const Int& rhs);
   int value() const;
 public:
-  friend std::ostream& operator<<(std::ostream& os, const Integer& num);
+  friend std::ostream& operator<<(std::ostream& os, const Int& num);
 private:
   LinkedList<std::size_t> _num;
   // bool negative;
@@ -303,7 +303,7 @@ private:
 
 /** Signed constructor
  */
-Integer::Integer(int n) {
+Int::Int(int n) {
   // delete &_num;
   this->_num = LinkedList<std::size_t>();
   if (n < 0)
@@ -315,13 +315,13 @@ Integer::Integer(int n) {
   _num.reverse();
 }
 
-Integer::~Integer() {
+Int::~Int() {
   while (!this->_num.empty()) this->_num.removeFront();
 }
 
 /** Copy assignment !!!
  */
-Integer& Integer::operator=(const Integer& rhs) {
+Int& Int::operator=(const Int& rhs) {
   while (!this->_num.empty()) this->_num.removeFront();
   int n = rhs.value();
   if (n < 0)
@@ -336,7 +336,7 @@ Integer& Integer::operator=(const Integer& rhs) {
 
 /** Return the value
  */
-int Integer::value() const {
+int Int::value() const {
   long exp = 1;
   int n = 0;
   Node<std::size_t>* ptr = this->getHead();
@@ -351,7 +351,7 @@ int Integer::value() const {
 
 /** Ostream method
  */
-std::ostream& operator<<(std::ostream& os, const Integer& num) {
+std::ostream& operator<<(std::ostream& os, const Int& num) {
   Node<std::size_t> *ptr = num.getHead();
   int counter = 1;
   int number = 0;
