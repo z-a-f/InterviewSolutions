@@ -13,7 +13,7 @@ Initially result linked list is empty
 (reslt)->[NULL]
 ```
 
-We'll add current digits (which are also first digits at this point) 5 and 2 from both lists and will add `7( = 5 + 2)` to the tail of result linked list. There is no carry in this case, so carry remains 0.
+We'll add current digits (which are also first digits at this point) 5 and 2 from both lists and will add `7(= 5 + 2)` to the tail of result linked list. There is no carry in this case, so carry remains 0.
 
 ```
 (head1)->[5]->[1]->[8]->[NULL]
@@ -22,4 +22,4 @@ We'll add current digits (which are also first digits at this point) 5 and 2 fro
 carry = 0
 ```
 
-We'll add current digits 1 and 9 from both and will add 0 from result `10 ( ( = 0 + 1 + 9) % 10)` to the tail of result linked list. Carry becomes `1 ( (0 + 1 + 9)/10`
+We'll add current digits 1 and 9 from both and will add 0 from result `10 (= (0 + 1 + 9) % 10)` to the tail of result linked list. Carry becomes `1 (= (0 + 1 + 9)/10)`
