@@ -18,3 +18,9 @@ Sum of the two integers should be `7->0->2->1`.
 ```
 
 1. Handle carry
+
+## Follow-up Questions
+* How to multiply two large numbers?
+* How to divide two large numbers?
+* What if numbers are not of base 10 rather of some other base for example 2, 5, or 8?
+
