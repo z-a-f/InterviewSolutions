@@ -17,7 +17,7 @@ template <typename T>
 class Node {
 public:
   /** Constructor */
-  Node() : _elem(0), _next(nullptr) {}
+  Node(T e = T(0)) : _elem(e), _next(nullptr) {}
   // ~Node() { delete _next; }
 public:
   // Getters/Setters:
@@ -288,16 +288,17 @@ Node<T>* LinkedList<T>::_reverse_recursive (Node<T>* node) {
 class Int {
 public:
   Int(int n);
+  Int (Node<int>* n) { this->_num.setHead(n); }
   ~Int();
 public:
-  Node<std::size_t>* getHead() const {
+  Node<int>* getHead() const {
 	return const_cast<Int*>(this)->_num.head(); }
   Int& operator=(const Int& rhs);
   int value() const;
 public:
   friend std::ostream& operator<<(std::ostream& os, const Int& num);
 private:
-  LinkedList<std::size_t> _num;
+  LinkedList<int> _num;
   // bool negative;
 };
 
@@ -305,7 +306,7 @@ private:
  */
 Int::Int(int n) {
   // delete &_num;
-  this->_num = LinkedList<std::size_t>();
+  this->_num = LinkedList<int>();
   if (n < 0)
 	throw (std::range_error("No support for negative numbers...!"));
   do {
@@ -339,7 +340,7 @@ Int& Int::operator=(const Int& rhs) {
 int Int::value() const {
   long exp = 1;
   int n = 0;
-  Node<std::size_t>* ptr = this->getHead();
+  Node<int>* ptr = this->getHead();
   while (ptr != nullptr) {
 	n += exp * ptr->value();
 	exp *= 10;
@@ -352,7 +353,7 @@ int Int::value() const {
 /** Ostream method
  */
 std::ostream& operator<<(std::ostream& os, const Int& num) {
-  Node<std::size_t> *ptr = num.getHead();
+  Node<int> *ptr = num.getHead();
   int counter = 1;
   int number = 0;
   while (ptr != nullptr) {
