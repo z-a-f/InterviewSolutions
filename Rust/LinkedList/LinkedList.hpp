@@ -136,7 +136,7 @@ void LinkedList<T>::addFront(const T& e) {
  */
 template <typename T>
 void LinkedList<T>::removeFront() {
-  if (empty()) return;
+  if (this->empty()) return;
   Node<T>* old = _head;
   _head = old->_next;
   _size--;
@@ -287,16 +287,19 @@ Node<T>* LinkedList<T>::_reverse_recursive (Node<T>* node) {
  */
 class Int {
 public:
+  Int() { this->_num.setHead(nullptr); }
   Int(int n);
   Int (Node<int>* n) { this->_num.setHead(n); }
-  ~Int();
+  // ~Int();
 public:
   Node<int>* getHead() const {
 	return const_cast<Int*>(this)->_num.head(); }
   Int& operator=(const Int& rhs);
   int value() const;
+  // Int operator+(const Int& a, const Int& b);
 public:
   friend std::ostream& operator<<(std::ostream& os, const Int& num);
+  friend Int operator+(const Int&, const Int&);
 private:
   LinkedList<int> _num;
   // bool negative;
@@ -315,10 +318,11 @@ Int::Int(int n) {
   } while (n > 0);
   _num.reverse();
 }
-
+/*
 Int::~Int() {
   while (!this->_num.empty()) this->_num.removeFront();
 }
+*/
 
 /** Copy assignment !!!
  */
@@ -350,10 +354,52 @@ int Int::value() const {
   return n;
 }
 
+/** Addition operator overloading
+ */
+Int operator+(const Int& A, const Int& B) {
+  Node<int>* a = A.getHead();
+  Node<int>* b = B.getHead();
+
+  Node<int>* result = nullptr;
+  Node<int>* last = nullptr;
+  int carry = 0;
+  
+  while (a != nullptr || b != nullptr || carry > 0) {
+	int first = (a == nullptr ? 0 : a->value());
+	int second = (b == nullptr ? 0 : b->value());
+
+	int sum = first + second + carry;
+	// cout << "DEBUG: " << first << ' ' << second << endl;
+	Node<int>* pNew = new Node<int>(sum % 10);
+	carry = sum / 10;
+
+	if (result == nullptr) {
+	  result = pNew;
+	} else {
+	  last->setNext(pNew);
+	}
+
+	last = pNew;
+
+	if (a != nullptr) {
+	  a = a->next();
+	}
+
+	if (b != nullptr) {
+	  b = b->next();
+	}
+  }
+  // This is the head of the new LinkedList:
+  // return result;
+  Int temp;
+  temp._num.setHead(result);
+  return temp;
+}
+
 /** Ostream method
  */
 std::ostream& operator<<(std::ostream& os, const Int& num) {
-  Node<int> *ptr = num.getHead();
+  /*Node<int> *ptr = num.getHead();
   int counter = 1;
   int number = 0;
   while (ptr != nullptr) {
@@ -362,5 +408,7 @@ std::ostream& operator<<(std::ostream& os, const Int& num) {
 	counter *= 10;
   }
   os << number;
+  return os;*/
+  os << num.value();
   return os;
 }

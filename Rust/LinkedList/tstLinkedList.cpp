@@ -55,5 +55,11 @@ int main() {
   cout << num << endl;
   num = Int(200);
   cout << num << endl;
+
+  Int a(123);
+  Int b(897);
+  Int c = a + b;
+  cout << c.value() << endl;
+  cout << c << endl;
   return 0;
 }

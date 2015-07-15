@@ -6,16 +6,12 @@ using namespace std;
 
 /** Add two integers of type Int
  *
- * @return Int The result of the addition
- * @params Int Both inputs of type Int
  */
-Int add_integers (Int A, Int B) {
+Node<int>* add_integers (Node<int>* a, Node<int>* b) {
   Node<int>* result = nullptr;
   Node<int>* last = nullptr;
   int carry = 0;
   
-  Node<int>* a = A.getHead();
-  Node<int>* b = B.getHead();
   while (a != nullptr || b != nullptr || carry > 0) {
 	int first = (a == nullptr ? 0 : a->value());
 	int second = (b == nullptr ? 0 : b->value());
@@ -41,16 +37,28 @@ Int add_integers (Int A, Int B) {
 	  b = b->next();
 	}
   }
-  return Int(result);
+  return result;
 }
 
 int main() {
-  Int a = Int(123);
-  Int b = Int(999);
-  Int c = add_integers(a, b);
+  // Create integer 123:
+  LinkedList<int> a;
+  a.addFront(1);
+  a.addFront(2);
+  a.addFront(3);
+  cout << "Integer a: " << a << endl;
 
-  cout << c.value() << endl;
-  cout << "TEST" << endl;
+  // Create integer 897:
+  LinkedList<int> b;
+  b.addFront(8);
+  b.addFront(9);
+  b.addFront(7);
+  cout << "Integer b: " << b << endl;
+
+  // Add them up:
+  LinkedList<int> c;
+  c.setHead(add_integers(a.head(), b.head()));
+  cout << "Integer a + b: " << c << endl;
   
   return 0;
 }
