@@ -14,9 +14,46 @@ public class Int {
 		} while (n > 0);
 		this._num.reverse();
 	}
+	public Int() {
+		this._num = new LinkedList<Integer>();
+		this._num.addFront(0);
+	}
 
 	public Node<Integer> getHead() {
 		return this._num.head();
+	}
+
+	public void add (Int A, Int B) {
+		Node<Integer> a = A._num.head();
+		Node<Integer> b = B._num.head();
+	
+		Node<Integer> result = null;
+		Node<Integer> last = null;
+		int carry = 0;
+
+		while (a != null || b != null || carry > 0) {
+			Integer first = (a == null ? 0 : a.value());
+			Integer second = (b == null ? 0 : b.value());
+			Integer sum = first + second + carry;
+			Node<Integer> pNew = new Node<Integer>(sum % 10);
+			carry = sum / 10;
+			if (result == null) {
+				result = pNew;
+			} else {
+				last.setNext(pNew);
+			}
+
+			last = pNew;
+			if (a != null) {
+				a = a.next();
+			}
+			if (b != null) {
+				b = b.next();
+			}
+		}
+
+		this._num.setHead(result);
+		// return temp;
 	}
 
 	@Override
@@ -27,31 +64,14 @@ public class Int {
 	// @Override
 	public Integer value () {
 		Node<Integer> ptr = this.getHead();
-		int counter = 1;
-		int number = 0;
+		Integer exp = 1;
+		Integer n = 0;
 		while (ptr != null) {
-			number = counter * ptr.value();
+			n += exp * ptr.value();
+			exp *= 10;
 			ptr = ptr.next();
-			counter *= 10;
 		}
-		return number;
+		return n;
 	}
-	
-	
-	/*
-	public Node() {
-		this._next = null;
-		// this._elem = 0;			
-	}
-
-	public T value() { return this._elem; }
-	public Node<T> next() { return this._next; }
-	public void setValue(T e) { this._elem = e; }
-	public void setNext(Node<T> n) { this._next = n; }
-
-	protected T _elem;
-	protected Node<T> _next;
-
-	// Linked List is friend as long as it is in the same package
-	*/
 }
+

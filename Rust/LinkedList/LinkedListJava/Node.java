@@ -2,9 +2,17 @@ package LinkedListJava;
 
 public class Node<T> {
 	
+	public Node(T e, Node<T> n) {
+		this._next = n;
+		this._elem = e;
+	}
+	public Node(T e) {
+		this._next = null;
+		this._elem = e;
+	}
 	public Node() {
 		this._next = null;
-		// this._elem = 0;			
+		// this._elem = 0;
 	}
 
 	public T value() { return this._elem; }
