@@ -138,7 +138,7 @@ class LinkedList(object):
 Int class
 """
 class Int:
-    def __init__(self, n):
+    def __init__(self, n = 0):
         try:
             n = int(n)
         except ValueError:
@@ -166,6 +166,43 @@ class Int:
             exp *= 10
             ptr = ptr.next()
         return n
+
+    def __add__(self, other):
+        a = self._num.head();
+        b = other._num.head();
+
+        result = None
+        last = None
+        carry = 0;
+
+        while (a != None or b != None or carry > 0):
+            first = (0 if a == None else a.value())
+            second = (0 if b == None else b.value())
+            sum = first + second + carry
+            pNew = Node(sum % 10)
+            carry = sum / 10
+            if result == None:
+                result = pNew
+            else:
+                last.setNext(pNew)
+
+            last = pNew
+            if a != None:
+                a = a.next()
+
+            if b != None:
+                b = b.next()
+
+        # result is the head of the sum
+        temp = Int()
+        temp._num.setHead(result)
+        return temp
+
+    # def __radd__(self, other):
+    #     return self + other
+        
+    def __str__(self):
+        return str(self.value())
     
 if __name__ == '__main__':
     print "\n1) Testing Node..."
@@ -203,6 +240,12 @@ if __name__ == '__main__':
     list.deleteKey(list.head().value())
     print "7)After removing headelement:", list
 
-    num = Int(100)
-    print num._num
-    print num.value()
+    A = Int(123)
+    B = Int(897)
+
+    print "Integer A:", A
+    print "Integer B:", B
+    print "Integer A + B:", A + B
+    # print "Integer A + B:", sum(A, B)
+    
+    
