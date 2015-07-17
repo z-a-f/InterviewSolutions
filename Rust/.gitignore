@@ -3,6 +3,7 @@ Doxy
 
 # C/C++
 *.dSYM
+*.bin
 
 # Compiled python modules.
 *.pyc
