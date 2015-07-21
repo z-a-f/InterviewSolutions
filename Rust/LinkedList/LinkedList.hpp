@@ -17,7 +17,7 @@ template <typename T>
 class Node {
 public:
   /** Constructor */
-  Node(T e = T(0)) : _elem(e), _next(nullptr) {}
+  Node(T e = T(0)) : _elem(e), _next(nullptr), _arb(nullptr) {}
   // ~Node() { delete _next; }
 public:
   // Getters/Setters:
@@ -31,6 +31,11 @@ public:
    * @returns Node<T>*
    */
   Node<T>* next() const { return this->_next; }
+  /** Return the arbitrary node
+   *
+   * @returns Node<T>*
+   */
+  Node<T>* arb() const { return this->_arb; }
   /** Set the value in the node
    *
    * @param T value
@@ -41,9 +46,15 @@ public:
    * @param Node<T>* the next "next" pointer
    */
   void setNext(Node<T>* n) { this->_next = n; }
+  /** Set the arbitrary pointer
+   *
+   * @param Node<T>* the next "arb" pointer
+   */
+  void setArb(Node<T>* n) { this->_arb = n; }
 private:
   T _elem;						//!< Stored value
   Node<T>* _next;				//!< Next element
+  Node<T>* _arb;				//!< Arbitrary element
 
   friend class LinkedList<T>;	//!< Friend class
 };
@@ -70,7 +81,9 @@ public:
   void setHead(Node<T>* h);		// This is dangerous!!!
   // template <typename U>
   // friend std::ostream& operator<<(std::ostream& os, const LinkedList<U>& list);
+  Node<T>* operator[](std::size_t idx);
   friend std::ostream& operator<<<>(std::ostream& os, const LinkedList& list);
+  // std::ostream& printArb();
 private:
   Node<T>* _head;
   std::size_t _size;
@@ -180,6 +193,7 @@ void LinkedList<T>::setHead(Node<T>* h) {
  */
 template <typename T>
 std::ostream& operator<<(std::ostream& os, const LinkedList<T>& list) {
+  /*
   os << "HEAD->";
   Node<T>* ptr = list._head;
   while (ptr != nullptr) {
@@ -187,6 +201,24 @@ std::ostream& operator<<(std::ostream& os, const LinkedList<T>& list) {
 	ptr = ptr->_next;
   }
   os << "NULL";
+  delete ptr;
+  return os;
+  */
+
+  os << "[HEAD]\n V\n";
+  Node<T>* ptr = list._head;
+  while (ptr != nullptr) {
+	os << "[" << ptr->_elem << "]->";
+	os << "[";// << ( (ptr->arb() == nullptr) ? "NULL" : ptr->arb()->_elem) << "]\n V";
+	if (ptr->arb() == nullptr)
+	  os << "NULL";
+	else
+	  os << ptr->arb()->_elem << "|" << (ptr->arb());
+	
+	os << "]\n V\n";
+	ptr = ptr->_next;
+  }
+  os << "[NULL]";
   delete ptr;
   return os;
 }

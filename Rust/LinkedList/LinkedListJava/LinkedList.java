@@ -41,6 +41,7 @@ public class LinkedList<T> {
 	// This is the printing routine:
 	@Override
 	public String toString() {
+		/*
 		String os = "HEAD->";
 		Node<T> ptr = this._head;
 		while (ptr != null) {
@@ -48,6 +49,22 @@ public class LinkedList<T> {
 			ptr = ptr._next;
 		}
 		os += "NULL";
+		return os;
+		*/
+		String os = "[HEAD]\n V\n";
+		Node<T> ptr = this._head;
+		while (ptr != null) {
+			os += "[" + ptr._elem + "]->";
+			os += "[";
+			if (ptr.arb() == null)
+				os += "NULL";
+			else
+				os += ptr.arb()._elem + "|" + ptr.arb().hashCode();
+
+			os += "]\n V\n";
+			ptr = ptr.next();
+		}
+		os += "[NULL]";
 		return os;
 	}
 

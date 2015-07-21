@@ -60,5 +60,15 @@ int main() {
   Int b(897);
   Int c = a + b;
   cout << c << endl;
+
+  LinkedList<int> listArb;
+  listArb.addFront(21);
+  listArb.addFront(14);
+  listArb.addFront(7);
+  listArb.head()->setArb(listArb.head()->next()->next());
+  listArb.head()->next()->next()->setArb(listArb.head());
+  cout << listArb << endl;
+  //   cout << listArb.printArb() << endl;
+  
   return 0;
 }

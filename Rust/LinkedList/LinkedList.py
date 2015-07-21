@@ -5,6 +5,7 @@ class Node(object):
     def __init__(self, _elem=None, _next=None):
         self._elem = _elem
         self._next = _next
+        self._arb = None
 
     def __str__(self):
         return str(self._elem)
@@ -17,11 +18,17 @@ class Node(object):
     def next(self):
         return self._next
 
+    def arb(self):
+        return self._arb
+    
     def setValue(self, e):
         self._elem = e
 
     def setNext(self, n):
         self._next = n
+
+    def setArb(self, n):
+        self._arb = n
 
 
 """
@@ -65,12 +72,25 @@ class LinkedList(object):
         self._head = h
         
     def __str__(self):
-        os = "HEAD->"
+        # os = "HEAD->"
+        # ptr = self.head()
+        # while (ptr != None):
+        #     os += str(ptr.value()) + "->"
+        #     ptr = ptr.next()
+        # os += "NULL"
+        # return os
+        os = "[HEAD]\n V\n"
         ptr = self.head()
         while (ptr != None):
-            os += str(ptr.value()) + "->"
+            os += "[" + str(ptr._elem) + "]->";
+            os += "[";
+            if (ptr.arb() == None):
+                os += "NULL"
+            else:
+                os += (str(ptr.arb()._elem) + "|" + str(id(ptr.arb())))
+            os += "]\n V\n"
             ptr = ptr.next()
-        os += "NULL"
+        os += "[NULL]"
         return os
 
     # Rust solutions after this point
@@ -213,39 +233,46 @@ if __name__ == '__main__':
     
     print "\n2)Testing LinkedList..."
     list = LinkedList()
-    print "Initial list is:", list
-    print "Front of empty list:", list.front()
+    print "Initial list is:\n", list
+    print "Front of empty list:\n", list.front()
 
     list.addFront(28)
     list.addFront(21)
     list.addFront(14)
     list.addFront(7)
-    print "After populating the list:", list
+    print "After populating the list:\n", list
     
     print "\n3) Testing iterative reverse..."
     list.reverse()
-    print "After reverse:", list
+    print "After reverse:\n", list
 
     print "\n4) Testing recursive reverse..."
     list.reverseRecursive()
-    print "After reverse:", list
+    print "After reverse:\n", list
 
     
     list.deleteKey(0)
-    print "\n5)After removing non-existent element:", list
+    print "\n5)After removing non-existent element:\n", list
 
     list.deleteKey(list.head().next().value())
-    print "6)After removing existent element:", list
+    print "6)After removing existent element:\n", list
 
     list.deleteKey(list.head().value())
-    print "7)After removing headelement:", list
+    print "7)After removing headelement:\n", list
 
     A = Int(123)
     B = Int(897)
 
-    print "Integer A:", A
-    print "Integer B:", B
-    print "Integer A + B:", A + B
+    print "Integer A:\n", A
+    print "Integer B:\n", B
+    print "Integer A + B:\n", A + B
     # print "Integer A + B:", sum(A, B)
     
-    
+    print "Create list for arbitrary pointers:\n"
+    listArb = LinkedList()
+    listArb.addFront(21)
+    listArb.addFront(14)
+    listArb.addFront(7)
+    listArb.head().setArb(listArb.head().next().next())
+    listArb.head().next().next().setArb(listArb.head())
+    print listArb
