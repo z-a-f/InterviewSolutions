@@ -2,39 +2,35 @@ import LinkedListJava.*;
 
 class solution1 {
 	// This is the solution :)
-	public static <T> Node<T> reverse_iterative(Node<T> head) {
-		// Do nothing if the size = 0 or 1
-		if (head == null || head.next() == null)
-			return head;
-
-		Node<T> list_to_do = head.next();
-		Node<T> reversed_list = head;
-
-		reversed_list.setNext(null);
-
-		while (list_to_do != null) {
-			Node<T> temp = list_to_do;
-			list_to_do = list_to_do.next();
-
-			temp.setNext(reversed_list);
-			reversed_list = temp;
+	public static <T> Node<T> deep_copy_arbitrary_pointer(Node<T> head) {
+		if (head == null) {
+			return nullptr;
 		}
-		return reversed_list;
+
+		Node<T> current = head;
+		Node<T> new_head = null;
+		Node<T> new_prev = null;
+		Hashtable<Node<T>, Node<T>> map = new Hashtable<Node<T>, Node<T>>();
 	}
 
 	public static void main(String[] args) {
-		LinkedList<Integer> list = new LinkedList<Integer>();
-		System.out.println(list);
+		LinkedList<int> listArb;
+		listArb.addFront(21);
+		listArb.addFront(14);
+		listArb.addFront(7);
+		listArb.head()->setArb(listArb.head()->next()->next());
+		listArb.head()->next()->next()->setArb(listArb.head());
+		cout << listArb << endl;
 
-		list.addFront(28);
-		list.addFront(21);
-		list.addFront(14);
-		list.addFront(7);
-		System.out.println(list);
+		LinkedList<int> listArbCopy;
+		listArbCopy.setHead(deep_copy_arbitrary_pointer(listArb.head()));
 
-		list.setHead(reverse_iterative(list.head()));
-		System.out.println(list);
-		
+		// Change some stuff to check if the linked lists are really separate
+		listArbCopy.head()->next()->setValue(123);
+		listArb.head()->setValue(321);
+  
+		cout << listArbCopy << endl;
+		cout << listArb << endl;
 	}
 }
 
