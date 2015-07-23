@@ -1,6 +1,8 @@
 #pragma once
 
 #include <exception>
+#include <unordered_map>
+
 
 template <typename T> class LinkedList;
 class Int;
@@ -93,8 +95,11 @@ public:
   void reverse();
   void reverseRecursive();
   void deleteKey (T key);
+  LinkedList<T> deepCopy();
 private:
   Node<T>* _reverse_recursive(Node<T>* node);
+  Node<T>* _deep_copy_1 (Node<T>* head);
+  Node<T>* _deep_copy_2 (Node<T>* head);
 };
 
 /** Constructor */
@@ -285,6 +290,16 @@ void LinkedList<T>::deleteKey (T key) {
   delete current;
 }
 
+/** Deep copy method
+ *
+ * @returns LinkedList<T> New linked list
+ */
+template <typename T>
+LinkedList<T> LinkedList<T>::deepCopy() {
+  LinkedList<T> copy;
+  copy.setHead(this->_deep_copy_2(this->head()));
+  return copy;
+}
 
 //////////////////////////////////////
 // Helpers:
@@ -306,6 +321,105 @@ Node<T>* LinkedList<T>::_reverse_recursive (Node<T>* node) {
   node->setNext(nullptr);
   return reversed_list;
 }
+
+/** Deep copy the single linked list (solution 1)
+ *
+ * @returns Node<T>* The head of the new linked list
+ * @params Node<T>* The head of the original linked list
+ */
+template <typename T>
+Node<T>* LinkedList<T>::_deep_copy_1 (Node<T>* head) {
+  // If the linked list is empty, return
+  if (head == nullptr) {
+	return nullptr;
+  }
+
+  Node<T>* current = head;
+  Node<T>* new_head = nullptr;
+  Node<T>* new_prev = nullptr;
+  std::unordered_map<Node<T>*, Node<T>*> map;
+
+  // Create copy of the linked list, recording the corresponding
+  // nodes in hashmap without updating arbitrary pointer
+  while (current != nullptr) {
+	Node<T>* new_node = new Node<T>(current->value());
+
+	// Copy the old arbitrary pointer in the new node
+	new_node->setArb(current->arb());
+
+	if (new_prev != nullptr) {
+	  new_prev->setNext(new_node);
+	} else {
+	  new_head = new_node;
+	}
+
+	map[current] = new_node;
+	new_prev = new_node;
+	current = current->next();
+  }
+
+  Node<T>* new_current = new_head;
+
+  // Update arbitrary pointer:
+  while (new_current != nullptr) {
+	if (new_current->arb() != nullptr) {
+	  Node<T>* node = map[new_current->arb()];
+	  new_current->setArb(node);
+	}
+	new_current = new_current->next();
+  }
+  return new_head;
+}
+
+/** Deep copy the single linked list (solution 2)
+ *
+ * @returns Node<T>* The head of the new linked list
+ * @params Node<T>* The head of the original linked list
+ */
+template <typename T>
+Node<T>* LinkedList<T>::_deep_copy_2 (Node<T>* head) {
+  // If the linked list is empty, return
+  if (head == nullptr) {
+	return nullptr;
+  }
+
+  Node<T>* current = head;
+
+  // Inserting new nodes within the existing linked list
+  while (current != nullptr) {
+	Node<T>* new_node = new Node<T>(current->value());
+	new_node->setNext(current->next());
+	current->setNext(new_node);
+	current = new_node->next();
+  }
+
+  // Setting correct arbitrary pointers
+  current = head;
+  while (current != nullptr) {
+	if (current->arb() != nullptr) {
+	  current->next()->setArb(current->arb()->next());
+	}
+	current = current->next()->next();
+  }
+
+  // Separating lists
+  current = head;
+  Node<T>* new_head = head->next();
+  Node<T>* copied_current = nullptr;
+
+  while (current != nullptr) {
+	copied_current = current->next();
+	current->setNext(copied_current->next());
+
+	if (copied_current->next() != nullptr) {
+	  copied_current->setNext(copied_current->next()->next());
+	}
+
+	current = current->next();
+  }
+  return new_head;
+}
+
 
 
 //////////////////////////////////////

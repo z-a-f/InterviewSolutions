@@ -68,7 +68,16 @@ int main() {
   listArb.head()->setArb(listArb.head()->next()->next());
   listArb.head()->next()->next()->setArb(listArb.head());
   cout << listArb << endl;
-  //   cout << listArb.printArb() << endl;
+
+  LinkedList<int> listArbCopy = listArb.deepCopy();
+  // listArbCopy.setHead(deep_copy_arbitrary_pointer(listArb.head()));
+
+  // Change some stuff to check if the linked lists are really separate
+  listArbCopy.head()->next()->setValue(123);
+  listArb.head()->setValue(321);
+  
+  cout << listArbCopy << endl;
+  cout << listArb << endl;
   
   return 0;
 }
