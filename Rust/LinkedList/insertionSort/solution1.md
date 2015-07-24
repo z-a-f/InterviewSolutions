@@ -10,6 +10,7 @@ Concept of Insertion SOrt is very simple. We'll maintain two linked lists:
 Here is how the algorithm works.
 
 While Original list is not empy:
+
 1. Remove an element (say `X`) from the Original list
 2. Insert `X` at correct sorted position in the Sorted list.
 
