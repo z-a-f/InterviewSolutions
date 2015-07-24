@@ -1,5 +1,6 @@
 package LinkedListJava;
 
+import java.util.Hashtable;
 import java.lang.RuntimeException;
 
 public class LinkedList<T> {
@@ -121,6 +122,12 @@ public class LinkedList<T> {
 		prev.setNext(current.next());
 	}
 
+	public LinkedList<T> deepCopy() {
+		LinkedList<T> copy = new LinkedList<>();
+		copy.setHead(this._deep_copy_2(this.head()));
+		return copy;
+	}
+
 	//////////////////////////////////////
 	// Helper utilities
 	private Node<T> _reverse_recursive(Node<T> node) {
@@ -133,6 +140,92 @@ public class LinkedList<T> {
 		node._next = null;
 
 		return reversed_list;
+	}
+
+	private Node<T> _deep_copy_1(Node<T> head) {
+		if (head == null) {
+			return null;
+		}
+
+		Node<T> current = head;
+		Node<T> new_head = null;
+		Node<T> new_prev = null;
+		Hashtable<Node<T>, Node<T>> map = new Hashtable<Node<T>, Node<T>>();
+
+		// Create copy of the linked list, recording the corresponding
+		// nodes is hashmap without updating arbitrary pointer
+		while (current != null) {
+			Node<T> new_node = new Node<T>(current.value());
+
+			// copy the old arbitrary pointer in the new node
+			new_node.setArb(current.arb());
+
+			if (new_prev != null) {
+				new_prev.setNext(new_node);
+			} else {
+				new_head = new_node;
+			}
+
+			map.put(current, new_node);
+
+			new_prev = new_node;
+			current = current.next();
+		}
+
+		Node<T> new_current = new_head;
+
+		// updating arbitrary_pointer
+		while (new_current != null) {
+			if (new_current.arb() != null) {
+				Node<T> node = map.get(new_current.arb());
+				new_current.setArb(node);
+			}
+
+			new_current = new_current.next();
+		}
+		
+		return new_head;
+	}
+
+	private Node<T> _deep_copy_2(Node<T> head) {
+		if (head == null) {
+			return null;
+		}
+		
+		Node<T> current = head;
+
+		// inserting new nodes within the existing linkedlist
+		while (current != null) {
+			Node<T> new_node = new Node<T>(current.value());
+			new_node.setNext(current.next());
+			current.setNext(new_node);
+			current = new_node.next();
+		}
+
+		// Setting correct arbitrary pointers:
+		current = head;
+		while (current != null) {
+			if (current.arb() != null) {
+				current.next().setArb(current.arb().next());
+			}
+			current = current.next().next();
+		}
+
+		// separating lists
+		current = head;
+		Node<T> new_head = head.next();
+		Node<T> copied_current = new_head;
+
+		while (current != null) {
+			copied_current = current.next();
+			current.setNext(copied_current.next());
+			if (copied_current.next() != null) {
+				copied_current.setNext(copied_current.next().next());
+			}
+			current = current.next();
+		}
+		
+		return new_head;
 	}
 }
 

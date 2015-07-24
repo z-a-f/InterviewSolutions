@@ -52,9 +52,20 @@ public class tstLinkedList{
 		listArb.addFront(21);
 		listArb.addFront(14);
 		listArb.addFront(7);
-		System.out.println(listArb + "\n");
 		listArb.head().setArb(listArb.head().next().next());
 		listArb.head().next().next().setArb(listArb.head());
-		System.out.println(listArb + "\n");
+		// cout << listArb << endl;
+		System.out.println("List with arbitrary pointers:\n" + listArb);
+
+		LinkedList<Integer> listArbCopy = listArb.deepCopy(); // new LinkedList<>();
+		// listArbCopy.setHead(deep_copy_arbitrary_pointer(listArb.head()));
+
+		// Change some stuff to check if the linked lists are really separate
+		listArbCopy.head().next().setValue(123);
+		listArb.head().setValue(321);
+
+		System.out.println("Updated List with arbitrary pointers:\n" + listArb);
+		System.out.println("Copied List with arbitrary pointers:\n" + listArbCopy);
+		
 	}
 }
