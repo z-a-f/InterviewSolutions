@@ -138,6 +138,11 @@ class LinkedList(object):
 
         prev._next = current.next()
 
+    def deepCopy(self):
+        copy = LinkedList()
+        copy.setHead(self._deep_copy_2(self.head()))
+        return copy
+
         
     ######################################
     # Internal utilities:
@@ -153,6 +158,82 @@ class LinkedList(object):
         node.setNext(None)
 
         return reversed_list
+
+    def _deep_copy_1(self, head):
+        if head == None:
+            return None
+
+        current = head
+        new_head = None
+        new_prev = None
+        ht = dict()
+        
+        # Create copy of the linked list, recording the corresponding
+        # nodes in hashmap without updating arbitrary pointer
+        while current != None:
+            new_node = Node(current.value())
+            
+            # copy the old arbitrary pointer in the new node
+            new_node.setArb(current.arb())
+            
+            if new_prev != None:
+                new_prev.setNext(new_node)
+            else:
+                new_head = new_node
+                
+            ht[current] = new_node
+                
+            new_prev = new_node
+            current = current.next();
+
+        new_current = new_head
+
+        # updating arbitrary pointer
+        while new_current != None:
+            if new_current.arb() != None:
+                node = ht[new_current.arb()]
+                new_current.setArb(node)
+            new_current = new_current.next()
+
+        return new_head
+
+    def _deep_copy_2(self, head):
+        if head == None:
+            return None
+        
+        current = head
+        
+        # inserting new nodes within the existing linkedlist
+        while current != None:
+            new_node = Node(current.value())
+            
+            new_node.setNext(current.next())
+            current.setNext(new_node)
+            current = new_node.next()
+            
+        # setting correct arbitrary pointers
+        current = head
+        while current != None:
+            if current.arb() != None:
+                current.next().setArb(current.arb().next())
+                    
+            current = current.next().next()
+
+        # separating lists
+        current = head
+        new_head = head.next()
+        copied_current = new_head
+        
+        while current != None:
+            copied_current = current.next()
+            current.setNext(copied_current.next())
+            
+            if copied_current.next() != None:
+                copied_current.setNext(copied_current.next().next())
+
+            current = current.next()
+
+        return new_head
 
 """
 Int class
@@ -276,3 +357,12 @@ if __name__ == '__main__':
     listArb.head().setArb(listArb.head().next().next())
     listArb.head().next().next().setArb(listArb.head())
     print listArb
+
+    listArbCopy = LinkedList()
+    listArbCopy = listArb.deepCopy()
+
+    listArbCopy.head().next().next().setValue(123)
+    listArb.head().setValue(321)
+
+    print "Copy:", listArbCopy
+    print "Original:", listArb
