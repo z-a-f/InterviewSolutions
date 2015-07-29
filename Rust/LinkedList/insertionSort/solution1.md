@@ -24,3 +24,16 @@ Remove the first node:
 (orig)->[23]->[82]->[11]->(NULL)
 (sort)->[29]->(NULL)
 ```
+Now, remove the first node from the `orig` linked list and insert it at the appropriate position.
+```
+(orig)->[82]->[11]->(NULL)
+(sort)->[23]->[29]->(NULL)
+```
+Repeat the process until the whole list is sorted
+```
+(orig)->[11]->(NULL)
+(sort)->[23]->[29]->[82]->(NULL)
+
+(orig)->(NULL)
+(sort)->[11]->[23]->[29]->[82]->(NULL)
+```

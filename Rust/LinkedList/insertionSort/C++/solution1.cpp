@@ -1,78 +1,119 @@
 #include <iostream>
-#include <unordered_map>
 
 #include "../../LinkedList.hpp"
 
 using namespace std;
 
-/** Deep copy a singly linked list with arbitrary pointers
+/** Insertion sort helper
  *
  * @tparams T
- * @params Node<T>* the head of the linked list to be copied
+ * @param Node<T>*head Head of the sorted list
+ * @param Node<T>*node Node to be inserted
+ * @return Node<T>* List with the node inserted
+ */
+template <typename T>
+static Node<T>* sorted_insert(Node<T>* head, Node<T>* node) {
+  if (node == nullptr) {
+	return head;
+  }
+
+  if (head == nullptr || node->value() <= head->value()) {
+	node->setNext(head);
+	return node;
+  }
+
+  Node<T>* curr = head;
+
+  while (curr->next() != nullptr && curr->next()->value() < node->value()) {
+	curr = curr->next();
+  }
+  node->setNext(curr->next());
+  curr->setNext(node);
+
+  return head;
+}
+
+/** Sort the linked list (destructive, buggy)
+ *
+ * @tparams T
+ * @params Node<T>* the head of the linked list to be sorted
  * @returns Node<T>* the head of the new linked list
  */
 template <typename T>
-Node<T>* deep_copy_arbitrary_pointer (Node<T>* head) {
-  // If the linked list is empty, return
-  if (head == nullptr) {
-	return nullptr;
+Node<T>* insertion_sort(Node<T>* head) {
+  Node<T>* sorted = nullptr;
+  Node<T>* curr = head;
+
+  // DEBUG(curr, sorted);
+  while (curr != nullptr) {
+	Node<T>* temp = curr->next();
+	sorted = sorted_insert(sorted, curr);
+	curr = temp;
+	// DEBUG(curr, sorted);
   }
+  delete curr;
+  return sorted;
+}
 
-  Node<T>* current = head;
-  Node<T>* new_head = nullptr;
-  Node<T>* new_prev = nullptr;
-  std::unordered_map<Node<T>*, Node<T>*> map;
-
-  // Create copy of the linked list, recording the corresponding
-  // nodes in hashmap without updating arbitrary pointer
-  while (current != nullptr) {
-	Node<T>* new_node = new Node<T>(current->value());
-
-	// Copy the old arbitrary pointer in the new node
-	new_node->setArb(current->arb());
-
-	if (new_prev != nullptr) {
-	  new_prev->setNext(new_node);
-	} else {
-	  new_head = new_node;
-	}
-
-	map[current] = new_node;
-	new_prev = new_node;
-	current = current->next();
+template<typename T>
+void DEBUG(Node<T>*orig, Node<T>* sort) {
+  Node<T>* ptr = orig;
+  std::cout << "(orig)->";
+  while (ptr != nullptr) {
+	std::cout << "[" << ptr->value() << "]->";
+	ptr = ptr->next();
   }
-
-  Node<T>* new_current = new_head;
-
-  // Update arbitrary pointer:
-  while (new_current != nullptr) {
-	if (new_current->arb() != nullptr) {
-	  Node<T>* node = map[new_current->arb()];
-	  new_current->setArb(node);
-	}
-	new_current = new_current->next();
+  std::cout << "(NULL)\n";
+  ptr = sort;
+  std::cout << "(sort)->";
+  while (ptr != nullptr) {
+	std::cout << "[" << ptr->value() << "]->";
+	ptr = ptr->next();
   }
-  return new_head;
+  std::cout << "(NULL)\n";
+  delete ptr;
 }
 
 int main() {
-  LinkedList<int> listArb;
-  listArb.addFront(21);
-  listArb.addFront(14);
-  listArb.addFront(7);
-  listArb.head()->setArb(listArb.head()->next()->next());
-  listArb.head()->next()->next()->setArb(listArb.head());
-  cout << listArb << endl;
+  Node<int>* list = new Node<int>(11);
 
-  LinkedList<int> listArbCopy;
-  listArbCopy.setHead(deep_copy_arbitrary_pointer(listArb.head()));
+  Node<int>* sort;
 
-  // Change some stuff to check if the linked lists are really separate
-  listArbCopy.head()->next()->setValue(123);
-  listArb.head()->setValue(321);
+  sort = new Node<int>(82);
+  sort->setNext(list);
+  list = sort;
+
+  sort = new Node<int>(23);
+  sort->setNext(list);
+  list = sort;
+
+  sort = new Node<int>(29);
+  sort->setNext(list);
+  list = sort;
+
+  sort = nullptr;
+  DEBUG(list, sort);
+
+  sort = insertion_sort(list);
+  DEBUG(list, sort);
   
-  cout << listArbCopy << endl;
-  cout << listArb << endl;
+
   
+  /*LinkedList<int> list;
+  list.addFront(11);
+  list.addFront(82);
+  list.addFront(23);
+  list.addFront(29);
+  cout << list << endl;
+
+  cout << "\n *********** \n";
+  LinkedList<int> sorted;
+  sorted.setHead(insertion_sort(list.head()));
+  cout << "\n *********** \n";
+  
+  cout << list << endl;
+
+  cout << sorted << endl;
+  */
   return 0;
 }
