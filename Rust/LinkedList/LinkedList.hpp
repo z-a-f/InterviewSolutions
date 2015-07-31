@@ -1,6 +1,7 @@
 #pragma once
 
 #include <exception>
+#include <iostream>
 #include <unordered_map>
 
 
@@ -85,7 +86,7 @@ public:
   // friend std::ostream& operator<<(std::ostream& os, const LinkedList<U>& list);
   Node<T>* operator[](std::size_t idx);
   friend std::ostream& operator<<<>(std::ostream& os, const LinkedList& list);
-  // std::ostream& printArb();
+  void printArb();
 private:
   Node<T>* _head;
   std::size_t _size;
@@ -198,7 +199,7 @@ void LinkedList<T>::setHead(Node<T>* h) {
  */
 template <typename T>
 std::ostream& operator<<(std::ostream& os, const LinkedList<T>& list) {
-  /*
+  
   os << "HEAD->";
   Node<T>* ptr = list._head;
   while (ptr != nullptr) {
@@ -208,8 +209,8 @@ std::ostream& operator<<(std::ostream& os, const LinkedList<T>& list) {
   os << "NULL";
   delete ptr;
   return os;
-  */
-
+  
+  /*
   os << "[HEAD]\n V\n";
   Node<T>* ptr = list._head;
   while (ptr != nullptr) {
@@ -226,8 +227,28 @@ std::ostream& operator<<(std::ostream& os, const LinkedList<T>& list) {
   os << "[NULL]";
   delete ptr;
   return os;
+  */
 }
 
+template <typename T>
+void LinkedList<T>::printArb() {
+  std::cout << "[HEAD]\n V\n";
+  Node<T>* ptr = this->_head;
+  while (ptr != nullptr) {
+	std::cout << "[" << ptr->_elem << "]->";
+	std::cout << "[";// << ( (ptr->arb() == nullptr) ? "NULL" : ptr->arb()->_elem) << "]\n V";
+	if (ptr->arb() == nullptr)
+	  std::cout << "NULL";
+	else
+	  std::cout << ptr->arb()->_elem << "|" << (ptr->arb());
+	
+	std::cout << "]\n V\n";
+	ptr = ptr->_next;
+  }
+  std::cout << "[NULL]";
+  delete ptr;
+  // return std::cout;
+}
 
 /* Rust solutions after this point */
 

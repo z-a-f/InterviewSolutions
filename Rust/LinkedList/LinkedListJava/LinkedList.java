@@ -3,7 +3,7 @@ package LinkedListJava;
 import java.util.Hashtable;
 import java.lang.RuntimeException;
 
-public class LinkedList<T> {
+public class LinkedList<T extends Comparable<T>> {
 	private Node<T> _head;
 	private Integer _size;
 

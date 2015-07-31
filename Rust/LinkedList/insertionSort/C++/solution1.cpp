@@ -75,6 +75,22 @@ void DEBUG(Node<T>*orig, Node<T>* sort) {
 }
 
 int main() {
+  LinkedList<int> list;
+  LinkedList<int> sort;
+  
+  list.addFront(11);
+  list.addFront(82);
+  list.addFront(23);
+  list.addFront(29);
+
+  cout << list << endl;
+
+  sort.setHead(insertion_sort(list.head()));
+
+  // cout << list << endl;
+  // cout << sort << endl;
+  
+  /*
   Node<int>* list = new Node<int>(11);
 
   Node<int>* sort;
@@ -96,7 +112,7 @@ int main() {
 
   sort = insertion_sort(list);
   DEBUG(list, sort);
-  
+  */
 
   
   /*LinkedList<int> list;

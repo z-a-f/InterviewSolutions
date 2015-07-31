@@ -1,73 +1,48 @@
 import LinkedListJava.*;
-import java.util.Hashtable;
+import java.lang.Comparable;
 
 class solution1 {
 	// This is the solution :)
-	public static <T> Node<T> deep_copy_arbitrary_pointer(Node<T> head) {
-		if (head == null) {
-			return null;
+	public static <T extends Comparable<T>> Node<T> sorted_insert(Node<T> head, Node<T> node) {
+		if (node == null) return head;
+
+		if (head == null || node.value() <= head.value()) {
+			node.setNext(head);
+			return node;
 		}
 
-		Node<T> current = head;
-		Node<T> new_head = null;
-		Node<T> new_prev = null;
-		Hashtable<Node<T>, Node<T>> map = new Hashtable<Node<T>, Node<T>>();
+		Node<T> curr = head;
 
-		// Create copy of the linked list, recording the corresponding
-		// nodes is hashmap without updating arbitrary pointer
-		while (current != null) {
-			Node<T> new_node = new Node<T>(current.value());
+		while (curr.next() != null && (curr.next().value() < node.value()))
+			curr = curr.next();
 
-			// copy the old arbitrary pointer in the new node
-			new_node.setArb(current.arb());
+		node.setNext(curr.next());
+		curr.setNext(node);
 
-			if (new_prev != null) {
-				new_prev.setNext(new_node);
-			} else {
-				new_head = new_node;
-			}
+		return head;
+	}
 
-			map.put(current, new_node);
+	public static <T extends Comparable<T>> Node<T> insertion_sort(Node<T> head) {
+		Node<T> sorted = null;
+		Node<T> curr = head;
 
-			new_prev = new_node;
-			current = current.next();
+		while (curr != null) {
+			Node<T> temp = curr.next();
+			sorted = sorted_insert(sorted, curr);
+			curr = temp;
 		}
-
-		Node<T> new_current = new_head;
-
-		// updating arbitrary_pointer
-		while (new_current != null) {
-			if (new_current.arb() != null) {
-				Node<T> node = map.get(new_current.arb());
-				new_current.setArb(node);
-			}
-
-			new_current = new_current.next();
-		}
-		
-		return new_head;
+		return sorted;
 	}
 
 	public static void main(String[] args) {
-		LinkedList<Integer> listArb = new LinkedList<>();
-		listArb.addFront(21);
-		listArb.addFront(14);
-		listArb.addFront(7);
-		listArb.head().setArb(listArb.head().next().next());
-		listArb.head().next().next().setArb(listArb.head());
-		// cout << listArb << endl;
-		System.out.println("List with arbitrary pointers:\n" + listArb);
+		LinkedList<Integer> list = new LinkedList<>();
 
-		LinkedList<Integer> listArbCopy = new LinkedList<>();
-		listArbCopy.setHead(deep_copy_arbitrary_pointer(listArb.head()));
+		list.addFront(11);
+		list.addFront(82);
+		list.addFront(23);
+		list.addFront(29);
 
-		// Change some stuff to check if the linked lists are really separate
-		listArbCopy.head().next().setValue(123);
-		listArb.head().setValue(321);
-
-		System.out.println("Updated List with arbitrary pointers:\n" + listArb);
-		System.out.println("Copied List with arbitrary pointers:\n" + listArbCopy);
-
+		System.out.println(list);
 	}
 }
 

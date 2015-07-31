@@ -1,6 +1,6 @@
 package LinkedListJava;
 
-public class Node<T> {
+public class Node<T extends Comparable<T>> {
 	public Node(T e, Node<T> n, Node<T> a) {
 		this._next = n;
 		this._elem = e;
