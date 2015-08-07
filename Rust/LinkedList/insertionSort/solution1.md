@@ -3,6 +3,8 @@
 * Memory: _O(1)_
 * File: solution.(cpp|java|py)
 
+__Note__: There is a bug in this solution - if the nodes are already sorted, it doesn't remove them from the original linked list. So, if some part of the initial linked list is sorted (partially sorted), after the insertion sort the original list will still have some elements (not all though).
+
 Concept of Insertion SOrt is very simple. We'll maintain two linked lists:
 * Original list (given to us as input)
 * Sorted list (initially empty)
