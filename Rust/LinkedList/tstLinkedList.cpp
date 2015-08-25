@@ -14,7 +14,7 @@ int main() {
 	cout << "Exception caught: " << e.what() << endl;
   }
 
-  list.addFront(28);
+  list.addFront('a');           // Should invalid, but works
   list.addFront(21);
   list.addFront(14);
   list.addFront(7);
