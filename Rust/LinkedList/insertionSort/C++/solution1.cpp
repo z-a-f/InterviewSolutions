@@ -13,24 +13,24 @@ using namespace std;
  */
 template <typename T>
 static Node<T>* sorted_insert(Node<T>* head, Node<T>* node) {
-  if (node == nullptr) {
-	return head;
-  }
+    if (node == nullptr) {
+        return head;
+    }
 
-  if (head == nullptr || node->value() <= head->value()) {
-	node->setNext(head);
-	return node;
-  }
+    if (head == nullptr || node->value() <= head->value()) {
+        node->setNext(head);
+        return node;
+    }
 
-  Node<T>* curr = head;
+    Node<T>* curr = head;
 
-  while (curr->next() != nullptr && curr->next()->value() < node->value()) {
-	curr = curr->next();
-  }
-  node->setNext(curr->next());
-  curr->setNext(node);
+    while (curr->next() != nullptr && curr->next()->value() < node->value()) {
+        curr = curr->next();
+    }
+    node->setNext(curr->next());
+    curr->setNext(node);
 
-  return head;
+    return head;
 }
 
 /** Sort the linked list (destructive, buggy)
@@ -41,95 +41,98 @@ static Node<T>* sorted_insert(Node<T>* head, Node<T>* node) {
  */
 template <typename T>
 Node<T>* insertion_sort(Node<T>* head) {
-  Node<T>* sorted = nullptr;
-  Node<T>* curr = head;
+    Node<T>* sorted = nullptr;
+    Node<T>* curr = head;
 
-  // DEBUG(curr, sorted);
-  while (curr != nullptr) {
-	Node<T>* temp = curr->next();
-	sorted = sorted_insert(sorted, curr);
-	curr = temp;
-	// DEBUG(curr, sorted);
-  }
-  delete curr;
-  return sorted;
+    // DEBUG(curr, sorted);
+    while (curr != nullptr) {
+        Node<T>* temp = curr->next();
+        sorted = sorted_insert(sorted, curr);
+        curr = temp;
+        // DEBUG(curr, sorted);
+    }
+    // delete curr;
+    return sorted;
 }
 
 template<typename T>
 void DEBUG(Node<T>*orig, Node<T>* sort) {
-  Node<T>* ptr = orig;
-  std::cout << "(orig)->";
-  while (ptr != nullptr) {
-	std::cout << "[" << ptr->value() << "]->";
-	ptr = ptr->next();
-  }
-  std::cout << "(NULL)\n";
-  ptr = sort;
-  std::cout << "(sort)->";
-  while (ptr != nullptr) {
-	std::cout << "[" << ptr->value() << "]->";
-	ptr = ptr->next();
-  }
-  std::cout << "(NULL)\n";
-  delete ptr;
+    Node<T>* ptr = orig;
+    std::cout << "(orig)->";
+    while (ptr != nullptr) {
+        std::cout << "[" << ptr->value() << "]->";
+        ptr = ptr->next();
+    }
+    std::cout << "(NULL)\n";
+    ptr = sort;
+    std::cout << "(sort)->";
+    while (ptr != nullptr) {
+        std::cout << "[" << ptr->value() << "]->";
+        ptr = ptr->next();
+    }
+    std::cout << "(NULL)\n";
+    delete ptr;
 }
 
 int main() {
-  LinkedList<int> list;
-  LinkedList<int> sort;
-  
-  list.addFront(11);
-  list.addFront(82);
-  list.addFront(23);
-  list.addFront(29);
+    LinkedList<int> list;
+    LinkedList<int> sort;
 
-  cout << list << endl;
+    list.addFront(11);
+    list.addFront(82);
+    list.addFront(23);
+    list.addFront(29);
 
-  sort.setHead(insertion_sort(list.head()));
+    cout << list << endl;
 
-  // cout << list << endl;
-  // cout << sort << endl;
-  
-  /*
-  Node<int>* list = new Node<int>(11);
+    sort.setHead(insertion_sort(list.head()));
 
-  Node<int>* sort;
+    cout << list << endl;
+    cout << sort << endl;
 
-  sort = new Node<int>(82);
-  sort->setNext(list);
-  list = sort;
+    // cout << list << endl;
+    // cout << sort << endl;
 
-  sort = new Node<int>(23);
-  sort->setNext(list);
-  list = sort;
+    /*
+      Node<int>* list = new Node<int>(11);
 
-  sort = new Node<int>(29);
-  sort->setNext(list);
-  list = sort;
+      Node<int>* sort;
 
-  sort = nullptr;
-  DEBUG(list, sort);
+      sort = new Node<int>(82);
+      sort->setNext(list);
+      list = sort;
 
-  sort = insertion_sort(list);
-  DEBUG(list, sort);
-  */
+      sort = new Node<int>(23);
+      sort->setNext(list);
+      list = sort;
 
-  
-  /*LinkedList<int> list;
-  list.addFront(11);
-  list.addFront(82);
-  list.addFront(23);
-  list.addFront(29);
-  cout << list << endl;
+      sort = new Node<int>(29);
+      sort->setNext(list);
+      list = sort;
 
-  cout << "\n *********** \n";
-  LinkedList<int> sorted;
-  sorted.setHead(insertion_sort(list.head()));
-  cout << "\n *********** \n";
-  
-  cout << list << endl;
+      sort = nullptr;
+      DEBUG(list, sort);
 
-  cout << sorted << endl;
-  */
-  return 0;
+      sort = insertion_sort(list);
+      DEBUG(list, sort);
+    */
+
+
+    /*LinkedList<int> list;
+      list.addFront(11);
+      list.addFront(82);
+      list.addFront(23);
+      list.addFront(29);
+      cout << list << endl;
+
+      cout << "\n *********** \n";
+      LinkedList<int> sorted;
+      sorted.setHead(insertion_sort(list.head()));
+      cout << "\n *********** \n";
+
+      cout << list << endl;
+
+      cout << sorted << endl;
+    */
+    return 0;
 }

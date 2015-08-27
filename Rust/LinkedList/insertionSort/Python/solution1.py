@@ -3,59 +3,45 @@ sys.path.insert(0, '../..') # Need that to import LL
 
 from LinkedList import *    # Linked LIst defined here
 
-def deep_copy_arbitrary_pointer(head):
-    if head == None:
-        return None
+def sorted_insert(head, node):
+    if node == None:
+        return head
 
-    current = head
-    new_head = None
-    new_prev = None
-    ht = dict()
+    if head == None or node.value() <= head.value():
+        node.setNext(head)
+        return node
 
-    # Create copy of the linked list, recording the corresponding
-    # nodes in hashmap without updating arbitrary pointer
-    while current != None:
-        new_node = Node(current.value())
+    curr = head
+    while curr.next() != None and curr.next().value() < node.value():
+        curr = curr.next()
 
-        # copy the old arbitrary pointer in the new node
-        new_node.setArb(current.arb())
+    node.setNext(curr.next())
+    curr.setNext(node)
 
-        if new_prev != None:
-            new_prev.setNext(new_node)
-        else:
-            new_head = new_node
+    return head
 
-        ht[current] = new_node
+def insertion_sort(head):
+    sorted = None
+    curr = head
 
-        new_prev = new_node
-        current = current.next();
+    while curr != None:
+        temp = curr.next()
+        sorted = sorted_insert(sorted, curr)
+        curr = temp
 
-    new_current = new_head
-
-    # updating arbitrary pointer
-    while new_current != None:
-        if new_current.arb() != None:
-            node = ht[new_current.arb()]
-            new_current.setArb(node)
-        new_current = new_current.next()
-
-    return new_head
+    return sorted
 
 if __name__ == '__main__':
-    listArb = LinkedList()
-    listArb.addFront(21)
-    listArb.addFront(14)
-    listArb.addFront(7)
+    list = LinkedList()
+    sort = LinkedList()
 
-    listArb.head().setArb(listArb.head().next().next())
-    listArb.head().next().next().setArb(listArb.head());
+    list.addFront(11)
+    list.addFront(82)
+    list.addFront(23)
+    list.addFront(29)
 
-    print "List with arbitrary pointers:\n", listArb
+    print list
+    sort.setHead(insertion_sort(list.head()))
+    print sort
+    print list
 
-    listArbCopy = LinkedList()
-    listArbCopy.setHead(deep_copy_arbitrary_pointer(listArb.head()));
-    listArbCopy.head().next().setValue(123);
-    listArb.head().setValue(321);
-
-    print "Updated List with arbitrary pointers:\n", listArb
-    print "Copied List with arbitrary pointers:\n", listArbCopy
