@@ -78,6 +78,18 @@ int main() {
   
   cout << listArbCopy << endl;
   cout << listArb << endl;
+
+  // Check the sorting algos:
+  LinkedList<int> sort;
+  sort.addFront(11);
+  sort.addFront(82);
+  sort.addFront(23);
+  sort.addFront(29);
+
+  cout << sort << endl;
+  sort.sort();
+  cout << sort << endl;
+  
   
   return 0;
 }

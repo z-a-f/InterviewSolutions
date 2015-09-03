@@ -2,7 +2,7 @@ package LinkedListJava;
 
 import java.lang.Comparable;
 
-public class Node<T extends Comparable<T>> {
+public class Node<T extends Comparable<T>>{
 	public Node(T e, Node<T> n, Node<T> a) {
 		this._next = n;
 		this._elem = e;

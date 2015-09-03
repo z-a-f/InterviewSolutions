@@ -11,7 +11,7 @@ class Node(object):
         return str(self._elem)
 
     # __repr__ = __str__
-    
+
     def value(self):
         return self._elem
 
@@ -20,7 +20,7 @@ class Node(object):
 
     def arb(self):
         return self._arb
-    
+
     def setValue(self, e):
         self._elem = e
 
@@ -52,46 +52,46 @@ class LinkedList(object):
     def addFront(self, e):
         v = Node(e, self.head())
         self.setHead(v)
-        self._size += 1        
-        
+        self._size += 1
+
     def removeFront(self):
         if self.empty():
             return
         old = self.head()
         self.setHead(old.next())
         self._size -= 1
-        
+
     # Public (housekeeping):
     def size(self):
         return self._size
-    
+
     def head(self):
         return self._head
-    
+
     def setHead(self, h):
         self._head = h
-        
+
     def __str__(self):
-        # os = "HEAD->"
-        # ptr = self.head()
-        # while (ptr != None):
-        #     os += str(ptr.value()) + "->"
-        #     ptr = ptr.next()
-        # os += "NULL"
-        # return os
-        os = "[HEAD]\n V\n"
+        os = "HEAD->"
         ptr = self.head()
         while (ptr != None):
-            os += "[" + str(ptr._elem) + "]->";
-            os += "[";
-            if (ptr.arb() == None):
-                os += "NULL"
-            else:
-                os += (str(ptr.arb()._elem) + "|" + str(id(ptr.arb())))
-            os += "]\n V\n"
+            os += str(ptr.value()) + "->"
             ptr = ptr.next()
-        os += "[NULL]"
+        os += "NULL"
         return os
+        # os = "[HEAD]\n V\n"
+        # ptr = self.head()
+        # while (ptr != None):
+        #     os += "[" + str(ptr._elem) + "]->";
+        #     os += "[";
+        #     if (ptr.arb() == None):
+        #         os += "NULL"
+        #     else:
+        #         os += (str(ptr.arb()._elem) + "|" + str(id(ptr.arb())))
+        #     os += "]\n V\n"
+        #     ptr = ptr.next()
+        # os += "[NULL]"
+        # return os
 
     # Rust solutions after this point
     def reverse(self):
@@ -130,7 +130,7 @@ class LinkedList(object):
         # Key not found:
         if current == None:
             return
-        
+
         # If node is found:
         if current == self.head():
             self.setHead(self.head().next())
@@ -143,10 +143,13 @@ class LinkedList(object):
         copy.setHead(self._deep_copy_2(self.head()))
         return copy
 
-        
+    def sort(self):
+        self.setHead(self._insertion_sort(self.head()))
+
+
     ######################################
     # Internal utilities:
-    
+
     def _reverse_recursive(self, node):
         # Do not check the size = 0 or 1
         if (node == None or node._next == None):
@@ -167,22 +170,22 @@ class LinkedList(object):
         new_head = None
         new_prev = None
         ht = dict()
-        
+
         # Create copy of the linked list, recording the corresponding
         # nodes in hashmap without updating arbitrary pointer
         while current != None:
             new_node = Node(current.value())
-            
+
             # copy the old arbitrary pointer in the new node
             new_node.setArb(current.arb())
-            
+
             if new_prev != None:
                 new_prev.setNext(new_node)
             else:
                 new_head = new_node
-                
+
             ht[current] = new_node
-                
+
             new_prev = new_node
             current = current.next();
 
@@ -200,40 +203,68 @@ class LinkedList(object):
     def _deep_copy_2(self, head):
         if head == None:
             return None
-        
+
         current = head
-        
+
         # inserting new nodes within the existing linkedlist
         while current != None:
             new_node = Node(current.value())
-            
+
             new_node.setNext(current.next())
             current.setNext(new_node)
             current = new_node.next()
-            
+
         # setting correct arbitrary pointers
         current = head
         while current != None:
             if current.arb() != None:
                 current.next().setArb(current.arb().next())
-                    
+
             current = current.next().next()
 
         # separating lists
         current = head
         new_head = head.next()
         copied_current = new_head
-        
+
         while current != None:
             copied_current = current.next()
             current.setNext(copied_current.next())
-            
+
             if copied_current.next() != None:
                 copied_current.setNext(copied_current.next().next())
 
             current = current.next()
 
         return new_head
+
+    def _sorted_insert(self, head, node):
+        if node == None:
+            return head
+
+        if head == None or node.value() <= head.value():
+            node.setNext(head)
+            return node
+
+        curr = head
+        while curr.next() != None and curr.next().value() < node.value():
+            curr = curr.next()
+
+        node.setNext(curr.next())
+        curr.setNext(node)
+
+        return head
+
+    def _insertion_sort(self, head):
+        sorted = None
+        curr = head
+
+        while curr != None:
+            temp = curr.next()
+            sorted = self._sorted_insert(sorted, curr)
+            curr = temp
+
+        return sorted
 
 """
 Int class
@@ -257,7 +288,7 @@ class Int:
 
     def getHead(self):
         return self._num.head()
-        
+
     def value(self):
         exp = 1
         n = 0
@@ -301,17 +332,17 @@ class Int:
 
     # def __radd__(self, other):
     #     return self + other
-        
+
     def __str__(self):
         return str(self.value())
-    
+
 if __name__ == '__main__':
     print "\n1) Testing Node..."
     n = Node('abc', None)
     n.setNext(Node(3, None))
     print "New node n:", n
     print "Next of the n:", n.next()
-    
+
     print "\n2)Testing LinkedList..."
     list = LinkedList()
     print "Initial list is:\n", list
@@ -322,7 +353,7 @@ if __name__ == '__main__':
     list.addFront(14)
     list.addFront(7)
     print "After populating the list:\n", list
-    
+
     print "\n3) Testing iterative reverse..."
     list.reverse()
     print "After reverse:\n", list
@@ -331,7 +362,7 @@ if __name__ == '__main__':
     list.reverseRecursive()
     print "After reverse:\n", list
 
-    
+
     list.deleteKey(0)
     print "\n5)After removing non-existent element:\n", list
 
@@ -348,7 +379,7 @@ if __name__ == '__main__':
     print "Integer B:\n", B
     print "Integer A + B:\n", A + B
     # print "Integer A + B:", sum(A, B)
-    
+
     print "Create list for arbitrary pointers:\n"
     listArb = LinkedList()
     listArb.addFront(21)
@@ -366,3 +397,15 @@ if __name__ == '__main__':
 
     print "Copy:", listArbCopy
     print "Original:", listArb
+
+    # Check the sorting:
+    list = LinkedList()
+    list.addFront(11)
+    list.addFront(82)
+    list.addFront(23)
+    list.addFront(29)
+
+    print list
+    list.sort()
+    print list
+    
