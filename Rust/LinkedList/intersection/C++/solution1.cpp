@@ -4,74 +4,34 @@
 
 using namespace std;
 
-/** Insertion sort helper
- *
- * @tparams T
- * @param Node<T>*head Head of the sorted list
- * @param Node<T>*node Node to be inserted
- * @return Node<T>* List with the node inserted
- */
 template <typename T>
-static Node<T>* sorted_insert(Node<T>* head, Node<T>* node) {
-    if (node == nullptr) {
-        return head;
+std::size_t size(Node<T>* head) {
+    std::size_t len = 0;
+    while (head != nullptr) {
+        head = head->next();
+        len++;
     }
-
-    if (head == nullptr || node->value() <= head->value()) {
-        node->setNext(head);
-        return node;
-    }
-
-    Node<T>* curr = head;
-
-    while (curr->next() != nullptr && curr->next()->value() < node->value()) {
-        curr = curr->next();
-    }
-    node->setNext(curr->next());
-    curr->setNext(node);
-
-    return head;
+    return len;
 }
 
-/** Sort the linked list (destructive, buggy)
- *
- * @tparams T
- * @params Node<T>* the head of the linked list to be sorted
- * @returns Node<T>* the head of the new linked list
- */
 template <typename T>
-Node<T>* insertion_sort(Node<T>* head) {
-    Node<T>* sorted = nullptr;
-    Node<T>* curr = head;
+Node<T>* intersect (Node<T>* head1, Node<T>* head2) {
+    Node<T>* l1 = nullptr;
+    Node<T>* l2 = nullptr;
 
-    // DEBUG(curr, sorted);
-    while (curr != nullptr) {
-        Node<T>* temp = curr->next();
-        sorted = sorted_insert(sorted, curr);
-        curr = temp;
-        // DEBUG(curr, sorted);
-    }
-    // delete curr;
-    return sorted;
-}
+    size_t l1len = size(head1);
+    size_t l2len = size(head2);
 
-template<typename T>
-void DEBUG(Node<T>*orig, Node<T>* sort) {
-    Node<T>* ptr = orig;
-    std::cout << "(orig)->";
-    while (ptr != nullptr) {
-        std::cout << "[" << ptr->value() << "]->";
-        ptr = ptr->next();
+    int d = l1len - l2len;
+    l1 = d >= 0 ? head1 : head2;
+    l2 = d >= 0 ? head2 : head1;
+    d = d >= 0 ? d : -d;
+
+    while (d > 0) {
+        l1 = l1->next();
+        d--;
     }
-    std::cout << "(NULL)\n";
-    ptr = sort;
-    std::cout << "(sort)->";
-    while (ptr != nullptr) {
-        std::cout << "[" << ptr->value() << "]->";
-        ptr = ptr->next();
-    }
-    std::cout << "(NULL)\n";
-    delete ptr;
+    // TODO: Didn't finish the code
 }
 
 int main() {

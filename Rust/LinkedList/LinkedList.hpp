@@ -89,7 +89,7 @@ public:
     void printArb();
 private:
     Node<T>* _head;
-    std::size_t _size;
+    // std::size_t _size;
 
     // Rust solutions after this point
 public:
@@ -110,7 +110,7 @@ private:
 
 /** Constructor */
 template <typename T>
-LinkedList<T>::LinkedList() : _head(nullptr), _size(0) {}
+LinkedList<T>::LinkedList() : _head(nullptr)/*, _size(0)*/ {}
 
 /** Destructor */
 template <typename T>
@@ -152,7 +152,7 @@ void LinkedList<T>::addFront(const T& e) {
     v->_elem = e;
     v->_next = _head;
     _head = v;
-    _size++;
+    // _size++;
 }
 
 /** Remove the first element
@@ -163,7 +163,7 @@ void LinkedList<T>::removeFront() {
     if (this->empty()) return;
     Node<T>* old = _head;
     _head = old->_next;
-    _size--;
+    // _size--;
     delete old;
 }
 
@@ -173,7 +173,14 @@ void LinkedList<T>::removeFront() {
  */
 template <typename T>
 std::size_t LinkedList<T>::size() const {
-    return this->_size;
+    // return this->_size;
+    Node<T> head = this->head();
+    std::size_t len = 0;
+    while (head != nullptr) {
+        head = head->next();
+        len++;
+    }
+    return len;    
 }
 
 /** Returns the head of the linked list
@@ -193,6 +200,7 @@ Node<T>* LinkedList<T>::head() { return this->_head; }
 template <typename T>
 void LinkedList<T>::setHead(Node<T>* h) {
     this->_head = h;
+    this->resetSize();
 }
 
 
@@ -295,8 +303,8 @@ void LinkedList<T>::deleteKey (T key) {
 
     while (current != nullptr) {
         if (current->value() == key) {
-            this->_size--;
-            break;                                        // Found it! :)
+            // this->_size--;
+            break;              // Found it! :)
         }
 
         prev = current;
