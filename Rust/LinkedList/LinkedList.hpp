@@ -200,7 +200,7 @@ Node<T>* LinkedList<T>::head() { return this->_head; }
 template <typename T>
 void LinkedList<T>::setHead(Node<T>* h) {
     this->_head = h;
-    this->resetSize();
+    // this->resetSize();
 }
 
 

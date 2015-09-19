@@ -6,16 +6,18 @@ import LinkedListJava.*;
 class solution1 {
     // This is the solution :)
     public static <T extends Comparable<T>> Node<T> sorted_insert(Node<T> head, Node<T> node) {
+        
         if (node == null) return head;
 
-        if (head == null || node.value() <= head.value()) {
+        // if (head == null || node.value() <= head.value()) {
+        if (head == null || node.value().compareTo(head.value()) <= 0) {
             node.setNext(head);
             return node;
         }
 
         Node<T> curr = head;
 
-        while (curr.next() != null && (curr.next().value() < node.value()))
+        while (curr.next() != null && (curr.next().value().compareTo(node.value()) < 0 ))
             curr = curr.next();
 
         node.setNext(curr.next());
@@ -45,5 +47,10 @@ class solution1 {
         list.addFront(29);
 
         System.out.println(list);
+        LinkedList<Integer> list1 = new LinkedList<>();
+        list1.setHead(insertion_sort(list.head()));
+
+        System.out.println(list);
+        System.out.println(list1);
     }
 }

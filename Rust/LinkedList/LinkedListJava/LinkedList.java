@@ -133,9 +133,9 @@ public class LinkedList<T extends Comparable<T>> {
     }
 
     public void sort() {
-        // this.setHead(this._insertion_sort(this.head()));
-        System.outprintln("This function is still not implemented!");
-        System.outprintln("Still need to figure out the Comparable");
+        this.setHead(this._insertion_sort(this.head()));
+        // System.out.println("This function is still not implemented!");
+        // System.out.println("Still need to figure out the Comparable");
     }
     
     
@@ -238,18 +238,18 @@ public class LinkedList<T extends Comparable<T>> {
 
         return new_head;
     }
-    /*
+    
     private Node<T> _sorted_insert(Node<T> head, Node<T> node) {
         if (node == null) return head;
 
-        if (head == null || node.value() <= head.value()) {
+        if (head == null || node.value().compareTo(head.value()) <= 0) {
             node.setNext(head);
             return node;
         }
 
         Node<T> curr = head;
 
-        while (curr.next() != null && (curr.next().value() < node.value()))
+        while (curr.next() != null && (curr.next().value().compareTo(node.value()) < 0))
             curr = curr.next();
 
         node.setNext(curr.next());
@@ -269,5 +269,5 @@ public class LinkedList<T extends Comparable<T>> {
         }
         return sorted;
     }
-    */
+    
 }
