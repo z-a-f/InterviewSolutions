@@ -5,94 +5,77 @@
 using namespace std;
 
 template <typename T>
-std::size_t size(Node<T>* head) {
-    std::size_t len = 0;
+static std::size_t size(std::shared_ptr< Node<T> > head) {
+    std::size_t list_length = 0;
     while (head != nullptr) {
         head = head->next();
-        len++;
+        list_length++;
     }
-    return len;
+    return list_length;
 }
 
 template <typename T>
-Node<T>* intersect (Node<T>* head1, Node<T>* head2) {
-    Node<T>* l1 = nullptr;
-    Node<T>* l2 = nullptr;
+std::shared_ptr< Node<T> > intersects (
+                                       std::shared_ptr< Node<T> > head1,
+                                       std::shared_ptr< Node<T> > head2) {
+    // std::shared_ptr< Node<T> > l1 = nullptr;
+    // std::shared_ptr< Node<T> > l2 = nullptr;
 
     size_t l1len = size(head1);
     size_t l2len = size(head2);
 
     int d = l1len - l2len;
-    l1 = d >= 0 ? head1 : head2;
-    l2 = d >= 0 ? head2 : head1;
+    std::shared_ptr< Node<T> > l1 = d >= 0 ? head1 : head2;
+    std::shared_ptr< Node<T> > l2 = d >= 0 ? head2 : head1;
     d = d >= 0 ? d : -d;
 
     while (d > 0) {
         l1 = l1->next();
         d--;
     }
-    // TODO: Didn't finish the code
+
+    while (l1 != nullptr) {
+        // cout << l1->value() << " " << l2->value() << endl;
+        if (l1 == l2) {
+            return l1;
+        }
+        l1 = l1->next();
+        l2 = l2->next();
+
+    }
+    return nullptr;    
 }
 
 int main() {
-    LinkedList<int> list;
-    LinkedList<int> sort;
+    LinkedList<int> list1;
+    LinkedList<int> list2;
 
-    list.addFront(11);
-    list.addFront(82);
-    list.addFront(23);
-    list.addFront(29);
+    list1.addFront(27);
+    list1.addFront(12);
+    list1.addFront(23);
+    list1.addFront(29);
 
-    cout << list << endl;
+    list2.addFront(4);
+    list2.addFront(13);
 
-    sort.setHead(insertion_sort(list.head()));
+    list2.head()->next()->setNext(list1.head()->next()->next());
 
-    cout << list << endl;
-    cout << sort << endl;
+    cout << list1 << endl;
+    cout << list2 << endl;
 
-    // cout << list << endl;
-    // cout << sort << endl;
+    std::shared_ptr< Node<int> > intsct = intersects(list1.head(), list2.head());
 
-    /*
-      Node<int>* list = new Node<int>(11);
+    if (intsct == nullptr) cout << "NULL" << endl;
+    else cout << intsct->value() << endl;
 
-      Node<int>* sort;
-
-      sort = new Node<int>(82);
-      sort->setNext(list);
-      list = sort;
-
-      sort = new Node<int>(23);
-      sort->setNext(list);
-      list = sort;
-
-      sort = new Node<int>(29);
-      sort->setNext(list);
-      list = sort;
-
-      sort = nullptr;
-      DEBUG(list, sort);
-
-      sort = insertion_sort(list);
-      DEBUG(list, sort);
-    */
-
-
-    /*LinkedList<int> list;
-      list.addFront(11);
-      list.addFront(82);
-      list.addFront(23);
-      list.addFront(29);
-      cout << list << endl;
-
-      cout << "\n *********** \n";
-      LinkedList<int> sorted;
-      sorted.setHead(insertion_sort(list.head()));
-      cout << "\n *********** \n";
-
-      cout << list << endl;
-
-      cout << sorted << endl;
-    */
+    LinkedList<int> list3;
+    list3.addFront(27);
+    list3.addFront(12);
+    list3.addFront(23);
+    list3.addFront(29);
+    intsct = intersects(list1.head(), list3.head());
+    if (intsct == nullptr) cout << "NULL" << endl;
+    else cout << intsct->value() << endl;
+    
     return 0;
 }

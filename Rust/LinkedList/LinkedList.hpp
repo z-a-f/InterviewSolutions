@@ -20,7 +20,8 @@ template <typename T>
 class Node {
 public:
     /** Constructor */
-    Node(T e = T(0)) : _elem(e), _next(nullptr), _arb(nullptr) {}
+    // Node(T e = T(0)) : _elem(e), _next(nullptr), _arb(nullptr) {}
+    Node(T e = T(0)) : _elem(e), _next(nullptr), _arb(std::weak_ptr< Node<T> >()) {}
     // ~Node() { delete _next; }
 public:
     // Getters/Setters:
@@ -31,14 +32,19 @@ public:
     const T& value() const { return this->_elem; }
     /** Return the next node
      *
-     * @returns Node<T>*
+     * @returns std::shared_ptr< Node<T> >
      */
-    Node<T>* next() const { return this->_next; }
+    std::shared_ptr< Node<T> > next() const { return this->_next; }
     /** Return the arbitrary node
      *
-     * @returns Node<T>*
+     * @returns std::shared_ptr< Node<T> >
      */
-    Node<T>* arb() const { return this->_arb; }
+    std::shared_ptr< Node<T> > arb() const {
+        // std::shared_ptr< Node<T> > sp(this->_arb);
+        // return sp;
+        if (this->_arb.expired()) return nullptr;
+        return std::shared_ptr< Node<T> > (this->_arb);
+    }
     /** Set the value in the node
      *
      * @param T value
@@ -46,18 +52,26 @@ public:
     void setValue(const T& e) { this->_elem = e; }
     /** Set the next pointer
      *
-     * @param Node<T>* the next "next" pointer
+     * @param std::shared_ptr< Node<T> > the next "next" pointer
      */
-    void setNext(Node<T>* n) { this->_next = n; }
+    void setNext(std::shared_ptr< Node<T> > n) { this->_next = n; }
     /** Set the arbitrary pointer
      *
-     * @param Node<T>* the next "arb" pointer
+     * @param std::shared_ptr< Node<T> > the next "arb" pointer
      */
-    void setArb(Node<T>* n) { this->_arb = n; }
+    void setArb(std::shared_ptr< Node<T> > n) { this->_arb = n; }
+    /** Set the arbitrary pointer
+     *
+     * @param std::weak_ptr< Node<T> > the next "arb" pointer
+     */
+    void setArb(std::weak_ptr< Node<T> > n) { this->_arb = n; }
 private:
     T _elem;                    //!< Stored value
-    Node<T>* _next;             //!< Next element
-    Node<T>* _arb;              //!< Arbitrary element
+    // std::shared_ptr< Node<T> > _next;             //!< Next element
+    // std::shared_ptr< Node<T> > _arb;              //!< Arbitrary element
+    std::shared_ptr< Node<T> > _next;             //!< Next element
+    // std::shared_ptr< Node<T> > _arb;              //!< Arbitrary element
+    std::weak_ptr< Node<T> > _arb;              //!< Arbitrary element
 
     friend class LinkedList<T>; //!< Friend class
 };
@@ -71,7 +85,7 @@ template <typename T>
 class LinkedList {
 public:
     LinkedList();
-    ~LinkedList();
+    // ~LinkedList();
 public:
     bool empty() const;
     const T& front() const throw(std::range_error);
@@ -80,15 +94,15 @@ public:
 public:
     // Housekeeping
     std::size_t size() const;
-    Node<T>* head();
-    void setHead(Node<T>* h);             // This is dangerous!!!
+    std::shared_ptr< Node<T> > head();
+    void setHead(std::shared_ptr< Node<T> > h);             // This is dangerous!!!
     // template <typename U>
     // friend std::ostream& operator<<(std::ostream& os, const LinkedList<U>& list);
-    Node<T>* operator[](std::size_t idx);
+    std::shared_ptr< Node<T> > operator[](std::size_t idx);
     friend std::ostream& operator<<<>(std::ostream& os, const LinkedList& list);
     void printArb();
 private:
-    Node<T>* _head;
+    std::shared_ptr< Node<T> > _head;
     // std::size_t _size;
 
     // Rust solutions after this point
@@ -99,11 +113,11 @@ public:
     LinkedList<T> deepCopy();
     void sort();
 private:
-    Node<T>* _reverse_recursive(Node<T>* node);
-    Node<T>* _deep_copy_1 (Node<T>* head);
-    Node<T>* _deep_copy_2 (Node<T>* head);
-    Node<T>* _sorted_insert(Node<T>* head, Node<T>* node);
-    Node<T>* _insertion_sort(Node<T>* head);
+    std::shared_ptr< Node<T> > _reverse_recursive(std::shared_ptr< Node<T> > node);
+    std::shared_ptr< Node<T> > _deep_copy_1 (std::shared_ptr< Node<T> > head);
+    std::shared_ptr< Node<T> > _deep_copy_2 (std::shared_ptr< Node<T> > head);
+    std::shared_ptr< Node<T> > _sorted_insert(std::shared_ptr< Node<T> > head, std::shared_ptr< Node<T> > node);
+    std::shared_ptr< Node<T> > _insertion_sort(std::shared_ptr< Node<T> > head);
 };
 
 
@@ -113,11 +127,11 @@ template <typename T>
 LinkedList<T>::LinkedList() : _head(nullptr)/*, _size(0)*/ {}
 
 /** Destructor */
-template <typename T>
-LinkedList<T>::~LinkedList() {
-    while (!empty()) removeFront();
-    // delete _head;
-}
+// template <typename T>
+// LinkedList<T>::~LinkedList() {
+//     while (!empty()) removeFront();
+//     // delete _head;
+// }
 
 /** Empty?
  *
@@ -148,7 +162,8 @@ const T& LinkedList<T>::front() const
  */
 template <typename T>
 void LinkedList<T>::addFront(const T& e) {
-    Node<T>* v = new Node<T>;
+    // std::shared_ptr< Node<T> > v = std::make_shared< Node<T> >();// (new Node<T>);
+    std::shared_ptr< Node<T> > v(new Node<T>);
     v->_elem = e;
     v->_next = _head;
     _head = v;
@@ -161,10 +176,11 @@ void LinkedList<T>::addFront(const T& e) {
 template <typename T>
 void LinkedList<T>::removeFront() {
     if (this->empty()) return;
-    Node<T>* old = _head;
+    std::shared_ptr< Node<T> > old = _head;
     _head = old->_next;
     // _size--;
-    delete old;
+    // delete old;
+    old.reset();
 }
 
 /** Number of elements in the list
@@ -185,20 +201,20 @@ std::size_t LinkedList<T>::size() const {
 
 /** Returns the head of the linked list
  *
- * @returns Node<T>* the head of the current linked list
+ * @returns std::shared_ptr< Node<T> > the head of the current linked list
  */
 template <typename T>
-Node<T>* LinkedList<T>::head() { return this->_head; }
+std::shared_ptr< Node<T> > LinkedList<T>::head() { return this->_head; }
 
 /** Set the head to different node
  *
  * NOTE: this method is dangerous as it will lose information
  * about other nodes!!!
  *
- * @params Node<T>* the node to be set as head
+ * @params std::shared_ptr< Node<T> > the node to be set as head
  */
 template <typename T>
-void LinkedList<T>::setHead(Node<T>* h) {
+void LinkedList<T>::setHead(std::shared_ptr< Node<T> > h) {
     this->_head = h;
     // this->resetSize();
 }
@@ -214,18 +230,19 @@ template <typename T>
 std::ostream& operator<<(std::ostream& os, const LinkedList<T>& list) {
 
     os << "HEAD->";
-    Node<T>* ptr = list._head;
+    std::shared_ptr< Node<T> > ptr = list._head;
     while (ptr != nullptr) {
         os << ptr->_elem << "->";
         ptr = ptr->_next;
     }
     os << "NULL";
-    delete ptr;
+    // delete ptr;
+    ptr.reset();
     return os;
 
     /*
       os << "[HEAD]\n V\n";
-      Node<T>* ptr = list._head;
+      std::shared_ptr< Node<T> > ptr = list._head;
       while (ptr != nullptr) {
       os << "[" << ptr->_elem << "]->";
       os << "[";// << ( (ptr->arb() == nullptr) ? "NULL" : ptr->arb()->_elem) << "]\n V";
@@ -246,20 +263,25 @@ std::ostream& operator<<(std::ostream& os, const LinkedList<T>& list) {
 template <typename T>
 void LinkedList<T>::printArb() {
     std::cout << "[HEAD]\n V\n";
-    Node<T>* ptr = this->_head;
+    std::shared_ptr< Node<T> > ptr = this->_head;
     while (ptr != nullptr) {
         std::cout << "[" << ptr->_elem << "]->";
         std::cout << "[";// << ( (ptr->arb() == nullptr) ? "NULL" : ptr->arb()->_elem) << "]\n V";
-        if (ptr->arb() == nullptr)
+        // std::cout << "DEBUG1\n";
+        if (ptr->arb() == nullptr) { // ptr->arb() == nullptr) {
+            // std::cout << "DEBUG2\n";
             std::cout << "NULL";
-        else
+        } else{
+            // std::cout << "DEBUG3\n";
             std::cout << ptr->arb()->_elem << "|" << (ptr->arb());
+        }
 
         std::cout << "]\n V\n";
         ptr = ptr->_next;
     }
     std::cout << "[NULL]";
-    delete ptr;
+    // delete ptr;
+    ptr.reset();
     // return std::cout;
 }
 
@@ -272,17 +294,18 @@ void LinkedList<T>::reverse() {
     if (this->_head == nullptr || this->_head->_next == nullptr)
         return;
 
-    Node<T>* list_to_do = this->_head->_next;
+    std::shared_ptr< Node<T> > list_to_do = this->_head->_next;
     this->_head->_next = nullptr;
 
     while (list_to_do != nullptr) {
-        Node<T>* temp = list_to_do;
+        std::shared_ptr< Node<T> > temp = list_to_do;
         list_to_do = list_to_do->_next;
 
         temp->_next = _head;
         _head = temp;
     }
-    delete list_to_do;
+    // delete list_to_do;
+    list_to_do.reset();
 }
 
 /** Reverse the linked list using solution 2 (recursive)
@@ -298,8 +321,8 @@ void LinkedList<T>::reverseRecursive() {
  */
 template <typename T>
 void LinkedList<T>::deleteKey (T key) {
-    Node<T>* prev = nullptr;
-    Node<T>* current = this->head();
+    std::shared_ptr< Node<T> > prev = nullptr;
+    std::shared_ptr< Node<T> > current = this->head();
 
     while (current != nullptr) {
         if (current->value() == key) {
@@ -321,7 +344,8 @@ void LinkedList<T>::deleteKey (T key) {
         prev->setNext(current->next());
     }
 
-    delete current;
+    // delete current;
+    current.reset();
 }
 
 /** Deep copy method
@@ -346,16 +370,16 @@ void LinkedList<T>::sort() {
 
 /** Reverse a singly linked list (Recursive)
  *
- * @returns Node<T>* The head of the reversed linked list
- * @param Node<T>* The head of the linked list to be reversed
+ * @returns std::shared_ptr< Node<T> > The head of the reversed linked list
+ * @param std::shared_ptr< Node<T> > The head of the linked list to be reversed
  */
 template <typename T>
-Node<T>* LinkedList<T>::_reverse_recursive (Node<T>* node) {
+std::shared_ptr< Node<T> > LinkedList<T>::_reverse_recursive (std::shared_ptr< Node<T> > node) {
     // If the size of the linked list = 0 or 1, nothing to do :)
     if (node == nullptr || node->next() == nullptr)
         return node;
 
-    Node<T>* reversed_list = this->_reverse_recursive(node->next());
+    std::shared_ptr< Node<T> > reversed_list = this->_reverse_recursive(node->next());
 
     node->next()->setNext(node);
     node->setNext(nullptr);
@@ -364,25 +388,26 @@ Node<T>* LinkedList<T>::_reverse_recursive (Node<T>* node) {
 
 /** Deep copy the single linked list (solution 1)
  *
- * @returns Node<T>* The head of the new linked list
- * @params Node<T>* The head of the original linked list
+ * @returns std::shared_ptr< Node<T> > The head of the new linked list
+ * @params std::shared_ptr< Node<T> > The head of the original linked list
  */
 template <typename T>
-Node<T>* LinkedList<T>::_deep_copy_1 (Node<T>* head) {
+std::shared_ptr< Node<T> > LinkedList<T>::_deep_copy_1 (std::shared_ptr< Node<T> > head) {
     // If the linked list is empty, return
     if (head == nullptr) {
         return nullptr;
     }
 
-    Node<T>* current = head;
-    Node<T>* new_head = nullptr;
-    Node<T>* new_prev = nullptr;
-    std::unordered_map<Node<T>*, Node<T>*> map;
+    std::shared_ptr< Node<T> > current = head;
+    std::shared_ptr< Node<T> > new_head = nullptr;
+    std::shared_ptr< Node<T> > new_prev = nullptr;
+    std::unordered_map<std::shared_ptr< Node<T> >, std::shared_ptr< Node<T> > > map;
 
     // Create copy of the linked list, recording the corresponding
     // nodes in hashmap without updating arbitrary pointer
     while (current != nullptr) {
-        Node<T>* new_node = new Node<T>(current->value());
+        std::shared_ptr< Node<T> > new_node = std::make_shared< Node<T> >(current->value());
+        // new Node<T>(current->value());
 
         // Copy the old arbitrary pointer in the new node
         new_node->setArb(current->arb());
@@ -398,12 +423,12 @@ Node<T>* LinkedList<T>::_deep_copy_1 (Node<T>* head) {
         current = current->next();
     }
 
-    Node<T>* new_current = new_head;
+    std::shared_ptr< Node<T> > new_current = new_head;
 
     // Update arbitrary pointer:
     while (new_current != nullptr) {
         if (new_current->arb() != nullptr) {
-            Node<T>* node = map[new_current->arb()];
+            std::shared_ptr< Node<T> > node = map[new_current->arb()];
             new_current->setArb(node);
         }
         new_current = new_current->next();
@@ -413,21 +438,22 @@ Node<T>* LinkedList<T>::_deep_copy_1 (Node<T>* head) {
 
 /** Deep copy the single linked list (solution 2)
  *
- * @returns Node<T>* The head of the new linked list
- * @params Node<T>* The head of the original linked list
+ * @returns std::shared_ptr< Node<T> > The head of the new linked list
+ * @params std::shared_ptr< Node<T> > The head of the original linked list
  */
 template <typename T>
-Node<T>* LinkedList<T>::_deep_copy_2 (Node<T>* head) {
+std::shared_ptr< Node<T> > LinkedList<T>::_deep_copy_2 (std::shared_ptr< Node<T> > head) {
     // If the linked list is empty, return
     if (head == nullptr) {
         return nullptr;
     }
 
-    Node<T>* current = head;
+    std::shared_ptr< Node<T> > current(head);
 
     // Inserting new nodes within the existing linked list
     while (current != nullptr) {
-        Node<T>* new_node = new Node<T>(current->value());
+        // std::shared_ptr< Node<T> > new_node(std::make_shared< Node<T> >(current->value()));
+        std::shared_ptr< Node<T> > new_node(new Node<T>(current->value()));
         new_node->setNext(current->next());
         current->setNext(new_node);
         current = new_node->next();
@@ -436,6 +462,7 @@ Node<T>* LinkedList<T>::_deep_copy_2 (Node<T>* head) {
     // Setting correct arbitrary pointers
     current = head;
     while (current != nullptr) {
+        // std::cout << "DEBUG" << current->arb()->value() << std::endl;
         if (current->arb() != nullptr) {
             current->next()->setArb(current->arb()->next());
         }
@@ -444,8 +471,8 @@ Node<T>* LinkedList<T>::_deep_copy_2 (Node<T>* head) {
 
     // Separating lists
     current = head;
-    Node<T>* new_head = head->next();
-    Node<T>* copied_current = nullptr;
+    std::shared_ptr< Node<T> > new_head(head->next());
+    std::shared_ptr< Node<T> > copied_current(nullptr);
 
     while (current != nullptr) {
         copied_current = current->next();
@@ -466,12 +493,12 @@ Node<T>* LinkedList<T>::_deep_copy_2 (Node<T>* head) {
  * for a given node and inserts it into the linked
  * list with head "head"
  *
- * @returns Node<T>* The head of the new linked list
- * @param Node<T>* head -> the head of the linked list
- * @param Node<T>* node -> node to be inserted
+ * @returns std::shared_ptr< Node<T> > The head of the new linked list
+ * @param std::shared_ptr< Node<T> > head -> the head of the linked list
+ * @param std::shared_ptr< Node<T> > node -> node to be inserted
  */
 template <typename T>
-Node<T>* LinkedList<T>::_sorted_insert(Node<T> *head, Node<T> *node) {
+std::shared_ptr< Node<T> > LinkedList<T>::_sorted_insert(std::shared_ptr< Node<T> > head, std::shared_ptr< Node<T> > node) {
     if (node == nullptr) {
         return head;
     }
@@ -481,7 +508,7 @@ Node<T>* LinkedList<T>::_sorted_insert(Node<T> *head, Node<T> *node) {
         return node;
     }
 
-    Node<T>* curr = head;
+    std::shared_ptr< Node<T> > curr = head;
 
     while (curr->next() != nullptr && curr->next()->value() < node->value()) {
         curr = curr->next();
@@ -498,17 +525,17 @@ Node<T>* LinkedList<T>::_sorted_insert(Node<T> *head, Node<T> *node) {
  *
  * Sort the linked list and destroy the original
  *
- * @returns Node<T>* The head of the new linked list
- * @param Node<T>* head -> the head of the old linked list
+ * @returns std::shared_ptr< Node<T> > The head of the new linked list
+ * @param std::shared_ptr< Node<T> > head -> the head of the old linked list
  */
 
 template <typename T>
-Node<T>* LinkedList<T>::_insertion_sort(Node<T> *head){
-    Node<T>* sorted = nullptr;
-    Node<T>* curr = head;
+std::shared_ptr< Node<T> > LinkedList<T>::_insertion_sort(std::shared_ptr< Node<T> > head){
+    std::shared_ptr< Node<T> > sorted = nullptr;
+    std::shared_ptr< Node<T> > curr = head;
 
     while (curr != nullptr) {
-        Node<T>* temp = curr->next();
+        std::shared_ptr< Node<T> > temp = curr->next();
         sorted = this->_sorted_insert(sorted, curr);
         curr = temp;
     }
@@ -529,10 +556,10 @@ class Int {
 public:
     Int() { this->_num.setHead(nullptr); }
     Int(int n);
-    Int (Node<int>* n) { this->_num.setHead(n); }
+    Int (std::shared_ptr< Node<int> > n) { this->_num.setHead(n); }
     // ~Int();
 public:
-    Node<int>* getHead() const {
+    std::shared_ptr< Node<int> > getHead() const {
         return const_cast<Int*>(this)->_num.head(); }
     Int& operator=(const Int& rhs);
     int value() const;
@@ -584,24 +611,24 @@ Int& Int::operator=(const Int& rhs) {
 int Int::value() const {
     long exp = 1;
     int n = 0;
-    Node<int>* ptr = this->getHead();
+    std::shared_ptr< Node<int> > ptr = this->getHead();
     while (ptr != nullptr) {
         n += exp * ptr->value();
         exp *= 10;
         ptr = ptr->next();
     }
-    delete ptr;
+    // delete ptr;
     return n;
 }
 
 /** Addition operator overloading
  */
 Int operator+(const Int& A, const Int& B) {
-    Node<int>* a = A.getHead();
-    Node<int>* b = B.getHead();
+    std::shared_ptr< Node<int> > a = A.getHead();
+    std::shared_ptr< Node<int> > b = B.getHead();
 
-    Node<int>* result = nullptr;
-    Node<int>* last = nullptr;
+    std::shared_ptr< Node<int> > result = nullptr;
+    std::shared_ptr< Node<int> > last = nullptr;
     int carry = 0;
 
     while (a != nullptr || b != nullptr || carry > 0) {
@@ -610,7 +637,8 @@ Int operator+(const Int& A, const Int& B) {
 
         int sum = first + second + carry;
         // cout << "DEBUG: " << first << ' ' << second << endl;
-        Node<int>* pNew = new Node<int>(sum % 10);
+        std::shared_ptr< Node<int> > pNew = std::make_shared<Node<int> >(sum%10);
+        // (new Node<int>(sum % 10));
         carry = sum / 10;
 
         if (result == nullptr) {

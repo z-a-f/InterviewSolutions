@@ -14,7 +14,7 @@ int main() {
 	cout << "Exception caught: " << e.what() << endl;
   }
 
-  list.addFront('a');           // Should invalid, but works
+  list.addFront('a');           // Should be invalid, but works
   list.addFront(21);
   list.addFront(14);
   list.addFront(7);
@@ -59,16 +59,19 @@ int main() {
   Int a(123);
   Int b(897);
   Int c = a + b;
-  cout << c << endl;
+  cout << a << "+" << b << "=" << c << endl;
+  
 
   LinkedList<int> listArb;
+  listArb.addFront(15);
   listArb.addFront(21);
   listArb.addFront(14);
   listArb.addFront(7);
   listArb.head()->setArb(listArb.head()->next()->next());
   listArb.head()->next()->next()->setArb(listArb.head());
-  cout << listArb << endl;
 
+  cout << "List with arbitraries for deep copy:"  << listArb << endl;
+  listArb.printArb();
   LinkedList<int> listArbCopy = listArb.deepCopy();
   // listArbCopy.setHead(deep_copy_arbitrary_pointer(listArb.head()));
 
@@ -78,7 +81,7 @@ int main() {
   
   cout << listArbCopy << endl;
   cout << listArb << endl;
-
+  
   // Check the sorting algos:
   LinkedList<int> sort;
   sort.addFront(11);
