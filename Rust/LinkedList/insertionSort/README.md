@@ -1,4 +1,6 @@
 # Insertion Sort
+[solution](solution.md)
+
 Given head pointer of a linked list, sort linked list (in ascending order) using insertion sort and return new head pointer of the sorted linked list
 
 ## Example

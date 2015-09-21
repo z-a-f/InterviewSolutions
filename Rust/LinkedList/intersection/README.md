@@ -1,4 +1,6 @@
 # Intersection Point in Two Lists
+[solution](solution.md)
+
 Given head nodes of two linked lists which might or might not intersect, find out if they do, and return the intersection node (or null if not intersecting)
 
 ## Example

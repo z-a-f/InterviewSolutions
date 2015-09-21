@@ -1,5 +1,5 @@
 # Merge Sort
-[solution](solution1.md)
+[solution](solution.md)
 
 Given head pointer of a linked list, sort linked list (in ascending order) using merge sort and return new head pointer of the sorted linked list
 

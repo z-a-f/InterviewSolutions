@@ -1,4 +1,9 @@
 # Reverse a singly linked list
+
+[solution1](solution1.md)
+
+[solution2](solution1.md)
+
 Given the pointer/reference to the head of a singly linked list (SLL), reverse it and return the pointer/reference to the head of reversed SLL
 
 ## Example

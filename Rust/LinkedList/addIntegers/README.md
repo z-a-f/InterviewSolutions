@@ -1,5 +1,5 @@
 # Add two integers
-[solution](solution1.md)
+[solution](solution.md)
 
 Given head of two linked lists where each linked list represents an integer number (each node is a digit), add them and return resulting linked list.
 
