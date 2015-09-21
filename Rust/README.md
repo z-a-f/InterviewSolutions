@@ -10,11 +10,11 @@ Popular questions and solutions in C++, Python, and Java.
     * [tstLinkedList.java](LinkedList/tstLinkedList.java) -> Test file for java
     * [tstLinkedList.cpp](LinkedList/tstLinkedList.cpp)   -> Test file for C++
   * Questions and Solutions:
-    * [Adding Integers](LinkedList/addIntegers/README.md)
-    * [Deep Copy](LinkedList/deepCopy/README.md)
-    * [Delete a node by key](LinkedList/deleteKey/README.md)
-    * [Insertion Sort](LinkedList/insertionSort/README.md)
-    * [Find intersecting node](LinkedList/intersection/README.md)
-    * [Merge Sort](LinkedList/mergeSort/README.md)
-    * [Reverse Linked List](LinkedList/reverse/README.md)
+    * [Adding Integers](LinkedList/addIntegers)
+    * [Deep Copy](LinkedList/deepCopy)
+    * [Delete a node by key](LinkedList/deleteKey)
+    * [Insertion Sort](LinkedList/insertionSort)
+    * [Find intersecting node](LinkedList/intersection)
+    * [Merge Sort](LinkedList/mergeSort)
+    * [Reverse Linked List](LinkedList/reverse)
 
