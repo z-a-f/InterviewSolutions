@@ -2,6 +2,7 @@
 
 #include "../../LinkedList.hpp"
 
+// template <typename T> using pNode = std::shared_ptr< Node<T> >;
 using namespace std;
 
 template <typename T>

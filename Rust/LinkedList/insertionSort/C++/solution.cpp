@@ -2,17 +2,19 @@
 
 #include "../../LinkedList.hpp"
 
+
+template <typename T> using pNode = std::shared_ptr< Node<T> >;
 using namespace std;
 
 /** Insertion sort helper
  *
  * @tparams T
- * @param Node<T>*head Head of the sorted list
- * @param Node<T>*node Node to be inserted
- * @return Node<T>* List with the node inserted
+ * @param pNode<T> head Head of the sorted list
+ * @param pNode<T> node Node to be inserted
+ * @return pNode<T> List with the node inserted
  */
 template <typename T>
-static Node<T>* sorted_insert(Node<T>* head, Node<T>* node) {
+static pNode<T> sorted_insert(pNode<T> head, pNode<T> node) {
     if (node == nullptr) {
         return head;
     }
@@ -22,7 +24,7 @@ static Node<T>* sorted_insert(Node<T>* head, Node<T>* node) {
         return node;
     }
 
-    Node<T>* curr = head;
+    pNode<T> curr = head;
 
     while (curr->next() != nullptr && curr->next()->value() < node->value()) {
         curr = curr->next();
@@ -36,17 +38,17 @@ static Node<T>* sorted_insert(Node<T>* head, Node<T>* node) {
 /** Sort the linked list (destructive, buggy)
  *
  * @tparams T
- * @params Node<T>* the head of the linked list to be sorted
- * @returns Node<T>* the head of the new linked list
+ * @params pNode<T> the head of the linked list to be sorted
+ * @returns pNode<T> the head of the new linked list
  */
 template <typename T>
-Node<T>* insertion_sort(Node<T>* head) {
-    Node<T>* sorted = nullptr;
-    Node<T>* curr = head;
+pNode<T> insertion_sort(pNode<T> head) {
+    pNode<T> sorted = nullptr;
+    pNode<T> curr = head;
 
     // DEBUG(curr, sorted);
     while (curr != nullptr) {
-        Node<T>* temp = curr->next();
+        pNode<T> temp = curr->next();
         sorted = sorted_insert(sorted, curr);
         curr = temp;
         // DEBUG(curr, sorted);
@@ -56,8 +58,8 @@ Node<T>* insertion_sort(Node<T>* head) {
 }
 
 template<typename T>
-void DEBUG(Node<T>*orig, Node<T>* sort) {
-    Node<T>* ptr = orig;
+void DEBUG(pNode<T>orig, pNode<T> sort) {
+    pNode<T> ptr = orig;
     std::cout << "(orig)->";
     while (ptr != nullptr) {
         std::cout << "[" << ptr->value() << "]->";

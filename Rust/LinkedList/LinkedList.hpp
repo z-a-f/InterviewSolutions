@@ -664,8 +664,9 @@ Int operator+(const Int& A, const Int& B) {
         int second = (b == nullptr ? 0 : b->value());
 
         int sum = first + second + carry;
-        // cout << "DEBUG: " << first << ' ' << second << endl;
-        std::shared_ptr< Node<int> > pNew = std::make_shared<Node<int> >(sum%10);
+        
+        std::shared_ptr< Node<int> > pNew = std::shared_ptr< Node<int> >(new Node<int>(sum%10));
+        // std::make_shared<Node<int> >(sum%10);
         // (new Node<int>(sum % 10));
         carry = sum / 10;
 

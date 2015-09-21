@@ -2,17 +2,18 @@
 
 #include "../../LinkedList.hpp"
 
+template <typename T> using pNode = std::shared_ptr< Node<T> >;
 using namespace std;
 
 /** Delete a node with key `key` from the linked list
  *
- * @returns Node<T>* The head of the new linked list
- * @param Node<T>* The head of the linked list to search for `key`
+ * @returns pNode<T> The head of the new linked list (std::shared_ptr< Node<T> >)
+ * @param pNode<T> The head of the linked list to search for `key` (std::shared_ptr< Node<T> >)
  */
 template <typename T>
-Node<T>* delete_key (Node<T>* head, T key) {
-  Node<T>* prev = nullptr;
-  Node<T>* current = head;
+pNode<T> delete_key (pNode<T> head, T key) {
+  pNode<T> prev = nullptr;
+  pNode<T> current = head;
 
   while (current != nullptr) {
 	if (current->value() == key) {
@@ -33,7 +34,7 @@ Node<T>* delete_key (Node<T>* head, T key) {
 	prev->setNext(current->next());
   }
 
-  delete current;
+  // delete current;
   return head;
 }
 

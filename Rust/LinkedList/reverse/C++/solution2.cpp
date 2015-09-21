@@ -2,20 +2,21 @@
 
 #include "../../LinkedList.hpp"
 
+template <typename T> using pNode = std::shared_ptr< Node<T> >;
 using namespace std;
 
 /** Reverse a singly linked list (Recursive)
  *
- * @returns Node<T>* The head of the reversed linked list
- * @param Node<T>* The head of the linked list to be reversed
+ * @returns pNode<T> The head of the reversed linked list
+ * @param pNode<T> The head of the linked list to be reversed
  */
 template <typename T>
-Node<T>* reverse_recursive (Node<T>* head) {
+pNode<T> reverse_recursive (pNode<T> head) {
   // If the size of the linked list = 0 or 1, nothing to do :)
   if (head == nullptr || head->next() == nullptr)
 	return head;
 
-  Node<T>* reversed_list = reverse_recursive(head->next());
+  pNode<T> reversed_list = reverse_recursive(head->next());
 
   head->next()->setNext(head);
   head->setNext(nullptr);

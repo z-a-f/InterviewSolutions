@@ -2,14 +2,14 @@
 
 #include "../../LinkedList.hpp"
 
+template <typename T> using pNode = std::shared_ptr< Node<T> >;
 using namespace std;
-
 /** Add two integers of type Int
  *
  */
-Node<int>* add_integers (Node<int>* a, Node<int>* b) {
-  Node<int>* result = nullptr;
-  Node<int>* last = nullptr;
+pNode<int> add_integers (pNode<int> a, pNode<int> b) {
+  pNode<int> result = nullptr;
+  pNode<int> last = nullptr;
   int carry = 0;
   
   while (a != nullptr || b != nullptr || carry > 0) {
@@ -18,7 +18,7 @@ Node<int>* add_integers (Node<int>* a, Node<int>* b) {
 
 	int sum = first + second + carry;
 	cout << "DEBUG: " << first << ' ' << second << endl;
-	Node<int>* pNew = new Node<int>(sum % 10);
+	pNode<int> pNew = pNode<int>(new Node<int>(sum % 10));
 	carry = sum / 10;
 
 	if (result == nullptr) {
