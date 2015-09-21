@@ -9,18 +9,27 @@ import java.lang.Comparable;
 
 public class LinkedList<T extends Comparable<T>> {
     private Node<T> _head;
-    private Integer _size;
+    // private Integer _size;
 
     // Constructor
     public LinkedList() {
         this._head = null;
-        this._size = 0;
+        // this._size = 0;
     }
 
     public Node<T> head() { return this._head; }
     public void setHead(Node<T> h) { this._head = h; }
     public Boolean empty() { return this.size() == 0; }
-    public Integer size() { return this._size; }
+    // public Integer size() { return this._size; }
+    public int size() {
+        int list_length = 0;
+        Node<T> head = this.head();
+        while (head != null) {
+            head = head.next();
+            list_length++;
+        }
+        return list_length;
+    }
 
     public T front() {
         if (this.empty())
@@ -33,14 +42,14 @@ public class LinkedList<T extends Comparable<T>> {
         v._elem = e;
         v._next = this._head;
         this._head = v;
-        this._size++;
+        // this._size++;
     }
 
     public void removeFront() {
         if(this.empty()) return;
         Node<T> old = this._head;
         this._head = old._next;
-        this._size--;
+        // this._size--;
     }
 
     // This is the printing routine:
@@ -107,7 +116,7 @@ public class LinkedList<T extends Comparable<T>> {
 
         while (current != null) {
             if (current.value() == key) {
-                this._size--;
+                // this._size--;
                 break;
             }
             prev = current;
@@ -136,6 +145,31 @@ public class LinkedList<T extends Comparable<T>> {
         this.setHead(this._insertion_sort(this.head()));
         // System.out.println("This function is still not implemented!");
         // System.out.println("Still need to figure out the Comparable");
+    }
+
+    public Node<T> intersects (LinkedList<T> list) {
+        Node<T> l1 = null;
+        Node<T> l2 = null;
+
+        int d = this.size() - list.size();
+
+        l1 = (d >= 0) ? this.head() : list.head();
+        l2 = (d >= 0) ? list.head() : this.head();
+        d = (d >= 0) ? d : -d;
+
+        while (d > 0) {
+            l1 = l1.next();
+            d--;
+        }
+
+        while (l1 != null) {
+            if (l1 == l2) {
+                return l1;
+            }
+            l1 = l1.next();
+            l2 = l2.next();
+        }
+        return null;
     }
     
     

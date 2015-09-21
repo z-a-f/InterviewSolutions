@@ -1,4 +1,5 @@
 import LinkedListJava.*;
+import java.lang.Exception;
 
 public class tstLinkedList{
     public static void main(String[] args) {
@@ -77,6 +78,44 @@ public class tstLinkedList{
         System.out.println("Unsorted list is: " + list);
         list.sort();
         System.out.println("Sorted list is: " + list);
-        
+
+
+        System.out.println("Check the intersections:");
+
+        LinkedList<Integer> list1 = new LinkedList<>();
+        LinkedList<Integer> list2 = new LinkedList<>();
+        LinkedList<Integer> list3 = new LinkedList<>();
+
+        list1.addFront(27);
+        list1.addFront(12);
+        list1.addFront(23);
+        list1.addFront(29);
+
+        list2.addFront(4);
+        list2.addFront(13);
+
+        list2.head().next().setNext(list1.head().next().next());
+
+        list3.addFront(27);
+        list3.addFront(12);
+        list3.addFront(23);
+        list3.addFront(29);
+
+        System.out.println("List 1: " + list1);
+        System.out.println("List 2: " + list2);
+        System.out.println("List 3: " + list3);
+
+        Node<Integer> intsct;
+
+        intsct = list1.intersects(list2);
+
+        System.out.println("Intersect: " + intsct.value());
+
+        intsct = list1.intersects(list3);
+        try{
+            System.out.println("Intersect: " + intsct.value());
+        } catch(Exception e) {
+            System.out.println("Exception: " + e);
+        }
     }
 }

@@ -38,7 +38,7 @@ class LinkedList(object):
     # Public:
     def __init__(self):
         self._head = None
-        self._size = 0
+        # self._size = 0
 
     # Public:
     def empty(self):
@@ -52,18 +52,24 @@ class LinkedList(object):
     def addFront(self, e):
         v = Node(e, self.head())
         self.setHead(v)
-        self._size += 1
+        # self._size += 1
 
     def removeFront(self):
         if self.empty():
             return
         old = self.head()
         self.setHead(old.next())
-        self._size -= 1
+        # self._size -= 1
 
     # Public (housekeeping):
     def size(self):
-        return self._size
+        list_length = 0
+        head = self.head()
+        while head != None:
+            head = head.next()
+            list_length += 1
+        return list_length
+        # return self._size
 
     def head(self):
         return self._head
@@ -122,7 +128,7 @@ class LinkedList(object):
 
         while (current != None):
             if (current.value() == key):
-                self._size -= 1
+                # self._size -= 1
                 break
             prev = current
             current = current.next()
@@ -147,6 +153,33 @@ class LinkedList(object):
         self.setHead(self._insertion_sort(self.head()))
 
 
+
+    def intersects(self, list):
+        l1 = None
+        l2 = None
+
+        d = self.size() - list.size()
+
+        l1 = self.head() if d >= 0 else list.head()
+        l2 = list.head() if d >= 0 else self.head()
+        d = d if d >= 0 else -d
+
+        while d > 0:
+            l1 = l1.next()
+            d -= 1
+
+        while l1 != None:
+            if l1 == l2:
+                return l1
+            l1 = l1.next()
+            l2 = l2.next()
+
+        return None
+        
+        
+        
+
+        
     ######################################
     # Internal utilities:
 
@@ -408,4 +441,36 @@ if __name__ == '__main__':
     print list
     list.sort()
     print list
+    
+
+    print "Test the intersection point:"
+    list1 = LinkedList()
+    list2 = LinkedList()
+    list3 = LinkedList()
+    
+    list1.addFront(27)
+    list1.addFront(12)
+    list1.addFront(23)
+    list1.addFront(29)
+    
+    list2.addFront(4)
+    list2.addFront(13)
+    
+    list2.head().next().setNext(list1.head().next().next())
+    
+    list3.addFront(27)
+    list3.addFront(12)
+    list3.addFront(23)
+    list3.addFront(29)
+    
+    print list1
+    print list2
+    print list3
+    
+    # intsct = Node()
+    intsct = list1.intersects(list2)
+    print intsct
+    
+    intsct = list1.intersects(list3)
+    print intsct
     

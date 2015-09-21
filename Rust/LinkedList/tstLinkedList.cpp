@@ -93,6 +93,41 @@ int main() {
   sort.sort();
   cout << sort << endl;
   
+  // Check the intersections:
+  cout << "Check the intersections...\n";
+  LinkedList<int> list1;
+  LinkedList<int> list2;
+
+  list1.addFront(27);
+  list1.addFront(12);
+  list1.addFront(23);
+  list1.addFront(29);
+
+  list2.addFront(4);
+  list2.addFront(13);
+
+  list2.head()->next()->setNext(list1.head()->next()->next());
+
+  cout << list1 << endl;
+  cout << list2 << endl;
+
+  std::shared_ptr< Node<int> > intsct = list1.intersects(list2);
+
+  if (intsct == nullptr) cout << "NULL" << endl;
+  else cout << intsct->value() << endl;
+
+  LinkedList<int> list3;
+  list3.addFront(27);
+  list3.addFront(12);
+  list3.addFront(23);
+  list3.addFront(29);
+  intsct = list1.intersects(list3);
+  if (intsct == nullptr) cout << "NULL" << endl;
+  else cout << intsct->value() << endl;
+
+  
   
   return 0;
 }
+
+

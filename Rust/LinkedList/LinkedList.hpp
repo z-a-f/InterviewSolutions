@@ -112,6 +112,7 @@ public:
     void deleteKey (T key);
     LinkedList<T> deepCopy();
     void sort();
+    std::shared_ptr< Node<T> > intersects(LinkedList<T> l);
 private:
     std::shared_ptr< Node<T> > _reverse_recursive(std::shared_ptr< Node<T> > node);
     std::shared_ptr< Node<T> > _deep_copy_1 (std::shared_ptr< Node<T> > head);
@@ -190,7 +191,7 @@ void LinkedList<T>::removeFront() {
 template <typename T>
 std::size_t LinkedList<T>::size() const {
     // return this->_size;
-    Node<T> head = this->head();
+    std::shared_ptr< Node<T> > head = const_cast<LinkedList<T>*>(this)->head(); // Need to cast this as const
     std::size_t len = 0;
     while (head != nullptr) {
         head = head->next();
@@ -363,6 +364,33 @@ LinkedList<T> LinkedList<T>::deepCopy() {
 template <typename T>
 void LinkedList<T>::sort() {
     this->setHead(this->_insertion_sort(this->head()));
+}
+
+/** Check if current linked list intersects another ones
+ *
+ * @returns Node<T> Returns Node if intersection found, nullptr othrewise
+ * @param LinkedList<T> the list to be compared to
+ */
+template <typename T>
+std::shared_ptr< Node<T> > LinkedList<T>::intersects(LinkedList<T> list) {
+    int d = this->size() - list.size();
+    std::shared_ptr< Node<T> > l1 = d >= 0 ? this->head() : list.head();
+    std::shared_ptr< Node<T> > l2 = d >= 0 ? list.head() : this->head();
+    d = d >= 0 ? d : -d;
+
+    while (d > 0) {
+        l1 = l1->next();
+        d--;
+    }
+
+    while (l1 != nullptr) {
+        if (l1 == l2) {
+            return l1;
+        }
+        l1 = l1->next();
+        l2 = l2->next();
+    }
+    return nullptr;
 }
 
 //////////////////////////////////////
