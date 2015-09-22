@@ -1,9 +1,10 @@
 import linkedlist.*;
+import java.lang.Comparable;
 import java.util.Hashtable;
 
 class solution1 {
     // This is the solution :)
-    public static <T> Node<T> deep_copy_arbitrary_pointer(Node<T> head) {
+    public static <T extends Comparable<T>> Node<T> deep_copy_arbitrary_pointer(Node<T> head) {
         if (head == null) {
             return null;
         }

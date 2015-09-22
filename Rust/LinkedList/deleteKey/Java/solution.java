@@ -1,8 +1,9 @@
-import LinkedListJava.*;
+import linkedlist.*;
+import java.lang.Comparable;
 
 class solution {
 	// This is the solution :)
-	public static <T> Node<T> delete_key(Node<T> head, T key) {
+	public static <T extends Comparable<T>> Node<T> delete_key(Node<T> head, T key) {
 		Node<T> prev = null;
 		Node<T> current = head;
 

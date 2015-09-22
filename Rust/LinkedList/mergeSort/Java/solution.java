@@ -1,5 +1,5 @@
-import LinkedListJava.*;
-// import java.lang.Comparable;
+import linkedlist.*;
+import java.lang.Comparable;
 
 class solution {
     // This is the solution :)

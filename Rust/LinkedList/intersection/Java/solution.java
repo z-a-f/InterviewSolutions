@@ -1,7 +1,7 @@
-import java.lang.Exception;
-import LinkedListJava.*;
-// import java.lang.Comparable;
+import linkedlist.*;
 
+import java.lang.Exception;
+import java.lang.Comparable;
 
 class solution1 {
     // This is the solution :)
