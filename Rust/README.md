@@ -2,22 +2,20 @@
 Popular questions and solutions in C++, Python, and Java.
 
 ## TOC
-* [Linked Lists](LinkedList)
-  * Libraries and Testers:
-    * [LinkedList.hpp](LinkedList/LinkedList.hpp)         -> C++ library for linked lists (+solutions)
-    * [LinkedListJava](LinkedList/LinkedListJava)         -> Java library for linked Lists (+solutions)
-    * [LinkedList.py](LinkedList/LinkedList.py)           -> Python library for linked lists (+solutions/+tests)
-    * [tstLinkedList.java](LinkedList/tstLinkedList.java) -> Test file for java
-    * [tstLinkedList.cpp](LinkedList/tstLinkedList.cpp)   -> Test file for C++
-  * Questions and Solutions:
-    * [Adding Integers](LinkedList/addIntegers)
-    * [Deep Copy](LinkedList/deepCopy)
-    * [Delete a node by key](LinkedList/deleteKey)
-    * [Insertion Sort](LinkedList/insertionSort)
-    * [Find intersecting node](LinkedList/intersection)
-    * [Merge Sort](LinkedList/mergeSort)
-    * [Reverse Linked List](LinkedList/reverse)
+* [Custom libraries](Library)
+  * [C++](Library/C++)
+  * [Java](Library/Java)
+  * [Python](Library/Python)
+* [Linked List Questions](LinkedList)
+  * [Library tests](LinkedList/Tests)
+  * [Adding integers that are represented as linked lists](LinkedList/addIntegers)
+  * [Deep copy a linked list](LinkedList/deepCopy)
+  * [Delete a node by key](LinkedList/deleteKey)
+  * [Insertion sort of a linked list](LinkedList/insertionSort)
+  * [Find intersecting node](LinkedList/intersection)
+  * [Merge sort of a linked list](LinkedList/mergeSort)
+  * [Reverse linked list](LinkedList/reverse)
 
 
 ## Notes
-* I am aware that using `shared_ptr` as a function argument doesn't make sense in most of the files, as I don't transfer ownership - I was just lazy and did it that way :)
+* I use `shared_ptr` all over the place. Ideally in the function arguments you don't want to do that, unless you want to transfer ownership.
