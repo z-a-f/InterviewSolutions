@@ -7,7 +7,7 @@ Popular questions and solutions in C++, Python, and Java.
   * [Java](Library/Java)
   * [Python](Library/Python)
 * [Linked List Questions](LinkedList)
-  * [Library tests](LinkedList/Tests)
+  * [__Library tests__](LinkedList/Tests)
   * [Adding integers that are represented as linked lists](LinkedList/addIntegers)
   * [Deep copy a linked list](LinkedList/deepCopy)
   * [Delete a node by key](LinkedList/deleteKey)
