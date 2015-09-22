@@ -150,9 +150,8 @@ class LinkedList(object):
         return copy
 
     def sort(self):
-        self.setHead(self._insertion_sort(self.head()))
-
-
+        # self.setHead(self._insertion_sort(self.head()))
+        self.setHead(self._merge_sort(self.head()))
 
     def intersects(self, list):
         l1 = None
@@ -299,6 +298,63 @@ class LinkedList(object):
 
         return sorted
 
+    def _split(self, head):
+        slow = head
+        fast = head.next()
+
+        while (fast != None):
+            fast = fast.next()
+            if (fast != None):
+                fast = fast.next()
+                slow = slow.next()
+
+        fast = slow.next()
+        slow.setNext(None)
+
+        return fast
+
+    def _merge(self, first, second):
+        if (first == None): return second
+        if (second == None): return first
+
+        # new_head = Node()
+        if (first.value() <= second.value()):
+            new_head = first
+            first = first.next()
+        else:
+            new_head = second
+            second = second.next()
+
+        current = new_head
+        while (first != None) and (second != None):
+            temp = None
+            if (first.value() <= second.value()):
+                temp = first
+                first = first.next()
+            else:
+                temp = second
+                second = second.next()
+                current.setNext(temp)
+                current = temp
+
+        if (first != None):
+            current.setNext(first)
+        elif (second != None):
+            current.setNext(second)
+
+        return new_head
+
+    def _merge_sort(self, head):
+        if (head == None): return None
+        if (head.next() == None): return head
+
+        second_half = self._split(head)
+
+        l1 = self._merge_sort(head)
+        l2 = self._merge_sort(second_half)
+
+        return self._merge(l1,l2)
+    
 """
 Int class
 """

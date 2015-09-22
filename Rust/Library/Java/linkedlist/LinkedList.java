@@ -140,7 +140,8 @@ public class LinkedList<T extends Comparable<T>> {
     }
 
     public void sort() {
-        this.setHead(this._insertion_sort(this.head()));
+        // this.setHead(this._insertion_sort(this.head()));
+        this.setHead(this._merge_sort(this.head()));
         // System.out.println("This function is still not implemented!");
         // System.out.println("Still need to figure out the Comparable");
     }
@@ -301,5 +302,73 @@ public class LinkedList<T extends Comparable<T>> {
         }
         return sorted;
     }
-    
+
+    // Merge sort routines:
+    private Node<T> _split (Node<T> head) {
+        Node<T> slow = new Node<T>();
+        Node<T> fast = new Node<T>();
+
+        slow = head;
+        fast = head.next();
+
+        while (fast != null) {
+            fast = fast.next();
+            if (fast != null) {
+                fast = fast.next();
+                slow = slow.next();
+            }
+        }
+        fast = slow.next();
+        slow.setNext(null);
+        return fast;
+    }
+
+    private Node<T> _merge (
+        Node<T> first, Node<T> second) {
+        if (first == null) return second;
+        if (second == null) return first;
+
+        Node<T> new_head = new Node<T>();
+        if (first.value().compareTo(second.value()) <= 0) {
+            new_head = first;
+            first = first.next();
+        } else {
+            new_head = second;
+            second = second.next();
+        }
+
+        Node<T> current = new_head;
+        while (first != null && second != null) {
+            Node<T> temp = null;
+            if (first.value().compareTo(second.value()) <= 0) {
+                temp = first;
+                first = first.next();
+            } else {
+                temp = second;
+                second = second.next();
+            }
+            current.setNext(temp);
+            current = temp;
+        }
+
+        if (first != null) {
+            current.setNext(first);
+        } else if (second != null) {
+            current.setNext(second);
+        }
+
+        return new_head;
+    }
+
+    private Node<T> _merge_sort (Node<T> head) {
+        if (head == null) return null;
+        if (head.next() == null) return head;
+
+        Node<T> second_half = this._split(head);
+
+        Node<T> l1 = this._merge_sort(head);
+        Node<T> l2 = this._merge_sort(second_half);
+
+        return this._merge(l1, l2);
+    }
 }

@@ -67,10 +67,7 @@ public:
     void setArb(std::weak_ptr< Node<T> > n) { this->_arb = n; }
 private:
     T _elem;                    //!< Stored value
-    // std::shared_ptr< Node<T> > _next;             //!< Next element
-    // std::shared_ptr< Node<T> > _arb;              //!< Arbitrary element
     std::shared_ptr< Node<T> > _next;             //!< Next element
-    // std::shared_ptr< Node<T> > _arb;              //!< Arbitrary element
     std::weak_ptr< Node<T> > _arb;              //!< Arbitrary element
 
     friend class LinkedList<T>; //!< Friend class
@@ -119,6 +116,9 @@ private:
     std::shared_ptr< Node<T> > _deep_copy_2 (std::shared_ptr< Node<T> > head);
     std::shared_ptr< Node<T> > _sorted_insert(std::shared_ptr< Node<T> > head, std::shared_ptr< Node<T> > node);
     std::shared_ptr< Node<T> > _insertion_sort(std::shared_ptr< Node<T> > head);
+    std::shared_ptr< Node<T> > _split (std::shared_ptr<Node<T> > head);
+    std::shared_ptr< Node<T> > _merge (std::shared_ptr< Node<T> > first, std::shared_ptr< Node<T> > second);
+    std::shared_ptr< Node<T> > _merge_sort(std::shared_ptr< Node<T> > head);
 };
 
 
@@ -363,7 +363,8 @@ LinkedList<T> LinkedList<T>::deepCopy() {
 /** Sort the current linked list */
 template <typename T>
 void LinkedList<T>::sort() {
-    this->setHead(this->_insertion_sort(this->head()));
+    // this->setHead(this->_insertion_sort(this->head()));
+    this->setHead(this->_merge_sort(this->head()));
 }
 
 /** Check if current linked list intersects another ones
@@ -570,6 +571,109 @@ std::shared_ptr< Node<T> > LinkedList<T>::_insertion_sort(std::shared_ptr< Node<
 
     return sorted;
 }
+
+/** Merge sort helper: split routine
+ *
+ * Splits a linked list into two, and returns the head of the second half.
+ * Note that the `head` __cannot__ be a `NULL`
+ *
+ * @params std::shared_ptr<Node<T>> head of the original linked list
+ * @returns std::shared_ptr<Node<T>> head of the second-half linked list
+ */
+template <typename T>
+std::shared_ptr< Node<T> > LinkedList<T>::_split (std::shared_ptr<Node<T> > head) {
+    std::shared_ptr< Node<T> > slow, fast;
+    slow = head;
+    fast = head->next();
+
+    while (fast != nullptr) {
+        fast = fast->next();
+        if (fast != nullptr) {
+            fast = fast->next();
+            slow = slow->next();
+        }
+    }
+
+    // This is confusing - I am doing that because we need to set the
+    // `tail` to NULL, and then return the next (I am using `fast` as a
+    // temporary placeholder)
+    fast = slow->next();
+    slow->setNext(nullptr);
+
+    return fast;
+}
+
+/** Merge sort helper: merge routine
+ *
+ * Merges two linked lists into one, and returns the head of the combined linked list
+ *
+ * @params std::shared_ptr<Node<T>> first linked list head 
+ * @params std::shared_ptr<Node<T>> second linked list head (std::shared_ptr< Node<T> >)
+ * @returns std::shared_ptr<Node<T>> head of the combined linked list (std::shared_ptr< Node<T> >)
+ */
+template <typename T>
+std::shared_ptr< Node<T> > LinkedList<T>::_merge (std::shared_ptr< Node<T> > first, std::shared_ptr< Node<T> > second) {
+    if (first == nullptr) return second;
+    if (second == nullptr) return first;
+
+    std::shared_ptr< Node<T> > new_head;
+    if (first->value() <= second->value()) {
+        new_head = first;
+        first = first->next();
+    } else {
+        new_head = second;
+        second = second->next();
+    }
+
+    std::shared_ptr< Node<T> > current = new_head;
+    while (first != nullptr && second != nullptr) {
+        
+        std::shared_ptr< Node<T> > temp = nullptr;
+        if (first->value() <= second->value()) {
+            temp = first;
+            first = first->next();
+        } else {
+            temp = second;
+            second = second->next();
+        }
+        current->setNext(temp);
+        current = temp;
+    }
+    
+    if (first != nullptr) {
+        current->setNext(first);
+    } else if (second != nullptr) {
+        current->setNext(second);
+    }
+    
+    return new_head;
+}
+
+/** Merge sort routine
+ *
+ * This sorting is DESTRUCTIVE (as any sorting in the linked list)
+ *
+ * @param std::shared_ptr<Node<T>> head of the unsorted linked list
+ * @returns std::shared_ptr<Node<T> head of the sorted linked list
+ */
+template <typename T>
+std::shared_ptr< Node<T> > LinkedList<T>::_merge_sort(std::shared_ptr< Node<T> > head) {
+    if (head == nullptr) return nullptr; // Size 0
+    if (head->next() == nullptr) return head; // Size 1
+
+    std::shared_ptr< Node<T> > second_half = this->_split(head); // Split in two
+
+    // Sort the sub-lists:
+    std::shared_ptr< Node<T> > l1 = this->_merge_sort(head);
+    std::shared_ptr< Node<T> > l2 = this->_merge_sort(second_half);
+
+    // Merge the two and return
+    // pNode<T> out = merge(l1, l2);
+
+    return this->_merge(l1, l2);
+}
+
+
 
 //////////////////////////////////////
 // This is a specialized Linked List

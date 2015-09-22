@@ -68,16 +68,17 @@ if __name__ == '__main__':
     print "Original:", listArb
 
     # Check the sorting:
-    list = LinkedList()
-    list.addFront(11)
-    list.addFront(82)
-    list.addFront(23)
-    list.addFront(29)
+    listNew = LinkedList()
+    listNew.addFront(11)
+    listNew.addFront(82)
+    listNew.addFront(23)
+    listNew.addFront(29)
 
-    print list
-    list.sort()
-    print list
-    
+    print
+    print listNew
+    listNew.sort()
+    print listNew
+    print
 
     print "Test the intersection point:"
     list1 = LinkedList()

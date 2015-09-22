@@ -68,7 +68,7 @@ public class tstLinkedList{
         System.out.println("Updated List with arbitrary pointers:\n" + listArb);
         System.out.println("Copied List with arbitrary pointers:\n" + listArbCopy);
 
-        // Test the insertion sort
+        // Test the sort
         list.removeFront();
         list.addFront(11);
         list.addFront(82);

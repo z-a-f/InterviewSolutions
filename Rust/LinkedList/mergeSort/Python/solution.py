@@ -80,3 +80,15 @@ if __name__ == '__main__':
     print list
     print sort
 
+
+    list1 = LinkedList()
+    
+    list1.addFront(11)
+    list1.addFront(82)
+    list1.addFront(23)
+    list1.addFront(29)
+
+    print list1
+    list1.setHead(merge_sort(list1.head()))
+    print list1
+    
