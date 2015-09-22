@@ -18,3 +18,6 @@ Popular questions and solutions in C++, Python, and Java.
     * [Merge Sort](LinkedList/mergeSort)
     * [Reverse Linked List](LinkedList/reverse)
 
+
+## Notes
+* I am aware that using `shared_ptr` as a function argument doesn't make sense in most of the files, as I don't transfer ownership - I was just lazy and did it that way :)
