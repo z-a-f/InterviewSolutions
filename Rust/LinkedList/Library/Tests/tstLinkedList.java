@@ -1,4 +1,4 @@
-import LinkedListJava.*;
+import LinkedList.*;
 import java.lang.Exception;
 
 public class tstLinkedList{

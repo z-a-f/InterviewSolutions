@@ -1,4 +1,4 @@
-import LinkedListJava.*;
+import LinkedList.*;
 // import java.lang.Comparable;
 
 /* This solution doesn't work so far :'( */

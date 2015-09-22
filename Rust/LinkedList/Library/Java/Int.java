@@ -1,4 +1,4 @@
-package LinkedListJava;
+package LinkedList;
 
 import java.lang.RuntimeException;
 

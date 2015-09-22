@@ -1,4 +1,4 @@
-package LinkedListJava;
+package LinkedList;
 
 import java.util.Hashtable;
 import java.lang.RuntimeException;
