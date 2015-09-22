@@ -41,6 +41,9 @@ pNode<T> split(pNode<T> head) {
         }
     }
 
+    // This is confusing - I am doing that because we need to set the
+    // `tail` to NULL, and then return the next (I am using `fast` as a
+    // temporary placeholder)
     fast = slow->next();
     slow->setNext(nullptr);
 

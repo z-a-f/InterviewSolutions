@@ -3,45 +3,80 @@ sys.path.insert(0, '../..') # Need that to import LL
 
 from LinkedList import *    # Linked LIst defined here
 
-def sorted_insert(head, node):
-    if node == None:
-        return head
+def split(head):
+    slow = head
+    fast = head.next()
 
-    if head == None or node.value() <= head.value():
-        node.setNext(head)
-        return node
+    while (fast != None):
+        fast = fast.next()
+        if (fast != None):
+            fast = fast.next()
+            slow = slow.next()
 
-    curr = head
-    while curr.next() != None and curr.next().value() < node.value():
-        curr = curr.next()
+    fast = slow.next()
+    slow.setNext(None)
 
-    node.setNext(curr.next())
-    curr.setNext(node)
+    return fast
 
-    return head
+def merge(first, second):
+    if (first == None): return second
+    if (second == None): return first
 
-def insertion_sort(head):
-    sorted = None
-    curr = head
+    # new_head = Node()
+    if (first.value() <= second.value()):
+        new_head = first
+        first = first.next()
+    else:
+        new_head = second
+        second = second.next()
 
-    while curr != None:
-        temp = curr.next()
-        sorted = sorted_insert(sorted, curr)
-        curr = temp
+    current = new_head
+    while (first != None) and (second != None):
+        temp = None
+        if (first.value() <= second.value()):
+            temp = first
+            first = first.next()
+        else:
+            temp = second
+            second = second.next()
+        current.setNext(temp)
+        current = temp
 
-    return sorted
+    if (first != None):
+        current.setNext(first)
+    elif (second != None):
+        current.setNext(second)
 
+    return new_head
+
+def merge_sort(head):
+    if (head == None): return None
+    if (head.next() == None): return head
+
+    second_half = split(head)
+
+    l1 = merge_sort(head)
+    l2 = merge_sort(second_half)
+
+    return merge(l1,l2)
+
+            
 if __name__ == '__main__':
     list = LinkedList()
     sort = LinkedList()
 
-    list.addFront(11)
-    list.addFront(82)
-    list.addFront(23)
-    list.addFront(29)
+    list.addFront(1)
+    list.addFront(2)
+    list.addFront(3)
+    list.addFront(5)
+    list.addFront(6)
+    list.addFront(7)
+    list.addFront(8)
+    list.addFront(9)
+    
 
     print list
-    sort.setHead(insertion_sort(list.head()))
-    print sort
+    sort.setHead(merge_sort(list.head()))
     print list
+    print sort
 
