@@ -1,8 +1,6 @@
 import LinkedList.*;
 // import java.lang.Comparable;
 
-/* This solution doesn't work so far :'( */
-
 class solution1 {
     // This is the solution :)
     public static <T extends Comparable<T>> Node<T> sorted_insert(Node<T> head, Node<T> node) {

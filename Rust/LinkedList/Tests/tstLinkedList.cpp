@@ -1,7 +1,7 @@
 #include <iostream>
 #include <exception>
 
-#include "LinkedList.hpp"
+#include "../../Library/C++/LinkedList.hpp"
 
 using namespace std;
 

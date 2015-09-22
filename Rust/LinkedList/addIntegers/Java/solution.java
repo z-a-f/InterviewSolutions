@@ -1,5 +1,4 @@
-import LinkedListJava.*;
-// import LinkedList.*;
+import linkedlist.*;
 
 class solution {
     // This is the solution :)

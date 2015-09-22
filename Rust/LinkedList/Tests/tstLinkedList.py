@@ -1,5 +1,5 @@
 import sys                      # Need that to set path
-sys.path.insert(0, '../Python')     # Need that to import LL
+sys.path.insert(0, '../../Library/Python')     # Need that to import LL
 
 from LinkedList import *    # Linked List defined here
 

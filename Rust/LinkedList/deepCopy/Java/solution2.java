@@ -1,4 +1,4 @@
-import LinkedListJava.*;
+import LinkedList.*;
 import java.util.Hashtable;
 
 class solution2 {
