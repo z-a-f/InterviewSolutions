@@ -5,8 +5,6 @@ import java.lang.RuntimeException;
 import java.lang.Comparable;
 
 
-/* TODO: The comparable doesn't work!!! */
-
 public class LinkedList<T extends Comparable<T>> {
     private Node<T> _head;
     // private Integer _size;
