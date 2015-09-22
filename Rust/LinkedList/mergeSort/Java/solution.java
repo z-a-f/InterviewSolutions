@@ -1,8 +1,6 @@
 import LinkedListJava.*;
 // import java.lang.Comparable;
 
-/* This solution doesn't work so far :'( */
-
 class solution {
     // This is the solution :)
     public static <T extends Comparable<T>> Node<T> merge_sort (Node<T> head) {
