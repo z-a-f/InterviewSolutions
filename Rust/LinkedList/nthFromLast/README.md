@@ -1,16 +1,12 @@
 # N<sup>th</sup> from last node
 [solution](solution.md)
 
-Give the heads of two __sorted__ linked lists, merge the two, such that
-the resulting linked list is sorted. Return the head of the new linked list
+Given a singly linked list, return the n<sup>th</sup> node from the end. Return `NULL` if n is out-of-bounds.
 
 ## Example
 ```
-(head1)->[4]->[8]->[15]->[19]->(NULL)
-(head2)->[7]->[9]->[10]->[16]->(NULL)
-
-(merged)->[4]->[7]->[8]->[9]->[10]->[15]->[16]->[19]->(NULL)
+n =     (5)  (4)   (3)   (2)   (1)  (>=6 or <=0)
+(head)->[7]->[14]->[21]->[28]->[9]->(NULL)
 ```
 
-1. Use two iterators to scan both linked lists
-2. Use a pointer to point to the end of the merged sort as it is created
+1. Move two pointers

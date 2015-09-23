@@ -3,58 +3,56 @@ sys.path.insert(0, '../../../Library/Python') # Need that to import LL
 
 from LinkedList import *    # Linked LIst defined here
 
-def merge(first, second):
-    if (first == None): return second
-    if (second == None): return first
+def nth_from_last(head, n):
+    second = head
+    if (second == None or n < 1):
+        return None
 
-    # new_head = Node()
-    if (first.value() <= second.value()):
-        new_head = first
+    first = head
+    while first != None and n > 0:
         first = first.next()
-    else:
-        new_head = second
+        n -= 1
+
+    # Check out-of-bounds
+    if n != 0:
+        return None
+
+    while first != None:
+        first = first.next()
         second = second.next()
 
-    current = new_head
-    while (first != None) and (second != None):
-        temp = None
-        if (first.value() <= second.value()):
-            temp = first
-            first = first.next()
-        else:
-            temp = second
-            second = second.next()
-        current.setNext(temp)
-        current = temp
+    return second
 
-    if (first != None):
-        current.setNext(first)
-    elif (second != None):
-        current.setNext(second)
-
-    return new_head
-
-            
 if __name__ == '__main__':
-    list1 = LinkedList()
-    list2 = LinkedList()
+    list = LinkedList()
 
-    list1.addFront(19)
-    list1.addFront(15)
-    list1.addFront(8)
-    list1.addFront(4)
+    # Check on empty lists:
+    found = nth_from_last(list.head(), 1)
+    if found != None:
+        print "Something went wrong"
+    else:
+        print "Empty lists work"
 
-    list2.addFront(16)
-    list2.addFront(10)
-    list2.addFront(9)
-    list2.addFront(7)
+    list.addFront(9);
+    list.addFront(28);
+    list.addFront(21);
+    list.addFront(14);
+    list.addFront(7);
 
-    print "Original 1:", list1
-    print "Original 2:", list2
+    print list
+    
+    found = nth_from_last(list.head(), 100)
+    if found != None:
+        print "Something went wrong"
+    else:
+        print "BIG n's work!"
 
-    merged = LinkedList()
-    merged.setHead(merge(list1.head(), list2.head()))
+    found = nth_from_last(list.head(), 3)
+    if found != None:
+        print "n=3 value:", found.value()
+    else:
+        print "Something went wrong!"
 
-    print "Merged", merged
-    print "Original 1:", list1
-    print "Original 2:", list2
+    print list
+        
+        

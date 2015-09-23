@@ -2,68 +2,61 @@ import linkedlist.*;
 import java.lang.Comparable;
 
 class solution {
-    private static <T extends Comparable<T>> Node<T> merge (
-        Node<T> first, Node<T> second) {
-        if (first == null) return second;
-        if (second == null) return first;
+    private static <T extends Comparable<T>> Node<T> nth_from_last(Node<T> head, int n) {
+        Node<T> second = head;
+        if (second == null || n < 1) return null;
 
-        Node<T> new_head = new Node<T>();
-        if (first.value().compareTo(second.value()) <= 0) {
-            new_head = first;
+        Node<T> first = head;
+
+        while (first != null && n > 0) {
             first = first.next();
-        } else {
-            new_head = second;
+            --n;
+        }
+
+        // Check out of bounds:
+        if (n != 0) return null;
+
+        while (first != null) {
+            first = first.next();
             second = second.next();
         }
-
-        Node<T> current = new_head;
-        while (first != null && second != null) {
-            Node<T> temp = null;
-            if (first.value().compareTo(second.value()) <= 0) {
-                temp = first;
-                first = first.next();
-            } else {
-                temp = second;
-                second = second.next();
-            }
-            current.setNext(temp);
-            current = temp;
-        }
-
-        if (first != null) {
-            current.setNext(first);
-        } else if (second != null) {
-            current.setNext(second);
-        }
-
-        return new_head;
+        return second;
     }
     
-    
     public static void main(String[] args) {
-        LinkedList<Integer> list1 = new LinkedList<>();
-        LinkedList<Integer> list2 = new LinkedList<>();
+        LinkedList<Integer> list = new LinkedList<>();
 
-        list1.addFront(19);
-        list1.addFront(15);
-        list1.addFront(8);
-        list1.addFront(4);
+        Node<Integer> found = new Node<>();
+    
+        // Check on empty list first
+        found = nth_from_last(list.head(), 1);
+        if (found != null)
+            System.out.println("Something went wrong!");
+        else
+            System.out.println("Empty lists work!");
+    
+        list.addFront(9);
+        list.addFront(28);
+        list.addFront(21);
+        list.addFront(14);
+        list.addFront(7);
 
-        list2.addFront(16);
-        list2.addFront(10);
-        list2.addFront(9);
-        list2.addFront(7);
-
-        System.out.println("Original 1: " + list1);
-        System.out.println("Original 2: " + list2);
-
-        LinkedList<Integer> merged = new LinkedList<>();
-        merged.setHead(merge(list1.head(), list2.head()));
-
-        System.out.println("Merged: " + merged);
-        System.out.println("Original 1: " + list1);
-        System.out.println("Original 2: " + list2);
+        // Check on a BIG n:
+        found = nth_from_last(list.head(), 100);
+        if (found != null)
+            System.out.println("Something went wrong!");
+        else
+            System.out.println("BIG n's work!");
         
+        found = nth_from_last(list.head(), 3);
+        if (found != null)
+            System.out.println("n = 3 value: " + found.value());
+        else
+            System.out.println("Something went wrong!");
         
+        // Make sure the list is still intact:
+        System.out.println(list);
+    
+
     }
 }

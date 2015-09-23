@@ -1,60 +1,38 @@
 ## Solution explanation
-* Time: _O(m+n)_
+* Time: _O(n)_
 * Memory: _O(1)_
 * File: solution.(cpp|java|py)
 
-We maintain the head and the tail of the merged linked list. Initially the merged linked list is empty, and
-both `head` and `tail` point to `NULL`.
+Use two pointers, while one of the pointers is _n nodes apart_ from the other.
 
 ```
-(head1)->[4]->[8]->[15]->[19]->(NULL)
-(head2)->[7]->[9]->[10]->[16]->(NULL)
-
-(merged)->(NULL)<-(tail)
-
+n=3
+      (first)
+         v
+(head)->[7]->[14]->[21]->[28]->[9]->(NULL)
+         ^
+      (second)
 ```
 
-At every step we compare the heads of the original linked lists, and we point the tail of the
-merged array to the smaller node (by value). At the same time we change the head of the list
-with the smaller value to `.next()`
-
+Move the `first` pointer by `n` positions
 ```
-(head1)->[8]->[15]->[19]->(NULL)
-(head2)->[7]->[9]->[10]->[16]->(NULL)
-
-(merged)->[4]<-(tail)
-
+n=3
+                       (first)
+                          v
+(head)->[7]->[14]->[21]->[28]->[9]->(NULL)
+         ^
+      (second)
 ```
 
-Repeat the process until one of the original lists is not empty
-
+Now move both pointers until the `first` pointer is pointing at `NULL`:
 ```
-(head1)->[8]->[15]->[19]->(NULL)
-(head2)->[9]->[10]->[16]->(NULL)
-
-(merged)->[4]->[7]<-(tail)
-
-```
-
-If at some point one of the arrays is empty while the other one is not, we just poiont the tail
-of the merged linked list to the head of the non-empty list.
-
-```
-(head1)->[19]->(NULL)
-(head2)->(NULL)
-
-(merged)->[4]->[7]->[8]->[9]->[10]->[15]->[16]<-(tail)
-
+n=3
+                                  (first)
+                                     v
+(head)->[7]->[14]->[21]->[28]->[9]->(NULL)
+                    ^
+                 (second)
 ```
 
-```
-(head1)->(NULL)
-(head2)->(NULL)
-
-(merged)->[4]->[7]->[8]->[9]->[10]->[15]->[16]->[19]<-(tail)
-
-```
-
-__Note:__ In the actual solution the `head1` and `head2` will point to valid nodes, and thus will represent
-linked lists. If you need to make sure that the heads of the original linked lists are pointing to `NULL`,
-in the end of the solution manually update them
+Now, return the `second` pointer. If the `first` pointer reaches `NULL` before being _n nodes apart_
+from the `second`, return `NULL`

@@ -5,88 +5,64 @@
 template <typename T> using pNode = std::shared_ptr< Node<T> >; // This is just for convenience
 using namespace std;
 
-/*
-template <typename T>
-void DEBUG(pNode<T> head, pNode<T> tail) {
-    // cout << "[HEAD]->";
-    pNode<T> ptr = head;
-    while (ptr != tail) {
-        
-        cout << "[" << ptr->value() << "]->";
-        ptr = ptr->next();
-    }
-    // cout << "[NULL]";
-}
-*/
-
-/** Merge sort helper: merge routine
+/** Find the n-th node from the end of the singly linked list
  *
- * Merges two linked lists into one, and returns the head of the combined linked list
- * Note that the original linked lists will be destroyed, and will sometimes represent
- * some non-sense
- *
- * @params pNode<T> first linked list head (std::shared_ptr< Node<T> >)
- * @params pNode<T> second linked list head (std::shared_ptr< Node<T> >)
- * @returns pNode<T> head of the combined linked list (std::shared_ptr< Node<T> >)
+ * @param pNode<T> head of the original linked list (std::shared_ptr<Node<T>>)
+ * @param int n
+ * @returns pNode<T> node we are looking for or nullptr (std::shared_ptr<Node<T>>)
  */
 template <typename T>
-pNode<T> merge(pNode<T> head1, pNode<T> head2) {
-    // If one of the lists is empty, return the other
-    if (head1 == nullptr) return head2;
-    if (head2 == nullptr) return head1;
+pNode<T> nth_from_last(pNode<T> head, int n) {
+    pNode<T> second = head; // This is the head
+    if (second == nullptr || n < 1) return nullptr;
 
-    pNode<T> merged = nullptr;
-    if (head1->value() <= head2->value()) {
-        merged = head1;
-        head1 = head1->next();
-    } else {
-        merged = head2;
-        head2 = head2->next();
+    // The first pointer will be n-nodes forward
+    pNode<T> first = head; // This is the tail
+
+    while (first != nullptr && n > 0) {
+        first = first->next();
+        --n;
     }
 
-    pNode<T> tail = merged;
+    // Check if out-of-bounds
+    if (n != 0) return nullptr;
 
-    while (head1 != nullptr && head2 != nullptr) {
-        pNode<T> temp = nullptr;
-        if (head1->value() <= head2->value()) {
-            temp = head1;
-            head1 = head1->next();
-        } else {
-            temp = head2;
-            head2 = head2->next();
-        }
-
-        tail->setNext(temp);
-        tail = temp;
+    // When first pointer reaches the end of the list, second is pointing at n-th node
+    while (first != nullptr) {
+        first = first->next();
+        second = second->next();
     }
 
-    if (head1 != nullptr) tail->setNext(head1);
-    else if (head2 != nullptr) tail->setNext(head2);
-
-    return merged;
+    return second;
 }
 
 int main() {
-    LinkedList<int> list1;
-    LinkedList<int> list2;
+    LinkedList<int> list;
 
-    list1.addFront(19);
-    list1.addFront(15);
-    list1.addFront(8);
-    list1.addFront(4);
+    pNode<int> found;
+    
+    // Check on empty list first
+    found = nth_from_last(list.head(), 1);
+    if (found != nullptr) cout << "Something went wrong!\n";
+    else cout << "Empty lists work!\n";
+    
+    list.addFront(9);
+    list.addFront(28);
+    list.addFront(21);
+    list.addFront(14);
+    list.addFront(7);
 
-    list2.addFront(16);
-    list2.addFront(10);
-    list2.addFront(9);
-    list2.addFront(7);
+    // Check on a BIG n:
+    found = nth_from_last(list.head(), 100);
+    if (found != nullptr) cout << "Something went wrong!\n";
+    else cout << "BIG n's work!\n";
 
-    cout << "Original 1: " << list1 << endl;
-    cout << "Original 2: " << list2 << endl;
+    found = nth_from_last(list.head(), 3);
+    if (found != nullptr) cout << "n = 3 value: " << found->value() << endl;
+    else cout << "Something went wrong!\n";
 
-    LinkedList<int> merged;
-    merged.setHead(merge(list1.head(), list2.head()));
-
-    cout << "Merged: " << merged << endl;
-    cout << "Original 1: " << list1 << endl;
-    cout << "Original 2: " << list2 << endl;        
+    // Make sure the list is still intact:
+    cout << list<< endl;
+    
+    return 0;
 }
