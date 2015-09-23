@@ -1,4 +1,4 @@
-# N^th from last node
+# N<sup>th</sup> from last node
 [solution](solution.md)
 
 Give the heads of two __sorted__ linked lists, merge the two, such that
