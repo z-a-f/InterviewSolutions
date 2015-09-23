@@ -16,7 +16,7 @@ Popular questions and solutions in C++, Python, and Java.
   * [Merge two sorted linked lists](LinkedList/mergeLists) (Not integrated with the library)
   * [Merge sort of a linked list](LinkedList/mergeSort)
   * [Reverse linked list](LinkedList/reverse)
-  * [Find n<sup>th</sup> from the last node](LinkedList/nthFromlast)
+  * [Find n<sup>th</sup> from the last node](LinkedList/nthFromLast)
 
 
 ## Notes
