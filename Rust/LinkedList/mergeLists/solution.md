@@ -55,3 +55,6 @@ of the merged linked list to the head of the non-empty list.
 
 ```
 
+__Note:__ In the actual solution the `head1` and `head2` will point to valid nodes, and thus will represent
+linked lists. If you need to make sure that the heads of the original linked lists are pointing to `NULL`,
+in the end of the solution manually update them
