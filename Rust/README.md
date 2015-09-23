@@ -13,6 +13,7 @@ Popular questions and solutions in C++, Python, and Java.
   * [Delete a node by key](LinkedList/deleteKey)
   * [Insertion sort of a linked list](LinkedList/insertionSort)
   * [Find intersecting node](LinkedList/intersection)
+  * [Merge two sorted linked lists](LinkedList/mergeLists) (Not integrated with the library)
   * [Merge sort of a linked list](LinkedList/mergeSort)
   * [Reverse linked list](LinkedList/reverse)
 
