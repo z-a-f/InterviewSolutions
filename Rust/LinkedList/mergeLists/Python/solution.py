@@ -3,21 +3,6 @@ sys.path.insert(0, '../../../Library/Python') # Need that to import LL
 
 from LinkedList import *    # Linked LIst defined here
 
-def split(head):
-    slow = head
-    fast = head.next()
-
-    while (fast != None):
-        fast = fast.next()
-        if (fast != None):
-            fast = fast.next()
-            slow = slow.next()
-
-    fast = slow.next()
-    slow.setNext(None)
-
-    return fast
-
 def merge(first, second):
     if (first == None): return second
     if (second == None): return first
@@ -49,46 +34,27 @@ def merge(first, second):
 
     return new_head
 
-def merge_sort(head):
-    if (head == None): return None
-    if (head.next() == None): return head
-
-    second_half = split(head)
-
-    l1 = merge_sort(head)
-    l2 = merge_sort(second_half)
-
-    return merge(l1,l2)
-
             
 if __name__ == '__main__':
-    list = LinkedList()
-    sort = LinkedList()
-
-    list.addFront(1)
-    list.addFront(2)
-    list.addFront(3)
-    list.addFront(5)
-    list.addFront(6)
-    list.addFront(7)
-    list.addFront(8)
-    list.addFront(9)
-    
-
-    print list
-    sort.setHead(merge_sort(list.head()))
-    print list
-    print sort
-
-
     list1 = LinkedList()
-    
-    list1.addFront(11)
-    list1.addFront(82)
-    list1.addFront(23)
-    list1.addFront(29)
+    list2 = LinkedList()
 
-    print list1
-    list1.setHead(merge_sort(list1.head()))
-    print list1
-    
+    list1.addFront(19)
+    list1.addFront(15)
+    list1.addFront(8)
+    list1.addFront(4)
+
+    list2.addFront(16)
+    list2.addFront(10)
+    list2.addFront(9)
+    list2.addFront(7)
+
+    print "Original 1:", list1
+    print "Original 2:", list2
+
+    merged = LinkedList()
+    merged.setHead(merge(list1.head(), list2.head()))
+
+    print "Merged", merged
+    print "Original 1:", list1
+    print "Original 2:", list2

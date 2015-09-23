@@ -2,7 +2,7 @@
 
 #include "../../../Library/C++/LinkedList.hpp"
 
-template <typename T> using pNode = std::shared_ptr< Node<T> >;
+template <typename T> using pNode = std::shared_ptr< Node<T> >; // This is just for convenience
 using namespace std;
 
 /*
@@ -19,126 +19,74 @@ void DEBUG(pNode<T> head, pNode<T> tail) {
 }
 */
 
-/** Merge sort helper: split routine
- *
- * Splits a linked list into two, and returns the head of the second half.
- * Note that the `head` __cannot__ be a `NULL`
- *
- * @params pNode<T> head of the original linked list (std::shared_ptr< Node<T> >)
- * @returns pNode<T> head of the second-half linked list (std::shared_ptr< Node<T> >)
- */
-template <typename T>
-pNode<T> split(pNode<T> head) {
-    pNode<T> slow, fast;
-    slow = head;
-    fast = head->next();
-
-    while (fast != nullptr) {
-        fast = fast->next();
-        if (fast != nullptr) {
-            fast = fast->next();
-            slow = slow->next();
-        }
-    }
-
-    // This is confusing - I am doing that because we need to set the
-    // `tail` to NULL, and then return the next (I am using `fast` as a
-    // temporary placeholder)
-    fast = slow->next();
-    slow->setNext(nullptr);
-
-    return fast;
-}
-
 /** Merge sort helper: merge routine
  *
  * Merges two linked lists into one, and returns the head of the combined linked list
+ * Note that the original linked lists will be destroyed, and will sometimes represent
+ * some non-sense
  *
  * @params pNode<T> first linked list head (std::shared_ptr< Node<T> >)
  * @params pNode<T> second linked list head (std::shared_ptr< Node<T> >)
  * @returns pNode<T> head of the combined linked list (std::shared_ptr< Node<T> >)
  */
 template <typename T>
-pNode<T> merge(pNode<T> first, pNode<T> second) {
-    if (first == nullptr) return second;
-    if (second == nullptr) return first;
+pNode<T> merge(pNode<T> head1, pNode<T> head2) {
+    // If one of the lists is empty, return the other
+    if (head1 == nullptr) return head2;
+    if (head2 == nullptr) return head1;
 
-    pNode<T> new_head;
-    if (first->value() <= second->value()) {
-        new_head = first;
-        first = first->next();
+    pNode<T> merged = nullptr;
+    if (head1->value() <= head2->value()) {
+        merged = head1;
+        head1 = head1->next();
     } else {
-        new_head = second;
-        second = second->next();
+        merged = head2;
+        head2 = head2->next();
     }
 
-    pNode<T> current = new_head;
-    while (first != nullptr && second != nullptr) {
-        
+    pNode<T> tail = merged;
+
+    while (head1 != nullptr && head2 != nullptr) {
         pNode<T> temp = nullptr;
-        if (first->value() <= second->value()) {
-            temp = first;
-            first = first->next();
+        if (head1->value() <= head2->value()) {
+            temp = head1;
+            head1 = head1->next();
         } else {
-            temp = second;
-            second = second->next();
+            temp = head2;
+            head2 = head2->next();
         }
-        current->setNext(temp);
-        current = temp;
+
+        tail->setNext(temp);
+        tail = temp;
     }
-    
-    if (first != nullptr) {
-        current->setNext(first);
-    } else if (second != nullptr) {
-        current->setNext(second);
-    }
-    
-    return new_head;
+
+    if (head1 != nullptr) tail->setNext(head1);
+    else if (head2 != nullptr) tail->setNext(head2);
+
+    return merged;
 }
-
-/** Merge sort routine
- *
- * This sorting is DESTRUCTIVE (as any sorting in the linked list)
- *
- * @param pNode<T> head of the unsorted linked list
- * @returns pNode<T> head of the sorted linked list
- */
-template <typename T>
-pNode<T> merge_sort (pNode<T> head) {
-    if (head == nullptr) return nullptr; // Size 0
-    if (head->next() == nullptr) return head; // Size 1
-
-    pNode<T> second_half = split(head); // Split in two
-
-    // Sort the sub-lists:
-    pNode<T> l1 = merge_sort(head);
-    pNode<T> l2 = merge_sort(second_half);
-
-    // Merge the two and return
-    // pNode<T> out = merge(l1, l2);
-
-    return merge(l1, l2);
-}
-
 
 int main() {
-    LinkedList<int> list;
-    LinkedList<int> sort;
+    LinkedList<int> list1;
+    LinkedList<int> list2;
 
-    list.addFront(1);
-    list.addFront(2);
-    list.addFront(3);
-    list.addFront(4);
-    list.addFront(5);
-    list.addFront(6);
-    list.addFront(7);
-    list.addFront(8);
-    list.addFront(9);
+    list1.addFront(19);
+    list1.addFront(15);
+    list1.addFront(8);
+    list1.addFront(4);
 
-    cout << list << endl;
+    list2.addFront(16);
+    list2.addFront(10);
+    list2.addFront(9);
+    list2.addFront(7);
 
-    sort.setHead(merge_sort(list.head()));
+    cout << "Original 1: " << list1 << endl;
+    cout << "Original 2: " << list2 << endl;
 
-    cout << list << endl;
-    cout << sort << endl;
+    LinkedList<int> merged;
+    merged.setHead(merge(list1.head(), list2.head()));
+
+    cout << "Merged: " << merged << endl;
+    cout << "Original 1: " << list1 << endl;
+    cout << "Original 2: " << list2 << endl;        
 }

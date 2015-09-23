@@ -2,38 +2,6 @@ import linkedlist.*;
 import java.lang.Comparable;
 
 class solution {
-    // This is the solution :)
-    public static <T extends Comparable<T>> Node<T> merge_sort (Node<T> head) {
-        if (head == null) return null;
-        if (head.next() == null) return head;
-
-        Node<T> second_half = split(head);
-
-        Node<T> l1 = merge_sort(head);
-        Node<T> l2 = merge_sort(second_half);
-
-        return merge(l1, l2);
-    }
-
-    private static <T extends Comparable<T>> Node<T> split (Node<T> head) {
-        Node<T> slow = new Node<T>();
-        Node<T> fast = new Node<T>();
-
-        slow = head;
-        fast = head.next();
-
-        while (fast != null) {
-            fast = fast.next();
-            if (fast != null) {
-                fast = fast.next();
-                slow = slow.next();
-            }
-        }
-        fast = slow.next();
-        slow.setNext(null);
-        return fast;
-    }
-
     private static <T extends Comparable<T>> Node<T> merge (
         Node<T> first, Node<T> second) {
         if (first == null) return second;
@@ -73,25 +41,29 @@ class solution {
     
     
     public static void main(String[] args) {
-        LinkedList<Integer> list = new LinkedList<>();
+        LinkedList<Integer> list1 = new LinkedList<>();
+        LinkedList<Integer> list2 = new LinkedList<>();
 
-        list.addFront(1);
-        list.addFront(2);
-        list.addFront(3);
-        list.addFront(4);
-        list.addFront(5);
-        list.addFront(6);
-        list.addFront(7);
-        list.addFront(8);
-        list.addFront(9);
-        list.addFront(10);
-        list.addFront(11);
+        list1.addFront(19);
+        list1.addFront(15);
+        list1.addFront(8);
+        list1.addFront(4);
 
-        System.out.println(list);
-        LinkedList<Integer> sort = new LinkedList<>();
-        sort.setHead(merge_sort(list.head()));
+        list2.addFront(16);
+        list2.addFront(10);
+        list2.addFront(9);
+        list2.addFront(7);
 
-        System.out.println(list);
-        System.out.println(sort);
+        System.out.println("Original 1: " + list1);
+        System.out.println("Original 2: " + list2);
+
+        LinkedList<Integer> merged = new LinkedList<>();
+        merged.setHead(merge(list1.head(), list2.head()));
+
+        System.out.println("Merged: " + merged);
+        System.out.println("Original 1: " + list1);
+        System.out.println("Original 2: " + list2);
+        
+        
     }
 }
