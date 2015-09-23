@@ -30,6 +30,13 @@ class Node(object):
     def setArb(self, n):
         self._arb = n
 
+    def DEBUG(self):
+        temp = self
+        while temp._next != None:
+            print '[', temp.value(), "]->",
+            temp = temp._next
+        print '[', temp.value(), ']'
+
 
 """
 LinkedList class
@@ -316,7 +323,7 @@ class LinkedList(object):
     def _merge(self, first, second):
         if (first == None): return second
         if (second == None): return first
-
+        
         # new_head = Node()
         if (first.value() <= second.value()):
             new_head = first
@@ -324,7 +331,7 @@ class LinkedList(object):
         else:
             new_head = second
             second = second.next()
-
+            
         current = new_head
         while (first != None) and (second != None):
             temp = None
@@ -334,14 +341,14 @@ class LinkedList(object):
             else:
                 temp = second
                 second = second.next()
-                current.setNext(temp)
-                current = temp
-
+            current.setNext(temp)
+            current = temp
+            
         if (first != None):
             current.setNext(first)
         elif (second != None):
             current.setNext(second)
-
+            
         return new_head
 
     def _merge_sort(self, head):
@@ -352,6 +359,9 @@ class LinkedList(object):
 
         l1 = self._merge_sort(head)
         l2 = self._merge_sort(second_half)
+
+        # l1.DEBUG()
+        # l2.DEBUG()
 
         return self._merge(l1,l2)
     
