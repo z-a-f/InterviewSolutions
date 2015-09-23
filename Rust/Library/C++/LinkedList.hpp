@@ -110,6 +110,7 @@ public:
     LinkedList<T> deepCopy();
     void sort();
     std::shared_ptr< Node<T> > intersects(LinkedList<T> l);
+    std::shared_ptr< Node<T> > nthFromLast(int n);
 private:
     std::shared_ptr< Node<T> > _reverse_recursive(std::shared_ptr< Node<T> > node);
     std::shared_ptr< Node<T> > _deep_copy_1 (std::shared_ptr< Node<T> > head);
@@ -392,6 +393,39 @@ std::shared_ptr< Node<T> > LinkedList<T>::intersects(LinkedList<T> list) {
         l2 = l2->next();
     }
     return nullptr;
+}
+
+/** Find the n-th node from the end of the singly linked list
+ *
+ * @param std::shared_ptr<Node<T>> head of the original linked list
+ * @param int n
+ * @returns std::shared_ptr<Node<T>> node we are looking for or nullptr
+ */
+template <typename T>
+std::shared_ptr< Node<T> > LinkedList<T>::nthFromLast(int n) {
+    std::shared_ptr< Node<T> > second = this->head();
+   
+    if (second == nullptr || n < 1) return nullptr;
+
+    // The first pointer will be n-nodes forward:
+    std::shared_ptr< Node<T> > first = this->head();
+
+    while (first != nullptr && n > 0) {
+        first = first->next();
+        --n;
+    }
+
+    // Check if out-of-bounds
+    if (n != 0) return nullptr;
+
+    // When the pointer reaches the end of the list, second is pointing at
+    // the node we are looking forward
+    while (first != nullptr) {
+        first = first->next();
+        second = second->next();
+    }
+
+    return second;
 }
 
 //////////////////////////////////////

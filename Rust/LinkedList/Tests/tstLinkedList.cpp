@@ -125,7 +125,34 @@ int main() {
   if (intsct == nullptr) cout << "NULL" << endl;
   else cout << intsct->value() << endl;
 
-  
+  // Test the nthFromTheLast:
+  LinkedList<int> listNth;
+
+  std::shared_ptr< Node<int> > found;
+    
+  // Check on empty list first
+  found = listNth.nthFromLast(1);
+  if (found != nullptr) cout << "Something went wrong!\n";
+  else cout << "Empty lists work!\n";
+    
+  listNth.addFront(9);
+  listNth.addFront(28);
+  listNth.addFront(21);
+  listNth.addFront(14);
+  listNth.addFront(7);
+
+  // Check on a BIG n:
+  found = listNth.nthFromLast(100);
+  if (found != nullptr) cout << "Something went wrong! found: " << found << found->value() << "!" << endl;
+  else cout << "BIG n's work!\n";
+
+  found = listNth.nthFromLast(3);
+  if (found != nullptr) cout << "n = 3 value: " << found->value() << endl;
+  else cout << "Something went wrong!\n";
+
+  // Make sure the list is still intact:
+  cout << listNth<< endl;
+
   
   return 0;
 }

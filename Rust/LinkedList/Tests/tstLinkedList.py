@@ -111,3 +111,46 @@ if __name__ == '__main__':
     intsct = list1.intersects(list3)
     print intsct
     
+
+    ######################################
+    print "Check the nthFromLast"
+    list = LinkedList()
+
+    # Check on empty lists:
+    found = list.nthFromLast(1)
+    if found != None:
+        print "Something went wrong"
+    else:
+        print "Empty lists work"
+
+    list.addFront(9);
+    list.addFront(28);
+    list.addFront(21);
+    list.addFront(14);
+    list.addFront(7);
+
+    print list
+    
+    found = list.nthFromLast(100)
+    if found != None:
+        print "Something went wrong"
+    else:
+        print "BIG n's work!"
+
+    found = list.nthFromLast(3)
+    if found != None:
+        print "n=3 value:", found.value()
+    else:
+        print "Something went wrong!"
+
+    print list
+        
+        
+
+
+
+
+
+
+
+    

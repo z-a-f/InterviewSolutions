@@ -170,7 +170,28 @@ public class LinkedList<T extends Comparable<T>> {
         }
         return null;
     }
-    
+
+    public Node<T> nthFromLast (int n) {
+        Node<T> second = this.head();
+        if (second == null || n < 1) return null;
+
+        Node<T> first = this.head();
+
+        while (first != null && n > 0) {
+            first = first.next();
+            --n;
+        }
+
+        // Check for out-of-bounds
+        if (n != 0) return null;
+
+        while (first != null) {
+            first = first.next();
+            second = second.next();
+        }
+
+        return second;
+    }
     
     //////////////////////////////////////
     // Helper utilities

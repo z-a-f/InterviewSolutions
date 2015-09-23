@@ -117,5 +117,41 @@ public class tstLinkedList{
         } catch(Exception e) {
             System.out.println("Exception: " + e);
         }
+        
+        //////////////////////////////////////
+        System.out.println("Check the nthFromlast");
+        LinkedList<Integer> listNth = new LinkedList<>();
+
+        Node<Integer> found = new Node<>();
+    
+        // Check on empty list first
+        found = listNth.nthFromLast(1);
+        if (found != null)
+            System.out.println("Something went wrong!");
+        else
+            System.out.println("Empty lists work!");
+    
+        listNth.addFront(9);
+        listNth.addFront(28);
+        listNth.addFront(21);
+        listNth.addFront(14);
+        listNth.addFront(7);
+
+        // Check on a BIG n:
+        found = listNth.nthFromLast(100);
+        if (found != null)
+            System.out.println("Something went wrong!");
+        else
+            System.out.println("BIG n's work!");
+        
+        found = listNth.nthFromLast(3);
+        if (found != null)
+            System.out.println("n = 3 value: " + found.value());
+        else
+            System.out.println("Something went wrong!");
+        
+        // Make sure the list is still intact:
+        System.out.println(listNth);
+        
     }
 }

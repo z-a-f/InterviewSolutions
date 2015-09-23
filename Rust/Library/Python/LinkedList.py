@@ -181,7 +181,26 @@ class LinkedList(object):
             l2 = l2.next()
 
         return None
-        
+
+    def nthFromLast(self, n):
+        second = self.head()
+        if (second == None or n < 1):
+            return None
+
+        first = self.head()
+        while first != None and n > 0:
+            first = first.next()
+            n -= 1
+
+        # Check out-of-bound
+        if n != 0:
+            return None
+
+        while first != None:
+            first = first.next()
+            second = second.next()
+
+        return second
         
         
 
