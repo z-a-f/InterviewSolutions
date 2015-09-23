@@ -17,6 +17,7 @@ Popular questions and solutions in C++, Python, and Java.
   * [Merge sort of a linked list](LinkedList/mergeSort)
   * [Reverse linked list](LinkedList/reverse)
   * [Find n<sup>th</sup> from the last node](LinkedList/nthFromLast)
+  * [Remove duplicate nodes (by value)](LinkedList/removeDuplicate)
 
 
 ## Notes
