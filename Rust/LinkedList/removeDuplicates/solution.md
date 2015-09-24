@@ -14,14 +14,14 @@ A simple solution wowuld be to use a hashset (requires memory linearly proportio
      (current)
          v
 (head)->[4]->[7]->[4]->[9]->[4]->[9]->(NULL)
-HASHSET: []
+HASHSET: [4]
 ```
 
 ```
           (current)
               v
 (head)->[4]->[7]->[4]->[9]->[4]->[9]->(NULL)
-HASHSET: [4]
+HASHSET: [4, 7]
 ```
 
 ```
@@ -35,7 +35,7 @@ HASHSET: [4, 7]
                (current)
                    v
 (head)->[4]->[7]->[9]->[4]->[9]->(NULL)
-HASHSET: [4]
+HASHSET: [4, 7, 9]
 ```
 
 etc.
