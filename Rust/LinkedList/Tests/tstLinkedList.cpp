@@ -153,6 +153,20 @@ int main() {
   // Make sure the list is still intact:
   cout << listNth<< endl;
 
+  // Check removing the duplicates
+  list.clear();
+  cout << list << endl;
+  list.addFront(7);
+  list.addFront(4);
+  list.addFront(9);
+  list.addFront(4);
+  list.addFront(7);
+  list.addFront(4);
+
+  cout << list << endl;
+  list.removeDuplicates();
+  cout << list << endl;
+  
   
   return 0;
 }

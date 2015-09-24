@@ -84,6 +84,10 @@ class LinkedList(object):
     def setHead(self, h):
         self._head = h
 
+    def clear(self):
+        while not self.empty():
+            self.removeFront()
+
     def __str__(self):
         os = "HEAD->"
         ptr = self.head()
@@ -202,8 +206,22 @@ class LinkedList(object):
 
         return second
         
-        
+    def removeDuplicates(self):
+        if self.head() == None:
+            return self.head()
 
+        dup_set = set()
+
+        dup_set.add(self.head().value())
+        curr = self.head()
+
+        while curr.next() != None:
+            if curr.next().value() not in dup_set:
+                dup_set.add(curr.next().value())
+                curr = curr.next()
+            else:
+                curr.setNext(curr.next().next())
+                
         
     ######################################
     # Internal utilities:

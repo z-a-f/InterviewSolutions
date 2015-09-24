@@ -39,3 +39,8 @@ HASHSET: [4, 7, 9]
 ```
 
 etc.
+
+### Additional thoughts
+If you are not allowed to use extra memory (that is memory of _O(1)_):
+1. If change of order is allowed, one can sort the list first (time complexity of _O(nlogn)_). After that a linear pass could be done through the linked list, and remove adjacent duplicate elements.
+2. For each node, scan all the nodes from the head to the current node using _O(n<sup>2</sup>)_ time complexity

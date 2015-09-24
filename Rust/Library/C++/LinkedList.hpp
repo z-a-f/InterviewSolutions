@@ -3,6 +3,7 @@
 #include <exception>
 #include <iostream>
 #include <unordered_map>
+#include <unordered_set>
 
 
 template <typename T> class LinkedList;
@@ -95,6 +96,8 @@ public:
     void setHead(std::shared_ptr< Node<T> > h);             // This is dangerous!!!
     // template <typename U>
     // friend std::ostream& operator<<(std::ostream& os, const LinkedList<U>& list);
+    /** Remove all elements in the linked list */
+    void clear() { while(!empty()) removeFront(); }
     std::shared_ptr< Node<T> > operator[](std::size_t idx);
     friend std::ostream& operator<<<>(std::ostream& os, const LinkedList& list);
     void printArb();
@@ -111,6 +114,7 @@ public:
     void sort();
     std::shared_ptr< Node<T> > intersects(LinkedList<T> l);
     std::shared_ptr< Node<T> > nthFromLast(int n);
+    void removeDuplicates();
 private:
     std::shared_ptr< Node<T> > _reverse_recursive(std::shared_ptr< Node<T> > node);
     std::shared_ptr< Node<T> > _deep_copy_1 (std::shared_ptr< Node<T> > head);
@@ -427,6 +431,36 @@ std::shared_ptr< Node<T> > LinkedList<T>::nthFromLast(int n) {
 
     return second;
 }
+
+/** Find the duplicates in a linked list and remove them
+ *
+ */
+template <typename T>
+void LinkedList<T>::removeDuplicates() {
+    if (this->head() == nullptr) {
+        // this->setHead(head);
+        return;
+    }
+
+    std::unordered_set<int> dup_set;
+    std::shared_ptr< Node<T> > curr = this->head();
+    // std::weak_ptr< Node<T> > curr = head;
+    dup_set.insert(curr->value());
+
+    while (curr->next() != nullptr) {
+        if (dup_set.find(curr->next()->value()) == dup_set.end()) {
+            // Element not found in the map, add it to the map
+            dup_set.insert(curr->next()->value());
+            curr = curr->next();
+        } else {
+            // Duplicate found, delete the node
+            // std::weak_ptr< Node<T> > temp = curr->next();
+            curr->setNext(curr->next()->next());
+            // temp.reset();
+        }
+    }
+    // this->setHead(head);
+ }
 
 //////////////////////////////////////
 // Helpers:

@@ -144,7 +144,22 @@ if __name__ == '__main__':
         print "Something went wrong!"
 
     print list
-        
+
+    # Test removing the duplicates
+    list.clear()
+    print list
+    
+    list.addFront(7)
+    list.addFront(4)
+    list.addFront(9)
+    list.addFront(4)
+    list.addFront(7)
+    list.addFront(4)
+
+    print list
+    list.removeDuplicates()
+    print list
+
         
 
 

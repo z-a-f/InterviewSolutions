@@ -152,6 +152,19 @@ public class tstLinkedList{
         
         // Make sure the list is still intact:
         System.out.println(listNth);
+
+        // Check remove the duplicates
+        list.clear();
+        list.addFront(7);
+        list.addFront(4);
+        list.addFront(9);
+        list.addFront(4);
+        list.addFront(7);
+        list.addFront(4);
+
+        System.out.println(list);
+        list.removeDuplicates();
+        System.out.println(list);
         
     }
 }

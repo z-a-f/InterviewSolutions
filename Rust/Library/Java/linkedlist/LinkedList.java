@@ -1,6 +1,7 @@
 package linkedlist;
 
 import java.util.Hashtable;
+import java.util.HashSet;
 import java.lang.RuntimeException;
 import java.lang.Comparable;
 
@@ -80,6 +81,10 @@ public class LinkedList<T extends Comparable<T>> {
           return os;
         */}
 
+    public void clear() {
+        while (!empty()) removeFront();
+    }
+    
     /* Rust solutions here */
 
     // Iterative reverse:
@@ -189,8 +194,27 @@ public class LinkedList<T extends Comparable<T>> {
             first = first.next();
             second = second.next();
         }
-
         return second;
+    }
+
+    public void removeDuplicates () {
+        if (this.head() == null) return;
+
+        // Track list values in a hash table
+        HashSet<T> dup_set = new HashSet<T>();
+        Node<T> curr = this.head();
+        dup_set.add(curr.value());
+
+        while (curr.next() != null) {
+            if (!dup_set.contains(curr.next().value())) {
+                // Element not found, add it to the hashset:
+                dup_set.add(curr.next().value());
+                curr = curr.next();
+            } else {
+                // Duplicate found, remove the node
+                curr.setNext(curr.next().next());
+            }
+        }
     }
     
     //////////////////////////////////////
