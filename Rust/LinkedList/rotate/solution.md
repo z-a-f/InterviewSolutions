@@ -55,6 +55,15 @@ len = 5
 ^------------------------------------
 ```
 
+Update `head` to `newHead`
+
+### Additional thoughts
+If you assume that `n >= 0` and `n < len` at all times, there is no need to adjust the values of `n` for positive numbers.
+Just find the n<sup>th</sup> node from last in only one scan using two poionters:
+* Move `ptr2` `n` steps forward from head
+* Start `ptr1` from the head and move both `ptr1` and `ptr2` simultaneously until `ptr2` reaches the end of the
+linked list. At this point `ptr1` is pointing at the `n-1` node from tail.
+
 
 
 
