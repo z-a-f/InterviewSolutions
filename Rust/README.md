@@ -19,6 +19,7 @@ Popular questions and solutions in C++, Python, and Java.
   * [Find n<sup>th</sup> from the last node](LinkedList/nthFromLast)
   * [Remove duplicate nodes (by value)](LinkedList/removeDuplicate)
   * [Reverse even elements in the list](LinkedList/reverseEven) (Not integrated with the library)
+  * [Rotate Linked List](LinkedList/rotate)
 
 
 ## Notes
