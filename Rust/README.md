@@ -6,7 +6,7 @@ Popular questions and solutions in C++, Python, and Java.
   * [C++](Library/C++)
   * [Java](Library/Java)
   * [Python](Library/Python)
-* [Linked List Questions](LinkedList)
+* [Linked Lists](LinkedList)
   * [__Library tests__](LinkedList/Tests)
   * [Adding integers that are represented as linked lists](LinkedList/addIntegers)
   * [Deep copy a linked list](LinkedList/deepCopy)
@@ -20,6 +20,15 @@ Popular questions and solutions in C++, Python, and Java.
   * [Remove duplicate nodes (by value)](LinkedList/removeDuplicate)
   * [Reverse even elements in the list](LinkedList/reverseEven) (Not integrated with the library)
   * [Rotate Linked List](LinkedList/rotate)
+* Trees
+* Stacks and Queues
+* Strings
+* Arrays
+* Graphs
+* Backtracking
+* Dynamic Programming
+* Math and Stats
+* Other
 
 
 ## Notes
