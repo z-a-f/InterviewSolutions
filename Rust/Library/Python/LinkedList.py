@@ -222,7 +222,32 @@ class LinkedList(object):
             else:
                 curr.setNext(curr.next().next())
                 
-        
+    def rotate(self, n):
+        if self.head() == None or n == 0:
+            return
+
+        len = self.size()
+        n = n % len
+        if n < 0: n += len
+        if n == 0: return
+
+        rotations_count = len - n - 1
+        temp = self.head()
+
+        while rotations_count > 0:
+            rotations_count -= 1
+            temp = temp.next()
+
+        new_head = temp.next()
+        temp.setNext(None)
+
+        temp = new_head
+        while temp.next() != None:
+            temp = temp.next()
+        temp.setNext(self.head())
+
+        self.setHead(new_head)
+    
     ######################################
     # Internal utilities:
 

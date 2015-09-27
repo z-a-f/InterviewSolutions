@@ -165,6 +165,23 @@ public class tstLinkedList{
         System.out.println(list);
         list.removeDuplicates();
         System.out.println(list);
+
+
+        //////////////////////////////////////
+        // Check the rotation:
+        list.clear();
+        System.out.println("ROTATION");
+        System.out.println(list);
+        list.addFront(7);
+        list.addFront(6);
+        list.addFront(5);
+        list.addFront(4);
+        list.addFront(3);
+        list.addFront(2);
+        list.addFront(1);
+        System.out.println(list);
+        list.rotate(-10);
+        System.out.println(list);
         
     }
 }

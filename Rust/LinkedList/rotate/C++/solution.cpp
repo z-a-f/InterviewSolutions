@@ -19,94 +19,72 @@ void DEBUG(pNode<T> head) {
     cout << endl;
 }
 
-/** Split the linked list into two
- *
- * This method gets all the odd values, and keeps them in the original, 
- * while returning the head of another linked list with all the even elements
- *
- * @param pNode<T> head of the original linked list (std::shared_ptr<Node<T>>)
- * @returns pNode<T> the head of all the even elements
- */
 template <typename T>
-pNode<T> split_odd_even(pNode<T> head) {
-    if (head == nullptr) return nullptr;
-    pNode<T> curr = head;
-    pNode<T> even = head->next();
-    pNode<T> tail = even;
-    
-    while (curr != nullptr && curr->next() != nullptr) {
-        pNode<T> temp = curr->next();
-
-        curr->setNext(temp->next());
-        curr = curr->next();
-        
-        // Push at the beginning (You can push in the end to avoid the reversing later):
-        // temp->setNext(nullptr);
-        tail->setNext(temp);
-        tail = tail->next();
-        
+int find_length(pNode<T> head) {
+    int len = 0;
+    pNode<T> ptr = head;
+    while (ptr  != nullptr) {
+        ++len;
+        ptr = ptr->next();
     }
-    if (tail != nullptr) tail->setNext(nullptr);
-    return even;
+    return len;
 }
 
-/** Merge two linked lists, while alternating the nodes
- *
- * @param pNode<T> head1 of the first linked list (std::shared_ptr<Node<T>>)
- * @param pNode<T> head2 of the second linked list (std::shared_ptr<Node<T>>)
- * @returns pNode<T> head of the merged linked list (std::shared_ptr<Node<T>>)
- */
-template <typename T>
-pNode<T> merge_alternating (pNode<T> head1, pNode<T> head2) {
-    if (head1 == nullptr) return head2;
-    if (head2 == nullptr) return head1;
-
-    pNode<T> head = head1;
-    while (head1->next() != nullptr && head2 != nullptr) {
-        pNode<T> temp = head2;
-        head2 = head2->next();
-
-        temp->setNext(head1->next());
-        head1->setNext(temp);
-        head1 = temp->next();
+int adjust_rotation_needed(int n, int len) {
+    n = n % len;
+    if (n < 0) {
+        n += len;
     }
 
-    if (head1->next() == nullptr) head1->setNext(head2);
-
-    return head;
+    return n;
 }
 
-/* Reverse Even nodes
- *
- * This is the extension to the first version of the code
- * It avoids the requirement to reverse the result after
- * the whole thing
- */
 template <typename T>
-pNode<T> reverse_even_nodes(pNode<T> head) {
-    // Extract even nodes from teh existing list and create a new list consisting of even nodes.
-    // Push the even nodes in a reverse order to keep them in a reverse order
-    pNode<T> curr = head;
-    pNode<T> list_even = nullptr;
-
-    while (curr != nullptr && curr->next() != nullptr) {
-        pNode<T> even = curr->next();
-        curr->setNext(even->next());
-
-        // Push at the head of the new list
-        even->setNext(list_even);
-        list_even = even;
-
-        curr = curr->next();
+pNode<T> rotate(pNode<T> head, int n) {
+    if (head == nullptr || n == 0) {
+        return head;
     }
 
-    return merge_alternating(head, list_even);
-}
+    int len = find_length(head);
 
+    // If n (number of rotations required) is bigger than
+    // the length of the linked list or if n is negative,
+    // then we need to adjust it
+    n = adjust_rotation_needed(n, len);
+
+    if (n == 0) return head;
+
+    // Find the star of rotated list
+    // If we have 1, 2, 3, 4, 5, and n = 2,
+    // 4 is the start of the rotated list
+    int rotations_count = len - n - 1;
+    pNode<T> temp = head;
+
+    while (rotations_count > 0) {
+        rotations_count--;
+        temp = temp->next();
+    }
+
+    // After the loop is complete
+    pNode<T> new_head = temp->next();
+
+    // Set new end of list:
+    temp->setNext(nullptr);
+
+    // Iterate to the end of the list and
+    // link that to original head
+    temp = new_head;
+    while (temp->next() != nullptr) {
+        temp = temp->next();
+    }
+    temp->setNext(head);
+
+    return new_head;
+}
 
 int main() {
     LinkedList<int> list;
-    LinkedList<int> even;
+
     list.addFront(7);
     list.addFront(6);
     list.addFront(5);
@@ -115,24 +93,13 @@ int main() {
     list.addFront(2);
     list.addFront(1);
 
-    // DEBUG(list.head());
     cout << list << endl;
-    
-    even.setHead(split_odd_even(list.head()));
-    // cout << list << endl;
-    
-    DEBUG(list.head());
-    DEBUG(even.head());
-    
-    even.reverse();
-    cout << list << endl;
-    cout << even << endl;
-    
-    list.setHead(merge_alternating(list.head(), even.head()));
+
+    list.setHead(rotate(list.head(), -8));
 
     cout << list << endl;
+
     
-    // even.setHead(reverse_even_nodes(list.head()));
-    // cout << even << endl;
     return 0;
 }
+        

@@ -167,7 +167,24 @@ int main() {
   list.removeDuplicates();
   cout << list << endl;
   
-  
+  //////////////////
+  list.clear();
+  cout << list << endl;
+  list.rotate(1);
+  cout << list << endl;
+  list.addFront(7);
+  list.addFront(6);
+  list.addFront(5);
+  list.addFront(4);
+  list.addFront(3);
+  list.addFront(2);
+  list.addFront(1);
+
+  cout << list << endl;
+
+  list.rotate(1);
+
+  cout << list << endl;
   return 0;
 }
 

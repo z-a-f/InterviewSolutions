@@ -216,6 +216,38 @@ public class LinkedList<T extends Comparable<T>> {
             }
         }
     }
+
+    public void rotate(int n) {
+        if (this.head() == null || n == 0) {
+            return;
+        }
+        int len = this.size();
+
+        n = n % len;
+        if (n < 0) n += len;
+
+        if (n == 0) return;
+
+        int rotations_count = len - n - 1;
+        Node<T> temp = this.head();
+
+        while (rotations_count > 0) {
+            rotations_count--;
+            temp = temp.next();
+        }
+
+        Node<T> new_head = temp.next();
+
+        temp.setNext(null);
+
+        temp = new_head;
+        while (temp.next() != null) {
+            temp = temp.next();
+        }
+        temp.setNext(this.head());
+
+        this.setHead(new_head);
+    }
     
     //////////////////////////////////////
     // Helper utilities

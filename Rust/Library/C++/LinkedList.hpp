@@ -115,6 +115,7 @@ public:
     std::shared_ptr< Node<T> > intersects(LinkedList<T> l);
     std::shared_ptr< Node<T> > nthFromLast(int n);
     void removeDuplicates();
+    void rotate(int n);
 private:
     std::shared_ptr< Node<T> > _reverse_recursive(std::shared_ptr< Node<T> > node);
     std::shared_ptr< Node<T> > _deep_copy_1 (std::shared_ptr< Node<T> > head);
@@ -461,6 +462,41 @@ void LinkedList<T>::removeDuplicates() {
     }
     // this->setHead(head);
  }
+
+/** Rotate right by n elements
+ *
+ * @params n number of steps to rotate by
+ */
+template <typename T>
+void LinkedList<T>::rotate(int n) {
+    if (this->head() == nullptr || n == 0)
+        return;
+
+    int len = this->size();
+    n = n % len;
+    if (n < 0) n += len;
+
+    if (n == 0) return;
+
+    int rotations_count = len - n - 1;
+    std::shared_ptr< Node<T> > temp = this->head();
+
+    while (rotations_count > 0) {
+        rotations_count--;
+        temp = temp->next();
+    }
+
+    std::shared_ptr< Node<T> > new_head = temp->next();
+    temp->setNext(nullptr);
+
+    temp = new_head;
+    while (temp->next() != nullptr) {
+        temp = temp->next();
+    }
+    temp->setNext(this->head());
+
+    this->setHead(new_head);
+}
 
 //////////////////////////////////////
 // Helpers:

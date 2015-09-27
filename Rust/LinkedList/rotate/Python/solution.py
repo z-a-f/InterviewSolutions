@@ -3,67 +3,49 @@ sys.path.insert(0, '../../../Library/Python') # Need that to import LL
 
 from LinkedList import *    # Linked LIst defined here
 
-def split_odd_even(head):
-    if (head == None):
-        return None
+def find_length(head):
+    len = 0
+    ptr = head
+    while (ptr != None):
+        len += 1
+        ptr = ptr.next()
+    return len
 
-    curr = head
-    even = head.next()
-    tail = even
+def adjust_rotation_needed(n, len):
+    n = n % len
+    if n < 0: n += len
+    return n
 
-    while curr != None and curr.next() != None:
-        temp = curr.next()
+def rotate(head, n):
+    if head == None or n == 0:
+        return head
 
-        curr.setNext(temp.next())
-        curr = curr.next()
+    len = find_length(head)
 
-        tail.setNext(temp)
-        tail = tail.next()
+    n = adjust_rotation_needed(n, len)
 
-    if tail != None:
-        tail.setNext(None)
+    if n == 0: return head
 
-    return even
+    rotations_count = len - n - 1
+    temp = head
 
-def merge_alternating (head1, head2):
-    if head1 == None:
-        return head2
-    if head2 == None:
-        return head1
+    while rotations_count > 0:
+        rotations_count -= 1
+        temp = temp.next()
 
-    head = head1
-    while head1.next() != None and head2 != None:
-        temp = head2
-        head2 = head2.next()
+    new_head = temp.next()
 
-        temp.setNext(head1.next())
-        head1.setNext(temp)
-        head1 = temp.next()
+    temp.setNext(None)
 
-    if head1.next() == None:
-        head1.setNext(head2)
+    temp = new_head
+    while temp.next() != None:
+        temp = temp.next()
+    temp.setNext(head)
 
-    return head
-
-def reverse_even_nodes(head):
-    curr = head
-    list_even = None
-
-    while curr != None and curr.next() != None:
-        even = curr.next()
-        curr.setNext(even.next())
-
-        even.setNext(list_even)
-        list_even = even
-
-        curr = curr.next()
-
-    return merge_alternating(head, list_even)
-    
+    return new_head
 
 if __name__ == '__main__':
     list = LinkedList()
-    even = LinkedList()
     
     list.addFront(7)
     list.addFront(6)
@@ -74,19 +56,6 @@ if __name__ == '__main__':
     list.addFront(1)
 
     print list
-
-    # even.setHead(split_odd_even(list.head()))
+    list.setHead(rotate(list.head(), -8))
     print list
-    # even.reverse()
-    print even
-
-    # list.setHead(merge_alternating(list.head(), even.head()))
-    list.setHead(reverse_even_nodes(list.head()))
-    print list
-    
-
-
-
-
-
     

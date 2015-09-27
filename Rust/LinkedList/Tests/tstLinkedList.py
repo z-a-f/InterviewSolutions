@@ -160,7 +160,22 @@ if __name__ == '__main__':
     list.removeDuplicates()
     print list
 
-        
+    ######################################
+    ## Rotations
+    list.clear()
+    list.addFront(7)
+    list.addFront(6)
+    list.addFront(5)
+    list.addFront(4)
+    list.addFront(3)
+    list.addFront(2)
+    list.addFront(1)
+
+    print list
+    list.rotate(-10)
+    print list
+    
+ 
 
 
 
