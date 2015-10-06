@@ -1,26 +1,52 @@
+"""@package customLibs
+
+LinkedList and node package
 """
-Node class
-"""
+
+## Node class
+#
+# This is a generic node for singly linked list
 class Node(object):
+    ## Default constructor
+    # 
+    # @param _elem The value stored in the node
+    # @param _next Pointer to the next node
     def __init__(self, _elem=None, _next=None):
         self._elem = _elem
         self._next = _next
         self._arb = None
 
+    ## toString overloader
+    #
+    # Shows the value stored in the node
+    # @returns _elem The internal value (String)
     def __str__(self):
         return str(self._elem)
 
     # __repr__ = __str__
 
+    ## Return the value
+    #
+    # @return _elem The internal value
     def value(self):
         return self._elem
 
+    ## Next node
+    #
+    # Returns the pointer to the next node
+    # @returns _next The next Node object
     def next(self):
         return self._next
 
+    ## Arbitrary pointer
+    #
+    # Returns _arb Pointer to an arbitrary Node
     def arb(self):
         return self._arb
 
+    ## Set the stored value
+    #
+    # Changes the internal value self._elem
     def setValue(self, e):
         self._elem = e
 
