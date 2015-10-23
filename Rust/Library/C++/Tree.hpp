@@ -1,49 +1,79 @@
 #pragma once
 
 #include <iostream>             // For the std::ostream
-#include <vector>               // For array of children
+#include <list>                 // For array of children
 
-template <typename T> class TreeNode;
-template <typename T> using treeNode = std::shared_ptr< TreeNode<T> >; // This is just for convenience
-
-/** Gneric Tree Node class
- *
- * The implementation of the class is a little weird:
- * children are stored in a vector of pointers to TreeNodeN
- * objects
- */
 template <typename T>
-class TreeNode {
-public:
-    /** Constructor */
-    TreeNode (std::size_t N = 0, T e = T(0)) {
-        _children = std::vector< treeNode<T> >(N, nullptr);
-        _elem = e;
+class Tree {
+protected:
+    struct Node {
+        T elt;                       // element value
+        std::shared_ptr<Node> par;   // parent
+        std::shared_ptr<Node> left;  // left
+        std::shared_ptr<Node> right; // right child
+        Node(T e = 0) : elt(e), par(nullptr), left(nullptr), right(nullptr) {} // Constructor
     };
-
-    /** Get value */
-    T get() { return _elem; }
-
-    /** Set value */
-    void set(T e) { _elem = e; }
-
-    /** Get child */
-    treeNode<T> child(std::size_t idx) { return this->_children[idx];}
-
-    /** Set child */
-    void child(std::size_t idx, T e) {
-        this->_children[idx] = new TreeNode<T>();
-        // this->_childrem[idx]->
-    }
-
-    /** Overload operator= */
+    typedef std::shared_ptr<Node> pNode;
+public:
+    class Position {
+    private:
+        pNode v;                // Pointer of the node
+    public:
+        Position(pNode _v = NULL) : v(_v) {} // Constructor
+        T& operator*() { return v->elt; }    // Get element
+        Position left() const                // Get left children
+        { return Position(v->left); }        // 
+        Position right() const               // Get right child
+        { return Position(v->right); }       // 
+        Position parent() const              // Get parent
+        { return Position(v->par); }         // 
+        bool isRoot() const                  // Is it root?
+        { return v->par == nullptr; }        //
+        bool isExternal() const              //
+        { return v->left == nullptr &&       // 
+                v->right == nullptr; }       // Is it external?
+        friend class Tree;                    // Give tree access
+    };
+    typedef std::list<Position> PositionList; // List of positions
+public:
+    Tree();
+    int size() const;
+    bool empty() const;
+    Position root() const;
+    PositionList positions() const;
+    void addRoot();
+    void expandExternal(const Position& p);
+    Position removeAboveExternal(const Position& p);
+    // TODO: HOUSEKEEPING FUNCTIONS!
     /*
-    void operator=(treeNode<T> tn) {
-        if (this == tn) return;
-        this = tn;
-        }*/
-        
+      1. Copy constructor
+      2. Assignment operator
+      3. Destructor
+      4. Operator<<
+     */
+protected:
+    void preorder(pNode v, PositionList& pl) const;
 private:
-    std::vector< treeNode<T> > _children;
-    T _elem;
+    pNode _root;                // Root of the tree
+    int n;                      // Size
+    
 };
+
+
+template <typename T>
+Tree<T>::Tree() : _root(nullptr), n(0) {} // Constructor
+
+template <typename T>
+int Tree<T>::size() const { return n; } // number of nodes
+
+template <typename T>
+bool Tree<T>::empty() const { return size() == 0; } // is tree empty
+
+template <typename T>
+typename Tree<T>::Position Tree<T>::root() const // Get the root
+{ return Position(_root); }
+
+template <typename T>
+void Tree<T>::addRoot()          // Add root to empty tree
+{ _root = pNode(); n = 1; }
+

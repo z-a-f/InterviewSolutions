@@ -40,43 +40,55 @@ class Node(object):
 
     ## Arbitrary pointer
     #
-    # Returns _arb Pointer to an arbitrary Node
+    # @returns _arb Pointer to an arbitrary Node
     def arb(self):
         return self._arb
 
     ## Set the stored value
     #
     # Changes the internal value self._elem
+    # @param e New element
     def setValue(self, e):
         self._elem = e
 
+    ## Set the next pointer
+    #
+    # @param n Next node pointer
     def setNext(self, n):
         self._next = n
 
+    ## Set the arbitrary pointer
+    #
+    # @param n Arbitrary node pointer
     def setArb(self, n):
         self._arb = n
+    
+    # def DEBUG(self):
+    #     temp = self
+    #     while temp._next != None:
+    #         print '[', temp.value(), "]->",
+    #         temp = temp._next
+    #     print '[', temp.value(), ']'
 
-    def DEBUG(self):
-        temp = self
-        while temp._next != None:
-            print '[', temp.value(), "]->",
-            temp = temp._next
-        print '[', temp.value(), ']'
 
-
-"""
-LinkedList class
-"""
+## Linked List class
+#
+# Generic linked list class
 class LinkedList(object):
-    # Public:
+    ## Default constructor
     def __init__(self):
         self._head = None
         # self._size = 0
 
-    # Public:
+    ## Check if the list is empty
+    #
+    # @returns Boolean 
     def empty(self):
         return self.head() == None
 
+    ## Return the value of the front
+    #
+    # @returns _elem The value of the head
     def front(self):
         if self.empty():
             return None
