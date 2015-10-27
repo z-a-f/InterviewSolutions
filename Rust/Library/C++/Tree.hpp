@@ -28,7 +28,7 @@ public:
         // ~Node();
         friend class Tree;
     public:
-        Node* parent();
+        Node* parent() { return _parent; };
         // The whole thing is accessible through
         // either children(idx) or
         // children()[idx]
@@ -133,6 +133,65 @@ template <typename T>
 class BST {
 public:
     class Node {
-        
+    private:
+        T _val;                 //!< Value of the node
+        Node* _parent;          //!< Parent of the node
+        Node* _left;            //!< Left child
+        Node* _right;           //!< Right child
+    public:
+        /** Constructor */
+        Node(T e = 0, Node* p = nullptr) :
+            _val(e), _parent(p),
+            _left(nullptr), _right(nullptr) {}
+        Node(Node* p);
+        /* Destructor */
+        // ~Node();
+        friend class BST;
+    public:
+        /** Return parent */
+        Node* parent() { return this->_parent; }
+        // The whole thing is accessible through
+        // either children(idx) or
+        // children()[idx]
+        // std::list<Node*> children();
+        // Node* children (int idx);
+        // Node* child(int idx);   // This is the same as children(idx)
+        Node* left() { return _left; }
+        Node* right() { return _right; }
+        T value() { return this->_val; }
+        void value(T e) { this->_val = e; }
+        /** Is it the root node? */
+        bool isRoot() { return _parent == nullptr; }
+        bool isExternal();
+    private: // Utilities:
+        void deleteChildren(Node* n);
     };
+public:
+    BST();
+    ~BST();
+private:
+    Node* _root;
+    std::size_t n;
 };
+
+/** Construct from another node */
+template <typename T>
+BST<T>::Node::Node(Node* p) {
+    _parent = p->_parent;
+    _left = p->_left;
+    _right = p->_right;
+    _val = p->val;
+}
+
+template <typename T>
+bool BST<T>::Node::isExternal() { return _left == nullptr && _right == nullptr; }
+
+template <typename T>
+void BST<T>::Node::deleteChildren(BST::Node *n) {
+    if (n != nullptr) {
+        deleteChildren(_left);
+        deleteChildren(_right);
+        delete n;
+    }
+}
+
