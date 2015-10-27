@@ -124,3 +124,15 @@ template <typename T>
 T Tree<T>::Node::value() {
     return this->_val;
 }
+
+
+////////////////////////////////////////////////
+// This is a binary search tree:
+/** Binary search tree */
+template <typename T>
+class BST {
+public:
+    class Node {
+        
+    };
+};
