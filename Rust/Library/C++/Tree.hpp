@@ -54,7 +54,7 @@ public:
     /** Is the tree empty? */
     bool empty() { return this->size() == 0; }
     /** Get the root of the tree */
-    Node* root() { return this->_root; }
+    Node* root() { return const_cast<Tree<T>*>(this)->_root; }
     /** Add root */
     void addRoot() { _root = new Node; _n = 1; }
 private:
@@ -158,6 +158,8 @@ public:
         // Node* child(int idx);   // This is the same as children(idx)
         Node* left() { return _left; }
         Node* right() { return _right; }
+        void left(Node* ptr) { _left = ptr; }
+        void right(Node* ptr) { _right = ptr; }
         T value() { return this->_val; }
         void value(T e) { this->_val = e; }
         void expandExternal();
@@ -166,24 +168,26 @@ public:
         bool isExternal();
     private: // Utilities:
         void deleteChildren(Node* n);
+        
     };
 public:
-    BST() : _root(nullptr), _n(0) {}
-    ~BST() { Node::deleteChildren(_root); }
+    BST(Node* r = nullptr, std::size_t n = 0) : _root(r), _n(n) {}
+    ~BST() { BST<T>::Node().deleteChildren(_root); }
 public:
     /** Add empty root if it doesn't exist */
     bool addRoot(T v = 0) {
         if (empty()) {
             _root = new Node(v);
+            _n = 1;
             return true;
         }
         return false;
     }
     void addValue(T v);
     /** Is the tree empty? */
-    void empty() { return _n == 0; }
+    bool empty() const { return _n == 0; }
     /** Get the root */
-    Node* root() { return _root; }
+    Node* root() const{ return this->_root; }
     /** Get the size */
     std::size_t size() { return _n; }
 private:
@@ -238,6 +242,25 @@ void BST<T>::addValue(T v) {
     // At this point ptr is the place where we have to be,
     // and the ptr_p is the parent place
     ptr = new Node(v, ptr_p);
-    if (v <= ptr_p->value()) ptr_p->left() = ptr;
-    else ptr_p->right() = ptr;
+    if (v <= ptr_p->value()) ptr_p->left(ptr);
+    else ptr_p->right(ptr);
+    _n++;
+}
+
+template <typename T>
+std::ostream& operator<<(std::ostream& os, const BST<T>& t) {
+    
+    BST<T> temp = t;
+    if (t.empty()) return os;
+    os << BST<T>(t.root()->left());
+    os << temp.root()->value();
+    os << BST<T>(t.root()->right());
+
+    return os;
+    /*
+      if (node == nullptr) return
+      inorder(node->left())
+      visit(node)
+      inorder(node->right())
+     */
 }
