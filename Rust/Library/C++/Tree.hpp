@@ -160,6 +160,7 @@ public:
         Node* right() { return _right; }
         T value() { return this->_val; }
         void value(T e) { this->_val = e; }
+        void expandExternal();
         /** Is it the root node? */
         bool isRoot() { return _parent == nullptr; }
         bool isExternal();
@@ -167,11 +168,27 @@ public:
         void deleteChildren(Node* n);
     };
 public:
-    BST();
-    ~BST();
+    BST() : _root(nullptr), _n(0) {}
+    ~BST() { Node::deleteChildren(_root); }
+public:
+    /** Add empty root if it doesn't exist */
+    bool addRoot(T v = 0) {
+        if (empty()) {
+            _root = new Node(v);
+            return true;
+        }
+        return false;
+    }
+    void addValue(T v);
+    /** Is the tree empty? */
+    void empty() { return _n == 0; }
+    /** Get the root */
+    Node* root() { return _root; }
+    /** Get the size */
+    std::size_t size() { return _n; }
 private:
     Node* _root;
-    std::size_t n;
+    std::size_t _n;
 };
 
 /** Construct from another node */
@@ -183,9 +200,11 @@ BST<T>::Node::Node(Node* p) {
     _val = p->val;
 }
 
+/** Check if the node is external */
 template <typename T>
 bool BST<T>::Node::isExternal() { return _left == nullptr && _right == nullptr; }
 
+/** Delete all the children under n (n included) */
 template <typename T>
 void BST<T>::Node::deleteChildren(BST::Node *n) {
     if (n != nullptr) {
@@ -195,3 +214,30 @@ void BST<T>::Node::deleteChildren(BST::Node *n) {
     }
 }
 
+/** Expand external by creating left and right child */
+template <typename T>
+void BST<T>::Node::expandExternal() {
+    if (isExternal()) {
+        _left = BST<T>::Node(0, this);
+        _right = BST<T>::Node(0, this);
+    }
+    
+}
+
+/** Add a new value to the tree */
+template <typename T>
+void BST<T>::addValue(T v) {
+    if (addRoot(v)) return;
+    Node* ptr = root();
+    Node* ptr_p = nullptr;
+    while (ptr != nullptr) {
+        ptr_p = ptr;
+        if (v <= ptr->value()) ptr = ptr->left();
+        else ptr = ptr->right();
+    }
+    // At this point ptr is the place where we have to be,
+    // and the ptr_p is the parent place
+    ptr = new Node(v, ptr_p);
+    if (v <= ptr_p->value()) ptr_p->left() = ptr;
+    else ptr_p->right() = ptr;
+}
