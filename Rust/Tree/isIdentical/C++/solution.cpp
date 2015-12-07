@@ -1,64 +1,61 @@
 # include <iostream>
 
-#include "../../../Library/C++/LinkedList.hpp"
+#include "../../../Library/C++/Tree.hpp"
 
-template <typename T> using pNode = std::shared_ptr< Node<T> >;
 using namespace std;
-/** Add two integers of type Int
- *
- */
-pNode<int> add_integers (pNode<int> a, pNode<int> b) {
-  pNode<int> result = nullptr;
-  pNode<int> last = nullptr;
-  int carry = 0;
-  
-  while (a != nullptr || b != nullptr || carry > 0) {
-	int first = (a == nullptr ? 0 : a->value());
-	int second = (b == nullptr ? 0 : b->value());
 
-	int sum = first + second + carry;
-	cout << "DEBUG: " << first << ' ' << second << endl;
-	pNode<int> pNew = pNode<int>(new Node<int>(sum % 10));
-	carry = sum / 10;
+template <typename T>
+bool is_identical(
+    std::shared_ptr<typename BST<T>::Node> root1,
+    std::shared_ptr<typename BST<T>::Node> root2) {
+    if (root1 == nullptr && root2 == nullptr) return true;
 
-	if (result == nullptr) {
-	  result = pNew;
-	} else {
-	  last->setNext(pNew);
-	}
+    if (root1 != nullptr && root2 != nullptr) {
+        return ((root1->value() == root2->value())
+                && is_identical<T>(root1->left(), root2->left())
+                && is_identical<T>(root1->right(), root2->right()));
+    }
 
-	last = pNew;
+    return false;
+}
 
-	if (a != nullptr) {
-	  a = a->next();
-	}
+template <typename T>
+bool is_identical(typename BST<T>::Node* root1, typename BST<T>::Node* root2) {
+    return is_identical<T>(
+        std::shared_ptr<typename BST<T>::Node>(root1),
+        std::shared_ptr<typename BST<T>::Node>(root2));
+}
 
-	if (b != nullptr) {
-	  b = b->next();
-	}
-  }
-  return result;
+
+template <typename T>
+bool is_identical(BST<T> t1, BST<T> t2) {
+    return is_identical<T>(t1.root(), t2.root());
 }
 
 int main() {
-  // Create integer 123:
-  LinkedList<int> a;
-  a.addFront(1);
-  a.addFront(2);
-  a.addFront(3);
-  cout << "Integer a: " << a << endl;
+    BST<int> myTree1;
+    BST<int> myTree2;
+    BST<int> myTree3;
+    
+    myTree1.addValue(50);
+    myTree1.addValue(30);
+    myTree1.addValue(40);
+    
+    myTree2.addValue(50);
+    myTree2.addValue(40);
+    myTree2.addValue(30);
 
-  // Create integer 897:
-  LinkedList<int> b;
-  b.addFront(8);
-  b.addFront(9);
-  b.addFront(7);
-  cout << "Integer b: " << b << endl;
-
-  // Add them up:
-  LinkedList<int> c;
-  c.setHead(add_integers(a.head(), b.head()));
-  cout << "Integer a + b: " << c << endl;
-  
-  return 0;
+    myTree3.addValue(50);
+    myTree3.addValue(30);
+    myTree3.addValue(40);
+    
+    
+    cout << "Tree 1: " << myTree1 << endl;
+    cout << "Tree 2: " << myTree2 << endl;
+    cout << "Trees 1 and 2 are identical: " << is_identical<int>(myTree1, myTree2);
+    cout << endl;
+    cout << "Trees 1 and 3 are identical: " << is_identical<int>(myTree1, myTree3);
+    cout << endl;
+    // cout << myTree1.root()->left()->right()->value() << endl;
+    return 0;
 }
