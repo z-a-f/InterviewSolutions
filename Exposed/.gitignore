@@ -1,0 +1,15 @@
+
+# C
+**/C/*.o
+**/C/*.out
+
+# C++
+**/C++/*.cpp
+**/C++/*.c++
+**/C++/*.o
+
+# Java
+**/Java/*.javac
+
+# Python
+**/Python/*.pyc
