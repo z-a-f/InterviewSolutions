@@ -5,9 +5,9 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>Welcome to z-Scale &#8211; z-Scale</title>
-<meta name="description" content="There should be description here :).">
-<meta name="keywords" content="home, main">
+<title>All Unique &#8211; z-Scale</title>
+<meta name="description" content="Preparing for Interviews is Hard :)">
+<meta name="keywords" content="algorithm, data structure, python, interview, solution">
 
 <!-- Twitter Cards -->
 <meta name="twitter:card" content="summary">
@@ -17,9 +17,9 @@
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Welcome to z-Scale">
-<meta property="og:description" content="There should be description here :).">
-<meta property="og:url" content="http://localhost:4000/index.html">
+<meta property="og:title" content="All Unique">
+<meta property="og:description" content="Preparing for Interviews is Hard :)">
+<meta property="og:url" content="http://localhost:4000/cracking%20the%20coding%20interview/cracking-coding-1.1/">
 <meta property="og:site_name" content="z-Scale">
 <meta property="og:image" content="http://localhost:4000/images/images/logo.png">
 
@@ -27,7 +27,7 @@
 
 
 
-<link rel="canonical" href="http://localhost:4000/">
+<link rel="canonical" href="http://localhost:4000/cracking%20the%20coding%20interview/cracking-coding-1.1/">
 <link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="z-Scale Feed">
 
 <!-- http://t.co/dKP3o1e -->
@@ -66,7 +66,7 @@
 
 </head>
 
-<body id="post-index">
+<body id="post" >
 
 <!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
 
@@ -122,15 +122,17 @@
 <div class="entry-header">
   <div class="header-title">
     <div class="header-title-wrap">
-      <h1>Welcome to z-Scale</h1>
+      <h1>All Unique</h1>
       
-        <h2><span class="entry-date"><time>&nbsp;</time></span></h2>
+        <h2><span class="entry-date date published updated"><time datetime="2016-12-01T00:00:00-08:00">December 01, 2016</time></span></h2>
       
 
       
-          <p class="entry-reading-time">
-            &nbsp;
-          </p><!-- /.entry-reading-time -->
+        <p class="entry-reading-time">
+          <i class="fa fa-clock-o"></i>
+          
+          Reading time ~1 minute
+        </p><!-- /.entry-reading-time -->
       
     </div><!-- /.header-title-wrap -->
   </div><!-- /.header-title -->
@@ -165,187 +167,10 @@
 
 
 <div id="main" role="main">
-  
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2016-12-01T00:00:00-08:00"><a href="http://localhost:4000/cracking%20the%20coding%20interview/cracking-coding-1.4/">December 01, 2016</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About Zafar">Zafar</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
+  <article class="hentry">
+    <div class="entry-content">
         
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/cracking%20the%20coding%20interview/cracking-coding-1.4/" rel="bookmark" title="%20fy the string" itemprop="url">%20fy the string</a></h1>
-    
-  </header>
-  <div class="entry-content">
-    
-      <p>Given a string<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup>, replace all spaces with <code>%20</code>. Assume that the string has sufficient space at the end to hold additional characters. Also, the “true” length of the string is given. Make sure the space occupied is constant.</p>
-
-<h3 id="example">Example</h3>
-
-<p>Input: “Mr John Smith    “, 13</p>
-
-<p>Output: “Mr%20John%20Smith”</p>
-
-<h3 id="solution">Solution</h3>
-<p><em>Complexity: <script type="math/tex">T = O(n), S = O(1)</script></em></p>
-
-<p>Because the question says that we have some buffer in the end of the string, and we are given the “true” length of the string, we can start from the end, and move every character from the “true” end to the string end. If we encounter a space, we place a <code>%20</code> instead</p>
-
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">percent_twentyfy</span><span class="p">(</span><span class="n">st</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-  <span class="n">idx</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">st</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="c"># The end of the string</span>
-  <span class="n">jdx</span> <span class="o">=</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span> <span class="c"># The "true" end of the string</span>
-  <span class="k">while</span> <span class="n">idx</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">jdx</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">st</span><span class="p">[</span><span class="n">jdx</span><span class="p">]</span> <span class="o">==</span> <span class="nb">ord</span><span class="p">(</span><span class="s">' '</span><span class="p">):</span>
-      <span class="n">st</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="s">'0'</span>
-      <span class="n">st</span><span class="p">[</span><span class="n">idx</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s">'2'</span>
-      <span class="n">st</span><span class="p">[</span><span class="n">idx</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s">'</span><span class="si">%</span><span class="s">'</span>
-      <span class="n">idx</span> <span class="o">-=</span> <span class="mi">3</span>
-    <span class="k">else</span><span class="p">:</span>
-      <span class="n">st</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="p">[</span><span class="n">jdx</span><span class="p">]</span>
-      <span class="n">idx</span> <span class="o">-=</span> <span class="mi">1</span>
-    <span class="n">jdx</span> <span class="o">-=</span> <span class="mi">1</span></code></pre></div>
-
-<div class="footnotes">
-  <ol>
-    <li id="fn:1">
-      <p>If you do it in Python: because strings in python are not mutable, assume that the input is a <code>bytearray</code> <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
-    </li>
-  </ol>
-</div>
-
-    
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2016-12-01T00:00:00-08:00"><a href="http://localhost:4000/cracking%20the%20coding%20interview/cracking-coding-1.3/">December 01, 2016</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About Zafar">Zafar</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/cracking%20the%20coding%20interview/cracking-coding-1.3/" rel="bookmark" title="String Permuations" itemprop="url">String Permuations</a></h1>
-    
-  </header>
-  <div class="entry-content">
-    
-      <p>Given two strings, write a method to decide if one is a permutation of the other.</p>
-
-<h3 id="solution">Solution</h3>
-<p><em>Complexity: <script type="math/tex">T = O(n), S = O(n)</script></em></p>
-
-<p>Assuming that the length are the same, we can count all the characters in one string, and see if the numbers match in the other string. For fast access we can use a hash table or an array to store the counts.</p>
-
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">is_permutation</span><span class="p">(</span><span class="n">str1</span><span class="p">,</span> <span class="n">str2</span><span class="p">):</span>
-  <span class="nb">hash</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-  <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">str1</span><span class="p">:</span>
-    <span class="nb">hash</span><span class="p">[</span><span class="n">char</span><span class="p">]</span> <span class="o">=</span> <span class="nb">hash</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">char</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
-  <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">str2</span><span class="p">:</span>
-    <span class="k">if</span> <span class="nb">hash</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">char</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-      <span class="k">return</span> <span class="bp">False</span>
-    <span class="nb">hash</span><span class="p">[</span><span class="n">char</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span>
-  <span class="k">return</span> <span class="bp">True</span></code></pre></div>
-
-
-    
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2016-12-01T00:00:00-08:00"><a href="http://localhost:4000/cracking%20the%20coding%20interview/cracking-coding-1.2/">December 01, 2016</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About Zafar">Zafar</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/cracking%20the%20coding%20interview/cracking-coding-1.2/" rel="bookmark" title="Reverse String" itemprop="url">Reverse String</a></h1>
-    
-  </header>
-  <div class="entry-content">
-    
-      <p>Implement a function <code>void reverse(char * str)</code> in C/C++ which reverses a null-terminated string.</p>
-
-<h3 id="solution">Solution</h3>
-<p><em>Complexity: <script type="math/tex">T = O(n), S = O(1)</script></em></p>
-
-<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="cp">#include &lt;iostream&gt;
-</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-
-<span class="kt">void</span> <span class="nf">reverse</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span> <span class="n">str</span><span class="p">)</span> <span class="p">{</span>
-  <span class="c1">// Find the end first
-</span>  <span class="kt">char</span><span class="o">*</span> <span class="n">end</span> <span class="o">=</span> <span class="n">str</span><span class="p">;</span>
-  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">str</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
-  <span class="k">while</span> <span class="p">(</span><span class="o">*</span><span class="n">end</span> <span class="o">!=</span> <span class="sc">'\n'</span><span class="p">)</span> <span class="p">{</span>
-    <span class="o">++</span><span class="n">end</span><span class="p">;</span>
-  <span class="p">}</span>
-  <span class="o">--</span><span class="n">end</span><span class="p">;</span>  <span class="c1">// We don't need to swap the '\n'
-</span>  <span class="kt">char</span> <span class="n">tmp</span><span class="p">;</span>
-  <span class="k">while</span> <span class="p">(</span><span class="n">str</span> <span class="o">&lt;</span> <span class="n">end</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">tmp</span> <span class="o">=</span> <span class="o">*</span><span class="n">str</span><span class="p">;</span>
-    <span class="o">*</span><span class="n">str</span><span class="o">++</span> <span class="o">=</span> <span class="o">*</span><span class="n">end</span><span class="p">;</span>
-    <span class="o">*</span><span class="n">end</span><span class="o">--</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">;</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-  <span class="kt">char</span> <span class="n">str</span><span class="p">[]</span> <span class="o">=</span> <span class="s">"This is a string, and it reverses!</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
-  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">str</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
-  <span class="n">reverse</span><span class="p">(</span><span class="n">str</span><span class="p">);</span>
-  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">str</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
-<span class="p">}</span></code></pre></div>
-
-
-    
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2016-12-01T00:00:00-08:00"><a href="http://localhost:4000/cracking%20the%20coding%20interview/cracking-coding-1.1/">December 01, 2016</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About Zafar">Zafar</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/cracking%20the%20coding%20interview/cracking-coding-1.1/" rel="bookmark" title="All Unique" itemprop="url">All Unique</a></h1>
-    
-  </header>
-  <div class="entry-content">
-    
+      <h1 class="post-title entry-title">All Unique</h1>
       <p>Implement an algorithm to determine if a string has all unique characters. What if you could cannot use additional data structures?</p>
 
 <h3 id="clarification-questions">Clarification questions</h3>
@@ -399,14 +224,75 @@
   <span class="k">return</span> <span class="bp">True</span></code></pre></div>
 
 
+      <footer class="entry-meta">
+        <span class="entry-tags"><a href="http://localhost:4000/tags#algorithm" title="Pages tagged algorithm" class="tag"><span class="term">algorithm</span></a><a href="http://localhost:4000/tags#data structure" title="Pages tagged data structure" class="tag"><span class="term">data structure</span></a><a href="http://localhost:4000/tags#python" title="Pages tagged python" class="tag"><span class="term">python</span></a><a href="http://localhost:4000/tags#interview" title="Pages tagged interview" class="tag"><span class="term">interview</span></a><a href="http://localhost:4000/tags#solution" title="Pages tagged solution" class="tag"><span class="term">solution</span></a></span>
+        
+        <span class="author vcard"><span class="fn">Zafar</span></span>
+        <div class="social-share">
+  <ul class="socialcount socialcount-small inline-list">
+    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/cracking%20the%20coding%20interview/cracking-coding-1.1/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://localhost:4000/cracking%20the%20coding%20interview/cracking-coding-1.1/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+    <li class="googleplus"><a href="https://plus.google.com/share?url=http://localhost:4000/cracking%20the%20coding%20interview/cracking-coding-1.1/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+  </ul>
+</div><!-- /.social-share -->
+
+      </footer>
+    </div><!-- /.entry-content -->
+    <div class="read-more">
+  <div class="read-more-header">
+    <a href="http://zafar.cc" class="read-more-btn">About the Author</a>
+  </div><!-- /.read-more-header -->
+  <div class="read-more-content author-info">
+    <h3>Zafar</h3>
+    <div class="author-container">
+      <img class="author-img" src="http://localhost:4000/images/me.jpg" alt="Zafar" />
+      <div class="author-bio">I am a 5th year PhD student at Boston University, working towards my degree in Computer Engineering. While my work focuses on digital design,error mitigation, and machine learning, my non-work interests range widely from information theory (go Shannon!), quantum computing, grandfather paradox, Star Trek, Little Mermaid, 'why is the grass green?', 1Q84, etc., etc., etc. If you want to talk about, well, anything - just ping me.</div>
+    </div>
+    <div class="author-share">
+      <ul class="list-inline social-buttons">
+        
+          <li><a href="https://github.com/zafartahirov" target="_blank"><i class="fa fa-github fa-fw"></i></a></li>
+        
+          <li><a href="https://www.linkedin.com/in/zafartakhirov" target="_blank"><i class="fa fa-linkedin fa-fw"></i></a></li>
+        
+      </ul>
+      
+        <a aria-label="Follow @zafartahirov on GitHub" data-style="mega" href="https://github.com/zafartahirov" class="github-button">Follow @zafartahirov</a>
+      
+      <br>
+      
+        <a href="https://twitter.com/TJzafar" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @TJzafar</a>
+      
+    </div>
+  </div>
+</div>
+
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+    <div class="read-more">
+  
+    <div class="read-more-header">
+      <a href="http://localhost:4000" class="read-more-btn">Read More</a>
+    </div><!-- /.read-more-header -->
+    <div class="read-more-content">
+      <h3><a href="http://localhost:4000/cracking%20the%20coding%20interview/cracking-coding-1.4/" title="%20fy the string">%20fy the string</a></h3>
+      <p>Given a string[^1], replace all spaces with `%20`. Assume that the string has sufficient space at the end to hold additional characters. ...&hellip; <a href="http://localhost:4000/cracking%20the%20coding%20interview/cracking-coding-1.4/">Continue reading</a></p>
+    </div><!-- /.read-more-content -->
+  
+  <div class="read-more-list">
     
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-
-
-
-
+      <div class="list-item">
+        <h4><a href="http://localhost:4000/cracking%20the%20coding%20interview/cracking-coding-1.3/" title="String Permuations">String Permuations</a></h4>
+        <span>Published on December 01, 2016</span>
+      </div><!-- /.list-item -->
+    
+      <div class="list-item">
+        <h4><a href="http://localhost:4000/cracking%20the%20coding%20interview/cracking-coding-1.2/" title="Reverse String">Reverse String</a></h4>
+        <span>Published on December 01, 2016</span>
+      </div><!-- /.list-item -->
+    
+  </div><!-- /.read-more-list -->
+</div><!-- /.read-more -->
+  </article>
 </div><!-- /#main -->
 
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>

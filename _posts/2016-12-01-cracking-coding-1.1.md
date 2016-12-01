@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "All Unique"
-categories: [Interview Preparation]
+categories: [Cracking the Coding Interview]
 description:
 tags: [algorithm, data structure, python, interview, solution]
 comments: true

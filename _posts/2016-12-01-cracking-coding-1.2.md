@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Reverse String"
-categories: [Interview Preparation]
+categories: [Cracking the Coding Interview]
 description:
 tags: [algorithm, data structure, c/c++, interview, solution]
 comments: true

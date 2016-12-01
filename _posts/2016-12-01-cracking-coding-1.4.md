@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "%20fy the string"
-categories: [Interview Preparation]
+categories: [Cracking the Coding Interview]
 description:
 tags: [algorithm, data structure, python, interview, solution]
 comments: true
