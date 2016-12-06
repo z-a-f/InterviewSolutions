@@ -1,4 +1,8 @@
 _site
+.DS_Store
+node_modules
 .sass-cache
 .jekyll-metadata
 Gemfile.lock
+
+**/.ipynb*

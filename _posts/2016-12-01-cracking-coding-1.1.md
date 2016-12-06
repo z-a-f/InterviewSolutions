@@ -15,6 +15,8 @@ Implement an algorithm to determine if a string has all unique characters. What 
 1. Do whitespace characters count as valid characters, that is if there are two spaces in the string, will the result be false?
 1. Does capitalization (or any capital letters) matter?
 
+<!-- more -->
+
 ### Solution 1
 _Complexity: $$T = O(n), S = O(n)$$_
 
@@ -22,7 +24,7 @@ This solution uses a hash table to store all the characters in the string -- if 
 
 __Note:__ This solution is based on the assumption that hash table access is constant!
 
-{% highlight python %}
+{% highlight python linenos %}
 def all_unique(st):
   hash = dict()
   for el in st:
@@ -41,7 +43,7 @@ If space is more important, and we don't care if the original array is modified 
 
 __Note:__ The assumption here is that either the string is mutable, or the input is not a string but array of characters.
 
-{% highlight python %}
+{% highlight python linenos %}
 def all_unique(st):
   st.sort() # In-place sort
   for idx in range(1, len(st)):
@@ -55,7 +57,7 @@ _Complexity: $$T = O(n^2), S = O(1)$$_
 
 If we are not allowed to modify the original array, and the space is more important, we can just compare every character to every other character.
 
-{% highlight python %}
+{% highlight python linenos %}
 def all_unique(st):
   for idx in range(len(st)):
     for jdx in range(idx+1, len(st)):

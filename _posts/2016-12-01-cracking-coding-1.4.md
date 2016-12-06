@@ -9,21 +9,25 @@ share: true
 ---
 Given a string[^1], replace all spaces with `%20`. Assume that the string has sufficient space at the end to hold additional characters. Also, the "true" length of the string is given. Make sure the space occupied is constant.
 
+[^1]: If you do it in Python: because strings in python are not mutable, assume that the input is a `bytearray`
+
 ### Example
 
 {% raw %}
-Input: "Mr John Smith    ", 13
-
-Output: "Mr%20John%20Smith"
+    Input:  "Mr John Smith    ", 13
+    Output: "Mr%20John%20Smith"
 {% endraw %}
+
+<!-- more -->
 
 ### Solution
 _Complexity: $$T = O(n), S = O(1)$$_
 
 Because the question says that we have some buffer in the end of the string, and we are given the "true" length of the string, we can start from the end, and move every character from the "true" end to the string end. If we encounter a space, we place a `%20` instead
 
-{% highlight python %}
+{% highlight python linenos %}
 def percent_twentyfy(st, n):
+  assert type(st) == bytearray # `isinstance` would be better
   idx = len(st) - 1 # The end of the string
   jdx = n-1 # The "true" end of the string
   while idx >= 0 and jdx >= 0:
@@ -38,4 +42,4 @@ def percent_twentyfy(st, n):
     jdx -= 1
 {% endhighlight %}
 
-[^1]: If you do it in Python: because strings in python are not mutable, assume that the input is a `bytearray`
+This is a test test

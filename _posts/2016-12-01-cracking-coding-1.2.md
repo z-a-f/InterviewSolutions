@@ -9,10 +9,12 @@ share: true
 ---
 Implement a function `void reverse(char * str)` in C/C++ which reverses a null-terminated string.
 
+<!-- more -->
+
 ### Solution
 _Complexity: $$T = O(n), S = O(1)$$_
 
-{% highlight c++ %}
+{% highlight c++ linenos %}
 #include <iostream>
 using namespace std;
 

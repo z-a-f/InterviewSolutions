@@ -9,12 +9,14 @@ share: true
 ---
 Given two strings, write a method to decide if one is a permutation of the other.
 
+<!-- more -->
+
 ### Solution
 _Complexity: $$T = O(n), S = O(n)$$_
 
 Assuming that the length are the same, we can count all the characters in one string, and see if the numbers match in the other string. For fast access we can use a hash table or an array to store the counts.
 
-{% highlight python %}
+{% highlight python linenos %}
 def is_permutation(str1, str2):
   hash = dict()
   for char in str1:
